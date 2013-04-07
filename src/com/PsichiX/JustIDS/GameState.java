@@ -55,6 +55,8 @@ public class GameState extends State implements CommandQueue.Delegate
 		
 		getApplication().getAssets().get(R.raw.badaboom_material, Material.class);
 		getApplication().getAssets().get(R.raw.badaboom_font, Font.class);
+		
+		getApplication().getPhoton().getRenderer().setClearBackground(true, 0.0f, 0.0f, 0.0f, 1.0f);
 	}
 	
 	@Override
