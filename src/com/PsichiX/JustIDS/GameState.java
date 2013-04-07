@@ -40,11 +40,12 @@ public class GameState extends State implements CommandQueue.Delegate
 		_cam.setViewAngle(180);
 		
 		Material mat;
-		mat = (Material) getApplication().getAssets().get(R.raw.logo_material, Material.class);
+		mat = (Material) getApplication().getAssets().get(R.raw.mana_material, Material.class);
 		Mana = new Sprite(mat);
 		Mana.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		_scn.attach(Mana);
-				
+		
+		mat = (Material) getApplication().getAssets().get(R.raw.health_material, Material.class);
 		Health = new Sprite(mat);
 		Health.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		Health.setPosition( _cam.getViewWidth() * 0.5f, 0.0f);
