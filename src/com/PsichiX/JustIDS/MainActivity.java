@@ -1,6 +1,8 @@
 package com.PsichiX.JustIDS;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 
 import com.PsichiX.XenonCoreDroid.XeActivity;
 import com.PsichiX.XenonCoreDroid.XeApplication;
@@ -30,6 +32,10 @@ public class MainActivity extends XeActivity
 		//obsluga mikrofonu
 		rs = new RecorderService();
 		rs.startRecording();
+		
+		//obsluga wibracji
+		VibratorUtil.v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		VibratorUtil.v.vibrate(1000);
 		
 		// run state
 		app = getApplicationCore();
