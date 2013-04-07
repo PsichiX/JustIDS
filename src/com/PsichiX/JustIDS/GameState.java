@@ -8,6 +8,10 @@ import com.PsichiX.XenonCoreDroid.XeSense;
 
 public class GameState extends State implements CommandQueue.Delegate
 {
+	
+	/** od 0 do 100*/
+	public static double manaLevel;
+	
 	private Camera2D _cam;
 	private Scene _scn;
 	private ActorsManager _actors = new ActorsManager(this);

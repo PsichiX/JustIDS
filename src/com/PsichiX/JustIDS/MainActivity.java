@@ -1,5 +1,7 @@
 package com.PsichiX.JustIDS;
 
+import android.content.Intent;
+
 import com.PsichiX.XenonCoreDroid.XeActivity;
 import com.PsichiX.XenonCoreDroid.XeApplication;
 import com.PsichiX.XenonCoreDroid.XeSense;
@@ -33,5 +35,7 @@ public class MainActivity extends XeActivity
 		getApplicationCore().getPhoton().getRenderer().setClearBackground(true, 1.0f, 1.0f, 1.0f, 1.0f);
 		getApplicationCore().getSense().use(XeSense.Type.ACCELEROMETER);
 		getApplicationCore().run(new GameState());
+		
+		startActivity(new Intent(this, AudioRecordTest.class));
 	}
 }
