@@ -59,26 +59,26 @@ public class GameStateManager {
 								hitListener.run();
 							}
 							vibrateOnHit();
-							if (isLost()) {
-								iLostTheGame();								
-								vibrateOnLost();
-								if (lostListener != null) {
-									lostListener.run();
-								}
-							}
-							if (isWon()) {
-								vibrateOnWon();
-								if (wonListener != null) {
-									wonListener.run();
-								}
-							}
-						}
+						}						
 					} else {
 						Log.i("MSG", "Skipping message : " + pi);
 					}
 					if (GameStateManager.this.onSomethingChanged != null){
 						GameStateManager.this.onSomethingChanged.run();
 					}
+					if (isLost()) {
+						iLostTheGame();								
+						vibrateOnLost();
+						if (lostListener != null) {
+							lostListener.run();
+						}
+					}
+					if (isWon()) {
+						vibrateOnWon();
+						if (wonListener != null) {
+							wonListener.run();
+						}
+					}					
 				}
 			}
 
