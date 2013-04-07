@@ -6,7 +6,7 @@ import android.util.Log;
 
 public class GameStateManager {
 	
-	private boolean DEBUG_SELF_SENDING = true;
+	private boolean DEBUG_SELF_SENDING = false;
 	
 	private volatile double lifePointsOfMine;
 	private volatile double lifePointsOfOther;

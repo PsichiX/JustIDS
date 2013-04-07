@@ -11,6 +11,7 @@ public class MainActivity extends XeActivity
 {
 	public static XeApplication app;
 	RecorderService rs;
+	private GameStateManager gsm;
 	
 	@Override
 	public void onCreate(android.os.Bundle savedInstanceState) 
@@ -25,10 +26,28 @@ public class MainActivity extends XeActivity
 		// create application
 		super.onCreate(savedInstanceState);
 		
+		final GameState gs = new GameState();
+		
+		gsm = new GameStateManager(this, new BroadCastManager());
+		gsm.setSomethingChangedListener(new Runnable() {
+			@Override
+			public void run() {	
+				gs.healthLevel = gsm.getLifePointsOfMine();
+			}
+		});
+
+		gsm.setHitListener(new Runnable() {
+			@Override
+			public void run() {	
+				// TO DO: do something when hit
+			}
+		});
+
+		gsm.resetGame();
+		
 		//obsluga mikrofonu
 		rs = new RecorderService();
 		rs.startRecording();
-		
 		
 		// run state
 		app = getApplicationCore();
@@ -39,7 +58,7 @@ public class MainActivity extends XeActivity
 		getApplicationCore().getPhoton().setRenderMode(XePhoton.RenderMode.QUEUE, true);
 		getApplicationCore().getPhoton().getRenderer().setClearBackground(true, 1.0f, 1.0f, 1.0f, 1.0f);
 		getApplicationCore().getSense().use(XeSense.Type.LINEAR_ACCELERATION);
-		getApplicationCore().run(new GameState());
+		getApplicationCore().run(gs);
 		
 		//startActivity(new Intent(this, AudioRecordTest.class));
 	}
