@@ -61,17 +61,7 @@ public class GameState extends State implements CommandQueue.Delegate
 	{
 		_scn.releaseAll();
 	}
-	
-	@Override
-	public void onInput(Touches ev)
-	{
-		Touch t = ev.getTouchByState(Touch.State.DOWN);
-		if (t != null)
-		{
-			getApplication().pushState(new ResultState("You won!"));
-		}
-	}
-	
+		
 	@Override
 	public void onSensor(XeSense.EventData ev)
 	{
