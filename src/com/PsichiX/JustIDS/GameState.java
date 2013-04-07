@@ -12,6 +12,7 @@ public class GameState extends State implements CommandQueue.Delegate
 	
 	/** od 0 do 100*/
 	public static double manaLevel;
+	public static double healthLevel;
 	
 	private Camera2D _cam;
 	private Scene _scn;
@@ -58,7 +59,7 @@ public class GameState extends State implements CommandQueue.Delegate
 	@Override
 	public void onSensor(XeSense.EventData ev)
 	{
-		if(ev.type == XeSense.Type.GRAVITY)
+		if(ev.type == XeSense.Type.LINEAR_ACCELERATION)
 		{
 			_currentForce = MathHelper.vecLength(ev.values[0], ev.values[1], ev.values[2]);
 			Log.d("ACCEL", Float.toString(_currentForce));

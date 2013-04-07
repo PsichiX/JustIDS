@@ -12,6 +12,7 @@ import com.PsichiX.XenonCoreDroid.Framework.Graphics.Graphics;
 public class MainActivity extends XeActivity
 {
 	public static XeApplication app;
+	RecorderService rs;
 	
 	@Override
 	public void onCreate(android.os.Bundle savedInstanceState) 
@@ -25,6 +26,11 @@ public class MainActivity extends XeActivity
 		
 		// create application
 		super.onCreate(savedInstanceState);
+		
+		//obsluga mikrofonu
+		rs = new RecorderService();
+		rs.startRecording();
+		
 		// run state
 		app = getApplicationCore();
 		Utils.initModule(getApplicationCore().getAssets());
@@ -36,6 +42,6 @@ public class MainActivity extends XeActivity
 		getApplicationCore().getSense().use(XeSense.Type.LINEAR_ACCELERATION);
 		getApplicationCore().run(new GameState());
 		
-		startActivity(new Intent(this, AudioRecordTest.class));
+		//startActivity(new Intent(this, AudioRecordTest.class));
 	}
 }

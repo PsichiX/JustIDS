@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Context;
 import android.util.Log;
+import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
 
@@ -88,6 +89,9 @@ public class AudioRecordTest extends Activity
         mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         
+        //AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        //am.setStreamVolume(AudioManager.STREAM_MUSIC, yourVolume, 0);
+        
         try {
             mRecorder.prepare();
         } catch (IOException e) {
@@ -128,7 +132,7 @@ public class AudioRecordTest extends Activity
     }
 
     private void stopRecording() {
-    	maxLevel.setText(mRecorder.getAudioSourceMax());
+    	//maxLevel.setText(mRecorder.getAudioSourceMax());
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
