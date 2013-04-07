@@ -21,6 +21,8 @@ public class GameState extends State implements CommandQueue.Delegate
 	private float _currentForce = 0.0f;
 	private Sprite Mana;
 	private Sprite Health;
+	private float _healthValue;
+	private float _manaValue;
 	
 	@Override
 	public void onEnter()
@@ -30,6 +32,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		_scn = (Scene)getApplication().getAssets().get(R.raw.scene, Scene.class);
 		_cam = (Camera2D)_scn.getCamera();
 		_cam.setViewPosition(_cam.getViewWidth() * 0.5f, _cam.getViewHeight() * 0.5f);
+
 		
 		Material mat;
 		mat = (Material) getApplication().getAssets().get(R.raw.logo_material, Material.class);
@@ -38,7 +41,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		Mana.getProperties().setVec("uColor", tabRed);
 		Mana.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		_scn.attach(Mana);
-		
+				
 		Health = new Sprite(mat);
 		float tabBlue[] = {0.0f, 0.0f, 1.0f, 1.0f};
 		Health.getProperties().setVec("uColor", tabBlue);
@@ -56,6 +59,11 @@ public class GameState extends State implements CommandQueue.Delegate
 	@Override
 	public void onInput(Touches ev)
 	{
+		Touch t = ev.getTouchByState(Touch.State.DOWN);
+		if (t != null)
+		{
+			getApplication().pushState(new ResultState());
+		}
 	}
 	
 	@Override
@@ -83,6 +91,13 @@ public class GameState extends State implements CommandQueue.Delegate
 		
 		_cmds.run();
 		_scn.update(dt);  
+		
+		_healthValue = 20;
+		_manaValue = 80;
+		
+		
+		Mana.setSize(_cam.getViewWidth() * 0.5f, _healthValue * _cam.getViewHeight() * 0.01f);
+		Health.setSize(_cam.getViewWidth() * 0.5f, _manaValue * _cam.getViewHeight() * 0.01f);
 	}
 	
 	public void onCommand(Object sender, String cmd, Object data)
