@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class BroadCastManager {
 
-	private static int PORT = 4444;
+	private static int PORT = 14444;
 	DatagramSocket socket;
 	
 	public BroadCastManager() {
