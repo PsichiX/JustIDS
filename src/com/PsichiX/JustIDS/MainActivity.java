@@ -30,7 +30,6 @@ public class MainActivity extends XeActivity
 		rs.startRecording();
 
 		//obsluga wibracji
-
 		
 		// run state
 		app = getApplicationCore();
