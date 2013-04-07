@@ -52,8 +52,8 @@ public class GameState extends State implements CommandQueue.Delegate
 		_scn.attach(Health);
 		gsm.resetGame();
 		
-		(Material)getApplication().getAssets().get(R.raw.badaboom_material, Material.class);
-		(Font)getApplication().getAssets().get(R.raw.badaboom_font, Font.class);
+		getApplication().getAssets().get(R.raw.badaboom_material, Material.class);
+		getApplication().getAssets().get(R.raw.badaboom_font, Font.class);
 	}
 	
 	@Override
