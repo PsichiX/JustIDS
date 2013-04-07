@@ -19,10 +19,15 @@ public class GameState extends State implements CommandQueue.Delegate
 	private CommandQueue _cmds = new CommandQueue();
 	private float _lastForce = 0.0f;
 	private float _currentForce = 0.0f;
+	private float _maxForce = 0.0f;
+	private boolean _forceRecording = false;
 	private Sprite Mana;
 	private Sprite Health;
-	private float _healthValue;
-	private float _manaValue;
+	private GameStateManager gsm;
+	
+	public GameState(GameStateManager gsm) {
+		this.gsm = gsm;
+	}
 	
 	@Override
 	public void onEnter()
@@ -62,7 +67,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		Touch t = ev.getTouchByState(Touch.State.DOWN);
 		if (t != null)
 		{
-			getApplication().pushState(new ResultState());
+//			getApplication().pushState(new ResultState());
 		}
 	}
 	
@@ -73,10 +78,12 @@ public class GameState extends State implements CommandQueue.Delegate
 		{
 			_lastForce = _currentForce;
 			_currentForce = MathHelper.vecLength(ev.values[0], ev.values[1], ev.values[2]);
-			//Log.d("ACCEL", Float.toString(_currentForce));
-			if(_currentForce > 1.0f && _lastForce <= 1.0f)
+			if(_forceRecording)
+				_maxForce = Math.max(_currentForce, _maxForce);
+			//Log.d("ACCEL", Float.toString(_maxForce));
+			if(_currentForce > 20.0f && _lastForce <= 20.0f)
 				_cmds.queueCommand(this, "StartAttack", null);
-			else if(_lastForce > 1.0f && _currentForce <= 1.0f)
+			else if(_lastForce > 20.0f && _currentForce <= 20.0f)
 				_cmds.queueCommand(this, "StopAttack", null);
 		}
 	}
@@ -91,20 +98,32 @@ public class GameState extends State implements CommandQueue.Delegate
 		
 		_cmds.run();
 		_scn.update(dt);  
-		
-		_healthValue = 20;
-		_manaValue = 80;
-		
-		
-		Mana.setSize(_cam.getViewWidth() * 0.5f, _healthValue * _cam.getViewHeight() * 0.01f);
-		Health.setSize(_cam.getViewWidth() * 0.5f, _manaValue * _cam.getViewHeight() * 0.01f);
+				
+		Mana.setSize(_cam.getViewWidth() * 0.5f, (float) (healthLevel * _cam.getViewHeight() * 0.01f));
+		Health.setSize(_cam.getViewWidth() * 0.5f, (float) (manaLevel * _cam.getViewHeight() * 0.01f));
 	}
 	
 	public void onCommand(Object sender, String cmd, Object data)
 	{
 		if(cmd.equals("StartAttack"))
+		{
 			Log.d("ATTACK", "START");
+			_maxForce = 0.0f;
+			_forceRecording = true;
+		}
 		else if(cmd.equals("StopAttack"))
+		{
 			Log.d("ATTACK", "STOP");
+			double strength = calculateStrength();
+			gsm.attackWithStrength(strength);
+			manaLevel = 0.0f;
+			_forceRecording = false;
+			_maxForce = 0.0f;
+		}
+	}
+
+	private double calculateStrength() {
+		double strength = 30 * Math.max(Math.min(1,(_maxForce- 20.0)/10.0),0)*(manaLevel/100.0); 
+		return strength;
 	}
 }

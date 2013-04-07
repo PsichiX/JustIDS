@@ -26,9 +26,9 @@ public class MainActivity extends XeActivity
 		// create application
 		super.onCreate(savedInstanceState);
 		
-		final GameState gs = new GameState();
 		
 		gsm = new GameStateManager(this, new BroadCastManager());
+		final GameState gs = new GameState(gsm);
 		gsm.setSomethingChangedListener(new Runnable() {
 			@Override
 			public void run() {	
@@ -48,7 +48,7 @@ public class MainActivity extends XeActivity
 		//obsluga mikrofonu
 		rs = new RecorderService();
 		rs.startRecording();
-		
+	
 		// run state
 		app = getApplicationCore();
 		Utils.initModule(getApplicationCore().getAssets());
@@ -56,7 +56,7 @@ public class MainActivity extends XeActivity
 		getApplicationCore().getTimer().setFixedStep(1000 / 30);
 		getApplicationCore().getPhoton().getRenderer().getTimer().setFixedStep(1000 / 30);
 		getApplicationCore().getPhoton().setRenderMode(XePhoton.RenderMode.QUEUE, true);
-		getApplicationCore().getPhoton().getRenderer().setClearBackground(true, 1.0f, 1.0f, 1.0f, 1.0f);
+		getApplicationCore().getPhoton().getRenderer().setClearBackground(true, 0.0f, 0.0f, 0.0f, 1.0f);
 		getApplicationCore().getSense().use(XeSense.Type.LINEAR_ACCELERATION);
 		getApplicationCore().run(gs);
 		
