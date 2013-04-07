@@ -39,13 +39,13 @@ public class BroadCastManager {
 	    return InetAddress.getByAddress(quads);
 	}
 	
-	public void sendBroadcast(final Context context, final String data) {
+	public void sendBroadcast(final Context context, final byte [] data) {
 			new Thread() { 
 				@Override
 				public void run() {
 					try {
 						socket.setBroadcast(true);
-						DatagramPacket packet = new DatagramPacket(data.getBytes(), data.length(),
+						DatagramPacket packet = new DatagramPacket(data, data.length,
 							    getBroadcastAddress(context), PORT);
 							socket.send(packet);
 					} catch (IOException e) {
@@ -55,7 +55,7 @@ public class BroadCastManager {
 			}.start();
 	}
 	
-	public String receiveBroadCast(Context context)  {
+	public byte [] receiveBroadCast(Context context)  {
 		byte[] buf = new byte[1024];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		try {
@@ -63,6 +63,7 @@ public class BroadCastManager {
 		} catch (IOException e) {
 			Log.e("SOCKET", e.getMessage());
 		}
-		return new String(packet.getData());
+		return packet.getData();
 	}
+	
 }

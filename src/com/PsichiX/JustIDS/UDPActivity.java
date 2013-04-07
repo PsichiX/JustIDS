@@ -13,48 +13,60 @@ import android.widget.TextView;
 
 public class UDPActivity extends Activity {
 
-	BroadCastManager mgr = new BroadCastManager();
+	GameStateManager gsm;
 	Thread thread;
-	Button button;
+	Button button10;
+	Button button20;
 	EditText text;
 	TextView textView;
-	@Override
+	TextView textView2;
+	
+	int count = 0;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_udp);
-		
-		button = (Button) findViewById(R.id.button1);
-		text = (EditText) findViewById(R.id.editText1);
-		textView = (TextView) findViewById(R.id.textView2);
-		button.setOnClickListener(new OnClickListener() {
+		gsm = new GameStateManager(this, new BroadCastManager());
+		button10 = (Button) findViewById(R.id.button1);
+		button10.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String s = text.getText().toString();
-				mgr.sendBroadcast(UDPActivity.this, s);
+				gsm.attackWithStrength(10.0);
 			}
 			
 		});
-		
-		thread = new Thread() {
+		button20 = (Button) findViewById(R.id.button2);
+		button20.setOnClickListener(new OnClickListener() {
 			@Override
-			public void run() {
-				Log.i("INFO", "Starting listening for messages");
-				while (true) {
-					final String message = mgr.receiveBroadCast(UDPActivity.this);
-					Log.i("MSG", message);
-					UDPActivity.this.runOnUiThread(new Runnable() {
-						
-						@Override
-						public void run() {
-							textView.setText(message);							
-						}
-					});
-				}
+			public void onClick(View v) {
+				gsm.attackWithStrength(20.0);
 			}
 			
-		};
+		});
+		textView = (TextView) this.findViewById(R.id.textView1);
+		textView2 = (TextView) this.findViewById(R.id.textView2);
+
+		gsm.setSomethingChangedListener(new Runnable() { 
+			public void run() {
+				UDPActivity.this.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						textView.setText("LP: " + gsm.getLifePointsOfMine());
+					}					
+				});
+			};
+		});
 		
-		thread.start();
+		gsm.setHitListener(new Runnable() { 
+			public void run() {
+				UDPActivity.this.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						textView2.setText("Hit: " + ++count);
+					}					
+				});
+			};
+		});
+		
 	}
 
 }
