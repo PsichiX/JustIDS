@@ -90,9 +90,6 @@ public class GameState extends State implements CommandQueue.Delegate
 		_cmds.run();
 		_scn.update(dt);  
 		
-		healthLevel = 80;
-		manaLevel = 20;
-		
 		Mana.setSize(_cam.getViewWidth() * 0.5f, (float) (healthLevel * _cam.getViewHeight() * 0.01f));
 		Health.setSize(_cam.getViewWidth() * 0.5f, (float) (manaLevel * _cam.getViewHeight() * 0.01f));
 	}
