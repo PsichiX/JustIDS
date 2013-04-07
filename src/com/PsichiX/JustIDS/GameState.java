@@ -67,7 +67,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		Touch t = ev.getTouchByState(Touch.State.DOWN);
 		if (t != null)
 		{
-//			getApplication().pushState(new ResultState());
+			getApplication().pushState(new ResultState("test"));
 		}
 	}
 	

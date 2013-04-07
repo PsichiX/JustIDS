@@ -48,6 +48,7 @@ public class MainActivity extends XeActivity
 		//obsluga mikrofonu
 		rs = new RecorderService();
 		rs.startRecording();
+
 		// run state
 		app = getApplicationCore();
 		Utils.initModule(getApplicationCore().getAssets());
