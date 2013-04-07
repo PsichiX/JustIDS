@@ -5,14 +5,4 @@
    blendingSource="SRC_ALPHA"
    blendingDestination="ONE_MINUS_SRC_ALPHA"
    >
-   <Samplers>
-      <Sampler0
-         name="uSamp"
-         image="drawable/logo"
-         filteringMin="LINEAR"
-         filteringMag="LINEAR"
-         wrappingVertical="REPEAT"
-         wrappingHorizontal="REPEAT"
-         />
-   </Samplers>
 </Material>
