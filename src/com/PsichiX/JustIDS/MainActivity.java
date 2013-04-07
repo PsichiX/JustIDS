@@ -76,8 +76,8 @@ public class MainActivity extends XeActivity
 		//startActivity(new Intent(this, AudioRecordTest.class));
 	}
 	
-	@Override
-	public void onBackPressed() {
-		this.finish();
-	}
+//	@Override
+//	public void onBackPressed() {
+//		this.finish();
+//	}
 }

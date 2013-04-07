@@ -88,6 +88,10 @@ public class GameState extends State implements CommandQueue.Delegate
 		_scn.update(dt);  
 		Mana.setSize(_cam.getViewWidth() * 0.5f, (float) (healthLevel * _cam.getViewHeight() * 0.01f));
 		Health.setSize(_cam.getViewWidth() * 0.5f, (float) (manaLevel * _cam.getViewHeight() * 0.01f));
+		
+		// hack zabezieczenie
+//		if(healthLevel <= 0.0f)
+//			youLost();
 	}
 	
 	public void onCommand(Object sender, String cmd, Object data)
@@ -119,7 +123,7 @@ public class GameState extends State implements CommandQueue.Delegate
 	}
 	
 	public void youLost() {
-		getApplication().pushState(new ResultState("You lost!", false));
+		getApplication().pushState(new ResultState("You lost!", true));
 	}
 
 }
