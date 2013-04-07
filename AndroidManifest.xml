@@ -23,22 +23,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="JustIDS" >
         <activity
-            android:name="com.PsichiX.JustIDS.UDPActivity"
-            android:label="@string/title_activity_udp" >
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-        <activity
-            android:name=".AudioRecordTest"
-            android:label="@string/title_activity_audio_record_test" >
-            <!-- <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
-        </activity>
-        <activity
             android:name="com.PsichiX.JustIDS.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
