@@ -48,13 +48,6 @@ public class MainActivity extends XeActivity
 		//obsluga mikrofonu
 		rs = new RecorderService();
 		rs.startRecording();
-<<<<<<< HEAD
-	
-=======
-
-		//obsluga wibracji
-		
->>>>>>> 3f5eb7398d02c2c23748b18a6183b4c9a3edf475
 		// run state
 		app = getApplicationCore();
 		Utils.initModule(getApplicationCore().getAssets());
