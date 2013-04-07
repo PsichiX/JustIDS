@@ -4,6 +4,9 @@
     <string name="app_name">JustIDS</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_microphone">MicrophoneActivity</string>
+    <string name="title_activity_audio_record_test">AudioRecordTest</string>
     <string name="title_activity_udp">UDPActivity</string>
 
 </resources>
