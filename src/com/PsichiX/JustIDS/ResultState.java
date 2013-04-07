@@ -23,6 +23,8 @@ public class ResultState extends State {
 	{
 		_scn = (Scene)getApplication().getAssets().get(R.raw.scene, Scene.class);
 		_cam = (Camera2D)_scn.getCamera();
+		_cam.setViewPosition(0.0f, 0.0f);
+		_cam.setViewAngle(0.0f);
 		
 		Material mat = (Material)getApplication().getAssets().get(R.raw.badaboom_material, Material.class);
 		Font fnt = (Font)getApplication().getAssets().get(R.raw.badaboom_font, Font.class);

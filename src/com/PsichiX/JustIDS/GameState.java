@@ -42,14 +42,10 @@ public class GameState extends State implements CommandQueue.Delegate
 		Material mat;
 		mat = (Material) getApplication().getAssets().get(R.raw.logo_material, Material.class);
 		Mana = new Sprite(mat);
-		float tabRed[] =  {1.0f, 0.0f, 0.0f, 1.0f};
-		Mana.getProperties().setVec("uColor", tabRed);
 		Mana.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		_scn.attach(Mana);
 				
 		Health = new Sprite(mat);
-		float tabBlue[] = {0.0f, 0.0f, 1.0f, 1.0f};
-		Health.getProperties().setVec("uColor", tabBlue);
 		Health.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		Health.setPosition( _cam.getViewWidth() * 0.5f, 0.0f);
 		_scn.attach(Health);
