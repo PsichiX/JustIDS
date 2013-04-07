@@ -43,6 +43,19 @@ public class MainActivity extends XeActivity
 			}
 		});
 
+		gsm.setLostListener(new Runnable() {
+			@Override
+			public void run() {	
+				gs.youLost();
+			}
+		});
+		gsm.setWonListener(new Runnable() {
+			@Override
+			public void run() {	
+				gs.youWon();
+			}
+		});
+
 		gsm.resetGame();
 		
 		//obsluga mikrofonu

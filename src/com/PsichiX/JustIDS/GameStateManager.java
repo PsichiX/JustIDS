@@ -63,13 +63,6 @@ public class GameStateManager {
 					} else {
 						Log.i("MSG", "Skipping message : " + pi);
 					}
-					if (isLost()) {
-						iLostTheGame();								
-						vibrateOnLost();
-						if (lostListener != null) {
-							lostListener.run();
-						}
-					}
 					if (isWon()) {
 						vibrateOnWon();
 						if (wonListener != null) {
@@ -78,6 +71,13 @@ public class GameStateManager {
 					} else {
 						if (GameStateManager.this.onSomethingChanged != null){
 							GameStateManager.this.onSomethingChanged.run();
+						}
+						if (isLost()) {
+							iLostTheGame();								
+							vibrateOnLost();
+							if (lostListener != null) {
+								lostListener.run();
+							}
 						}
 					}
 				}
@@ -150,8 +150,8 @@ public class GameStateManager {
 	public void iLostTheGame() {
 		PlayerInfo pi = new PlayerInfo();
 		pi.id = android_id; 
-		pi.lifePoints = 0;
-		pi.attackStrength = 0;
+		pi.lifePoints = 0.0;
+		pi.attackStrength = 0.0;
 		this.bcm.sendBroadcast(context, Serializer.serialize(pi));
 	}
 
