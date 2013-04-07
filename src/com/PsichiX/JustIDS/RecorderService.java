@@ -8,6 +8,7 @@ import com.PsichiX.JustIDS.AudioRecordTest.RecordButton;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.util.Log;
 
 public class RecorderService {
@@ -25,6 +26,9 @@ public class RecorderService {
 	int ITERATIONS_PER_SECOND = 30;
 	
     public void startRecording() {
+        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
+        mFileName += "/audiorecordtest.3gp";
+    	
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -54,6 +58,7 @@ public class RecorderService {
 					if (newlevel>20000) {
 						synchronized(GameState.class)	{
 							GameState.manaLevel+=newlevel/10000;
+							if(GameState.manaLevel>100) GameState.manaLevel=100;	
 						}
 					}
 				}
