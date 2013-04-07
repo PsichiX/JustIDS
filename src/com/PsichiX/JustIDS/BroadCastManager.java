@@ -9,6 +9,7 @@ import java.net.SocketException;
 import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiManager.MulticastLock;
 import android.util.Log;
 
 
@@ -29,6 +30,8 @@ public class BroadCastManager {
 	
 	public InetAddress getBroadcastAddress(Context context) throws IOException {
 	    WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+	    MulticastLock ml = wifi.createMulticastLock("some tag");
+	    ml.acquire();
 	    DhcpInfo dhcp = wifi.getDhcpInfo();
 	    // handle null somehow
 
