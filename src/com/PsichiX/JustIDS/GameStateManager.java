@@ -36,6 +36,8 @@ public class GameStateManager {
 	private Runnable wonListener;
 
 	private Runnable lostListener;
+
+	private boolean inGame = false;
 	
 	public GameStateManager(Context context, BroadCastManager bcm) {
 		this.bcm = bcm;
@@ -50,6 +52,9 @@ public class GameStateManager {
 				while (true) {
 					final byte[] message = GameStateManager.this.bcm.receiveBroadCast(GameStateManager.this.context);
 					PlayerInfo pi = (PlayerInfo) Serializer.deserialize(message);
+					if (!inGame) {
+						continue;
+					}
 					if (shouldICare(pi)) {
 						Log.i("MSG","Received message from: " + pi);
 						lifePointsOfOther = pi.lifePoints;
@@ -64,6 +69,7 @@ public class GameStateManager {
 						Log.i("MSG", "Skipping message : " + pi);
 					}
 					if (isWon()) {
+						inGame = false;
 						vibrateOnWon();
 						if (wonListener != null) {
 							wonListener.run();
@@ -73,6 +79,7 @@ public class GameStateManager {
 							GameStateManager.this.onSomethingChanged.run();
 						}
 						if (isLost()) {
+							inGame = false;
 							iLostTheGame();								
 							vibrateOnLost();
 							if (lostListener != null) {
@@ -181,6 +188,6 @@ public class GameStateManager {
 			this.onSomethingChanged.run();
 		}
 		decreaseLifePointsOfMine(0);
-	}
-	
+		inGame = true;
+	}	
 }
