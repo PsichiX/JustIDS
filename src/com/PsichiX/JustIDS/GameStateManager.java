@@ -63,9 +63,6 @@ public class GameStateManager {
 					} else {
 						Log.i("MSG", "Skipping message : " + pi);
 					}
-					if (GameStateManager.this.onSomethingChanged != null){
-						GameStateManager.this.onSomethingChanged.run();
-					}
 					if (isLost()) {
 						iLostTheGame();								
 						vibrateOnLost();
@@ -78,7 +75,11 @@ public class GameStateManager {
 						if (wonListener != null) {
 							wonListener.run();
 						}
-					}					
+					} else {
+						if (GameStateManager.this.onSomethingChanged != null){
+							GameStateManager.this.onSomethingChanged.run();
+						}
+					}
 				}
 			}
 
