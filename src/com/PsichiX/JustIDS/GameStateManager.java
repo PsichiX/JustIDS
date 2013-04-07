@@ -6,7 +6,7 @@ import android.util.Log;
 
 public class GameStateManager {
 	
-	private boolean DEBUG_SELF_SENDING = false;
+	private boolean DEBUG_SELF_SENDING = true;
 	
 	private volatile double lifePointsOfMine;
 	private volatile double lifePointsOfOther;
@@ -29,11 +29,14 @@ public class GameStateManager {
 	private Thread thread;
 	private Runnable onSomethingChanged;
 	private Runnable hitListener;
+
+	private VibratorUtil vibratorUtil;
 	
 	public GameStateManager(Context context, BroadCastManager bcm) {
 		this.bcm = bcm;
 		this.android_id = Secure.getString(context.getContentResolver(),Secure.ANDROID_ID); 
 		this.context = context;
+		this.vibratorUtil = new VibratorUtil(context);
 		resetGame();
 		this.thread = new Thread() {
 			@Override
@@ -48,12 +51,16 @@ public class GameStateManager {
 						if (isAttackSuccessfull(pi)) {
 							decreaseLifePointsOfMine(pi.attackStrength);
 							vibrateOnHit();
-							hitListener.run();
+							if (hitListener != null) {
+								hitListener.run();
+							}
 						}
 					} else {
 						Log.i("MSG", "Skipping message : " + pi);
 					}
-					GameStateManager.this.onSomethingChanged.run();
+					if (GameStateManager.this.onSomethingChanged != null){
+						GameStateManager.this.onSomethingChanged.run();
+					}
 				}
 			}
 
@@ -76,7 +83,7 @@ public class GameStateManager {
 	}
 
 	private void vibrateOnHit() {
-		VibratorUtil.v.vibrate(1000);
+		vibratorUtil.vibrate(1000);
 	}
 	
 	private synchronized double decreaseInternally(double decreaseBy) {
@@ -124,7 +131,9 @@ public class GameStateManager {
 	public void resetGame(){
 		this.lifePointsOfMine = 100.0;
 		this.lifePointsOfOther = 100.0;
-		GameStateManager.this.onSomethingChanged.run();
+		if (this.onSomethingChanged != null){
+			this.onSomethingChanged.run();
+		}
 	}
 	
 }
