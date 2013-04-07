@@ -11,11 +11,14 @@ public class ResultState extends State {
 	private Camera2D _cam;
 	private Scene _scn;
 	private String _status;
+	private boolean _strobo = false;
 	private Text _text;
+	private int _stroboPhase = 0;
 	
-	public ResultState(String status)
+	public ResultState(String status, boolean strobo)
 	{
 		_status = status;
+		_strobo = strobo;
 	}
 	
 	@Override
@@ -39,6 +42,17 @@ public class ResultState extends State {
 	{
 		float dt = getApplication().getTimer().getDeltaTime() * 0.001f;
 		//float dt = 1.0f / 30.0f;
+		
+		if(_strobo)
+		{
+			getApplication().getPhoton().getRenderer().setClearBackground(true,
+				_stroboPhase == 0 ? 1.0f : 0.0f,
+				_stroboPhase == 1 ? 1.0f : 0.0f,
+				_stroboPhase == 2 ? 1.0f : 0.0f,
+				1.0f);
+			_stroboPhase++;
+			_stroboPhase %= 3;
+		}
 		
 		_scn.update(dt);
 	}
