@@ -18,7 +18,7 @@ public class MainActivity extends XeActivity
 		XeApplication.SETUP_SOUND_STREAMS = 1;
 		XeApplication.SETUP_WINDOW_HAS_TITLE = false;
 		XeApplication.SETUP_WINDOW_FULLSCREEN = true;
-		XeApplication.SETUP_SCREEN_ORIENTATION = XeApplication.Orientation.LANDSCAPE;
+		XeApplication.SETUP_SCREEN_ORIENTATION = XeApplication.Orientation.PORTRAIT;
 		XeApplication.SETUP_SENSORS_RATE = android.hardware.SensorManager.SENSOR_DELAY_GAME;
 		
 		// create application
