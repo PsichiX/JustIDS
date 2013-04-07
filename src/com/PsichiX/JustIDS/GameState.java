@@ -21,8 +21,6 @@ public class GameState extends State implements CommandQueue.Delegate
 	private float _currentForce = 0.0f;
 	private Sprite Mana;
 	private Sprite Health;
-	private float _healthValue;
-	private float _manaValue;
 	
 	@Override
 	public void onEnter()
@@ -92,12 +90,11 @@ public class GameState extends State implements CommandQueue.Delegate
 		_cmds.run();
 		_scn.update(dt);  
 		
-		_healthValue = 20;
-		_manaValue = 80;
+		healthLevel = 80;
+		manaLevel = 20;
 		
-		
-		Mana.setSize(_cam.getViewWidth() * 0.5f, _healthValue * _cam.getViewHeight() * 0.01f);
-		Health.setSize(_cam.getViewWidth() * 0.5f, _manaValue * _cam.getViewHeight() * 0.01f);
+		Mana.setSize(_cam.getViewWidth() * 0.5f, (float) (healthLevel * _cam.getViewHeight() * 0.01f));
+		Health.setSize(_cam.getViewWidth() * 0.5f, (float) (manaLevel * _cam.getViewHeight() * 0.01f));
 	}
 	
 	public void onCommand(Object sender, String cmd, Object data)

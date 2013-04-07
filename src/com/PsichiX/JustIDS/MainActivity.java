@@ -28,7 +28,11 @@ public class MainActivity extends XeActivity
 		//obsluga mikrofonu
 		rs = new RecorderService();
 		rs.startRecording();
-		
+
+		//obsluga wibracji
+		VibratorUtil.v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		VibratorUtil.v.vibrate(1000);
+
 		
 		// run state
 		app = getApplicationCore();
@@ -37,7 +41,7 @@ public class MainActivity extends XeActivity
 		getApplicationCore().getTimer().setFixedStep(1000 / 30);
 		getApplicationCore().getPhoton().getRenderer().getTimer().setFixedStep(1000 / 30);
 		getApplicationCore().getPhoton().setRenderMode(XePhoton.RenderMode.QUEUE, true);
-		getApplicationCore().getPhoton().getRenderer().setClearBackground(true, 1.0f, 1.0f, 1.0f, 1.0f);
+		getApplicationCore().getPhoton().getRenderer().setClearBackground(true, 0.0f, 0.0f, 0.0f, 1.0f);
 		getApplicationCore().getSense().use(XeSense.Type.LINEAR_ACCELERATION);
 		getApplicationCore().run(new GameState());
 		
