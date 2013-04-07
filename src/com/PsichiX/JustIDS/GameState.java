@@ -1,8 +1,9 @@
 package com.PsichiX.JustIDS;
 
+import android.util.Log;
+
 import com.PsichiX.XenonCoreDroid.XeApplication.*;
 import com.PsichiX.XenonCoreDroid.Framework.Graphics.*;
-import com.PsichiX.XenonCoreDroid.Framework.Actors.*;
 import com.PsichiX.XenonCoreDroid.XeUtils.*;
 import com.PsichiX.XenonCoreDroid.XeSense;
 
@@ -10,8 +11,8 @@ public class GameState extends State implements CommandQueue.Delegate
 {
 	private Camera2D _cam;
 	private Scene _scn;
-	private ActorsManager _actors = new ActorsManager(this);
 	private CommandQueue _cmds = new CommandQueue();
+	private float _currentForce = 0.0f;
 	
 	@Override
 	public void onEnter()
@@ -26,19 +27,21 @@ public class GameState extends State implements CommandQueue.Delegate
 	public void onExit()
 	{
 		_scn.releaseAll();
-		_actors.detachAll();
 	}
 	
 	@Override
 	public void onInput(Touches ev)
 	{
-		_actors.onInput(ev);
 	}
 	
 	@Override
 	public void onSensor(XeSense.EventData ev)
 	{
-		_actors.onSensor(ev);
+		if(ev.type == XeSense.Type.LINEAR_ACCELERATION)
+		{
+			_currentForce = MathHelper.vecLength(ev.values[0], ev.values[1], ev.values[2]);
+			Log.d("ACCEL", Float.toString(_currentForce));
+		}
 	}
 
 	@Override
@@ -50,7 +53,6 @@ public class GameState extends State implements CommandQueue.Delegate
 		//float dt = 1.0f / 30.0f;
 		
 		_cmds.run();
-		_actors.onUpdate(dt);
 		_scn.update(dt);
 	}
 	
