@@ -37,7 +37,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		_scn = (Scene)getApplication().getAssets().get(R.raw.scene, Scene.class);
 		_cam = (Camera2D)_scn.getCamera();
 		_cam.setViewPosition(_cam.getViewWidth() * 0.5f, _cam.getViewHeight() * 0.5f);
-
+		_cam.setViewAngle(180);
 		
 		Material mat;
 		mat = (Material) getApplication().getAssets().get(R.raw.logo_material, Material.class);
