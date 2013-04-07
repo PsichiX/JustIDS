@@ -1,6 +1,8 @@
 package com.PsichiX.JustIDS;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 
 import com.PsichiX.XenonCoreDroid.XeActivity;
 import com.PsichiX.XenonCoreDroid.XeApplication;
@@ -12,6 +14,7 @@ import com.PsichiX.XenonCoreDroid.Framework.Graphics.Graphics;
 public class MainActivity extends XeActivity
 {
 	public static XeApplication app;
+	RecorderService rs;
 	
 	@Override
 	public void onCreate(android.os.Bundle savedInstanceState) 
@@ -25,6 +28,15 @@ public class MainActivity extends XeActivity
 		
 		// create application
 		super.onCreate(savedInstanceState);
+		
+		//obsluga mikrofonu
+		rs = new RecorderService();
+		rs.startRecording();
+		
+		//obsluga wibracji
+		VibratorUtil.v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		VibratorUtil.v.vibrate(1000);
+		
 		// run state
 		app = getApplicationCore();
 		Utils.initModule(getApplicationCore().getAssets());
@@ -36,6 +48,6 @@ public class MainActivity extends XeActivity
 		getApplicationCore().getSense().use(XeSense.Type.LINEAR_ACCELERATION);
 		getApplicationCore().run(new GameState());
 		
-		startActivity(new Intent(this, AudioRecordTest.class));
+		//startActivity(new Intent(this, AudioRecordTest.class));
 	}
 }

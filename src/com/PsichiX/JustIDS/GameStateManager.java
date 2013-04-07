@@ -76,7 +76,7 @@ public class GameStateManager {
 	}
 
 	private void vibrateOnHit() {
-		// TODO vibrate on hit
+		VibratorUtil.v.vibrate(1000);
 	}
 	
 	private synchronized double decreaseInternally(double decreaseBy) {
