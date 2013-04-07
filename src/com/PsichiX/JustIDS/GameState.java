@@ -51,6 +51,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		Health.setPosition( _cam.getViewWidth() * 0.5f, 0.0f);
 		_scn.attach(Health);
 		gsm.resetGame();
+		manaLevel = 0;
 		
 		getApplication().getAssets().get(R.raw.badaboom_material, Material.class);
 		getApplication().getAssets().get(R.raw.badaboom_font, Font.class);
