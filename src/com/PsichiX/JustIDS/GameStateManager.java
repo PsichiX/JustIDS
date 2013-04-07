@@ -1,6 +1,7 @@
 package com.PsichiX.JustIDS;
 
 import android.content.Context;
+import android.content.IntentSender.SendIntentException;
 import android.provider.Settings.Secure;
 import android.util.Log;
 
@@ -59,6 +60,7 @@ public class GameStateManager {
 							}
 							vibrateOnHit();
 							if (isLost()) {
+								iLostTheGame();								
 								vibrateOnLost();
 								if (lostListener != null) {
 									lostListener.run();
@@ -144,6 +146,15 @@ public class GameStateManager {
 		this.bcm.sendBroadcast(context, Serializer.serialize(pi));
 	}
 
+	public void iLostTheGame() {
+		PlayerInfo pi = new PlayerInfo();
+		pi.id = android_id; 
+		pi.lifePoints = 0;
+		pi.attackStrength = 0;
+		this.bcm.sendBroadcast(context, Serializer.serialize(pi));
+	}
+
+	
 	public void setSomethingChangedListener(Runnable runnable) {
 		this.onSomethingChanged = runnable;
 	}
