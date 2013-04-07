@@ -31,6 +31,10 @@ public class GameStateManager {
 	private Runnable hitListener;
 
 	private VibratorUtil vibratorUtil;
+
+	private Runnable wonListener;
+
+	private Runnable lostListener;
 	
 	public GameStateManager(Context context, BroadCastManager bcm) {
 		this.bcm = bcm;
@@ -49,10 +53,22 @@ public class GameStateManager {
 						Log.i("MSG","Received message from: " + pi);
 						lifePointsOfOther = pi.lifePoints;
 						if (isAttackSuccessfull(pi)) {
-							decreaseLifePointsOfMine(pi.attackStrength);
-							vibrateOnHit();
+							decreaseLifePointsOfMine(pi.attackStrength);							
 							if (hitListener != null) {
 								hitListener.run();
+							}
+							vibrateOnHit();
+							if (isLost()) {
+								vibrateOnLost();
+								if (lostListener != null) {
+									lostListener.run();
+								}
+							}
+							if (isWon()) {
+								vibrateOnWon();
+								if (wonListener != null) {
+									wonListener.run();
+								}
 							}
 						}
 					} else {
@@ -83,9 +99,17 @@ public class GameStateManager {
 	}
 
 	private void vibrateOnHit() {
+		vibratorUtil.vibrate(500);
+	}
+
+	private void vibrateOnWon() {
 		vibratorUtil.vibrate(1000);
 	}
-	
+
+	private void vibrateOnLost() {
+		vibratorUtil.vibrate(1000);
+	}
+
 	private synchronized double decreaseInternally(double decreaseBy) {
 		lifePointsOfMine -= decreaseBy;
 		if (lifePointsOfMine < 0.01) {
@@ -127,6 +151,16 @@ public class GameStateManager {
 	public void setHitListener(Runnable runnable) {
 		this.hitListener = runnable;
 	}
+
+	
+	public void setWonListener(Runnable runnable) {
+		this.wonListener = runnable;
+	}
+
+	public void setLostListener(Runnable runnable) {
+		this.lostListener = runnable;
+	}
+
 	
 	public void resetGame(){
 		this.lifePointsOfMine = 100.0;
@@ -134,6 +168,7 @@ public class GameStateManager {
 		if (this.onSomethingChanged != null){
 			this.onSomethingChanged.run();
 		}
+		decreaseLifePointsOfMine(0);
 	}
 	
 }

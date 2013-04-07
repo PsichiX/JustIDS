@@ -39,12 +39,24 @@ public class MainActivity extends XeActivity
 		gsm.setHitListener(new Runnable() {
 			@Override
 			public void run() {	
-				// TO DO: do something when hit
+				gs.manaLevel = 0;
 			}
 		});
 
-		gsm.resetGame();
-		
+		gsm.setWonListener(new Runnable() {
+			@Override
+			public void run() {
+				gs.youWon();
+			}
+		});
+
+		gsm.setLostListener(new Runnable() {
+			@Override
+			public void run() {
+				gs.youLost();
+			}
+		});
+
 		//obsluga mikrofonu
 		rs = new RecorderService();
 		rs.startRecording();

@@ -53,6 +53,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		Health.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		Health.setPosition( _cam.getViewWidth() * 0.5f, 0.0f);
 		_scn.attach(Health);
+		gsm.resetGame();
 	}
 	
 	@Override
@@ -67,7 +68,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		Touch t = ev.getTouchByState(Touch.State.DOWN);
 		if (t != null)
 		{
-			getApplication().pushState(new ResultState("test"));
+			getApplication().pushState(new ResultState("You won!"));
 		}
 	}
 	
@@ -125,4 +126,14 @@ public class GameState extends State implements CommandQueue.Delegate
 		double strength = 30 * Math.max(Math.min(1,(_maxForce- 20.0)/10.0),0)*(manaLevel/100.0); 
 		return strength;
 	}
+	
+	public void youWon() {
+		getApplication().pushState(new ResultState("You won!"));
+	}
+	
+	public void youLost() {
+		getApplication().pushState(new ResultState("You lost!"));
+	}
+
 }
+
