@@ -50,6 +50,9 @@ public class GameState extends State implements CommandQueue.Delegate
 		Health.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		Health.setPosition( _cam.getViewWidth() * 0.5f, 0.0f);
 		_scn.attach(Health);
+		
+		Material mat = (Material)getApplication().getAssets().get(R.raw.badaboom_material, Material.class);
+		Font fnt = (Font)getApplication().getAssets().get(R.raw.badaboom_font, Font.class);
 	}
 	
 	@Override
