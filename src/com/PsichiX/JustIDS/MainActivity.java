@@ -32,7 +32,6 @@ public class MainActivity extends XeActivity
 		//obsluga wibracji
 		VibratorUtil.v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		VibratorUtil.v.vibrate(1000);
-
 		
 		// run state
 		app = getApplicationCore();

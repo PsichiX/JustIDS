@@ -19,6 +19,8 @@ public class GameState extends State implements CommandQueue.Delegate
 	private CommandQueue _cmds = new CommandQueue();
 	private float _lastForce = 0.0f;
 	private float _currentForce = 0.0f;
+	private float _maxForce = 0.0f;
+	private boolean _forceRecording = false;
 	private Sprite Mana;
 	private Sprite Health;
 	
@@ -71,10 +73,12 @@ public class GameState extends State implements CommandQueue.Delegate
 		{
 			_lastForce = _currentForce;
 			_currentForce = MathHelper.vecLength(ev.values[0], ev.values[1], ev.values[2]);
-			//Log.d("ACCEL", Float.toString(_currentForce));
-			if(_currentForce > 1.0f && _lastForce <= 1.0f)
+			if(_forceRecording)
+				_maxForce = Math.max(_currentForce, _maxForce);
+			Log.d("ACCEL", Float.toString(_maxForce));
+			if(_currentForce > 20.0f && _lastForce <= 20.0f)
 				_cmds.queueCommand(this, "StartAttack", null);
-			else if(_lastForce > 1.0f && _currentForce <= 1.0f)
+			else if(_lastForce > 20.0f && _currentForce <= 20.0f)
 				_cmds.queueCommand(this, "StopAttack", null);
 		}
 	}
@@ -100,8 +104,17 @@ public class GameState extends State implements CommandQueue.Delegate
 	public void onCommand(Object sender, String cmd, Object data)
 	{
 		if(cmd.equals("StartAttack"))
+		{
 			Log.d("ATTACK", "START");
+			_maxForce = 0.0f;
+			_forceRecording = true;
+		}
 		else if(cmd.equals("StopAttack"))
+		{
 			Log.d("ATTACK", "STOP");
+			// TODO: wysylanie broadcasta
+			_forceRecording = false;
+			_maxForce = 0.0f;
+		}
 	}
 }
