@@ -1,6 +1,5 @@
 package com.PsichiX.JustIDS;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -277,13 +276,13 @@ public class GameStateManager {
 		gameStateEnum = GameStateEnum.IN_GAME;
 	}
 	
-	public void pause() {
+	public synchronized void pause() {
 		paused = true;
 		this.readingThread = null;
 		this.pingThread = null;
 	}
 	
-	public void resume() {
+	public synchronized void resume() {
 		paused = false;
 		readingThread = new ReadingThread();
 		readingThread.start();	
@@ -291,16 +290,20 @@ public class GameStateManager {
 		pingThread.start();	
 	}
 	
-	public void setActive(boolean active) {
+	public synchronized void setActive(boolean active) {
 		this.active = active;
 	}
 	
-	public Collection<PlayerId> getOthers() {
+	public synchronized  Collection<PlayerId> getOthers() {
 		return others.values();
 	}
 
 	public void destroy() {
 		bcm.destroy();
+	}
+	
+	public synchronized GameStateEnum getGameStateEnum() {
+		return gameStateEnum;
 	}
 
 }
