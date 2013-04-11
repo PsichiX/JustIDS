@@ -11,7 +11,7 @@ message PlayerId {
 message PlayerBroadcastInfo {
     enum BroadcastType {
     	STATE = 0;
-    	ATTACK = 0;
+    	ATTACK = 1;
     }
     required BroadcastType type = 1;
 	required PlayerId player_id = 2;

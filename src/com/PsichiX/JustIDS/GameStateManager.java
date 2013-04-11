@@ -1,5 +1,6 @@
 package com.PsichiX.JustIDS;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -62,6 +63,7 @@ public class GameStateManager {
 					continue;
 				}
 				try {
+					Log.d("RCVD:", Arrays.toString(message));
 					PlayerBroadcastInfo pbi = PlayerBroadcastInfo
 							.parseFrom(message);
 					if (gameStateEnum == GameStateEnum.FINISHED) {
@@ -78,9 +80,8 @@ public class GameStateManager {
 							}
 							vibrateOnHit();
 						}
-					} else {
-						Log.i("MSG", "Skipping message : " + pbi);
 					}
+					Log.d("PLAYERS",getOthers().toString());
 					if (isWon()) {
 						gameStateEnum = GameStateEnum.FINISHED;
 						vibrateOnWon();
@@ -108,12 +109,17 @@ public class GameStateManager {
 
 		private boolean shouldICare(PlayerBroadcastInfo pbi) {
 			if (hasFinished()) {
+				Log.i("MSG", "Skipping message (I finished already): " + pbi);
 				return false;
 			}
 			if (DEBUG_SELF_SENDING) {
 				return true;
 			}
-			return !pbi.getPlayerId().getId().equals(playerId.getId());
+			boolean mine = pbi.getPlayerId().getId().equals(playerId.getId());
+			if (mine) {
+				Log.i("MSG", "Skipping message (It's message from self): " + pbi);
+			}
+			return !mine;
 		}
 	}
 
@@ -218,7 +224,9 @@ public class GameStateManager {
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder()
 				.setPlayerId(playerId).setLifePoints(lp)
 				.setType(BroadcastType.STATE).build();
-		this.bcm.sendBroadcast(context, info.toByteArray());
+		byte[] message = info.toByteArray();
+		this.bcm.sendBroadcast(context, message);
+		Log.d("SENT:", Arrays.toString(message));
 	}
 
 	public boolean hasFinished() {
@@ -233,7 +241,9 @@ public class GameStateManager {
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder()
 				.setPlayerId(playerId).setAttackStrength(strength)
 				.setType(BroadcastType.ATTACK).build();
-		this.bcm.sendBroadcast(context, info.toByteArray());
+		byte[] message = info.toByteArray();
+		this.bcm.sendBroadcast(context, message);
+		Log.d("SENT:", Arrays.toString(message));
 	}
 
 	public void iLostTheGame() {

@@ -6,6 +6,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.Arrays;
 
 import android.content.Context;
 import android.net.DhcpInfo;
@@ -71,7 +72,8 @@ public class BroadCastManager {
 		} catch (IOException e) {
 			Log.e("SOCKET", e.getMessage());
 		}
-		return packet.getData();
+		int len = packet.getLength();
+		return Arrays.copyOfRange(packet.getData(), 0, len);
 	}
 	
 }

@@ -10,108 +10,224 @@ public final class PlayerInformation {
   }
   public interface PlayerIdOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
-    
+
     // required string id = 1;
+    /**
+     * <code>required string id = 1;</code>
+     */
     boolean hasId();
-    String getId();
-    
+    /**
+     * <code>required string id = 1;</code>
+     */
+    java.lang.String getId();
+    /**
+     * <code>required string id = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getIdBytes();
+
     // required string name = 2;
+    /**
+     * <code>required string name = 2;</code>
+     */
     boolean hasName();
-    String getName();
+    /**
+     * <code>required string name = 2;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>required string name = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
   }
+  /**
+   * Protobuf type {@code com.PsichiX.JustIDS.PlayerId}
+   */
   public static final class PlayerId extends
       com.google.protobuf.GeneratedMessage
       implements PlayerIdOrBuilder {
     // Use PlayerId.newBuilder() to construct.
-    private PlayerId(Builder builder) {
+    private PlayerId(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private PlayerId(boolean noInit) {}
-    
+    private PlayerId(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final PlayerId defaultInstance;
     public static PlayerId getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public PlayerId getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PlayerId(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              id_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              name_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable;
+      return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.PsichiX.JustIDS.PlayerInformation.PlayerId.class, com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<PlayerId> PARSER =
+        new com.google.protobuf.AbstractParser<PlayerId>() {
+      public PlayerId parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PlayerId(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PlayerId> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
     // required string id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object id_;
+    /**
+     * <code>required string id = 1;</code>
+     */
     public boolean hasId() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public String getId() {
+    /**
+     * <code>required string id = 1;</code>
+     */
+    public java.lang.String getId() {
       java.lang.Object ref = id_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           id_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getIdBytes() {
+    /**
+     * <code>required string id = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIdBytes() {
       java.lang.Object ref = id_;
-      if (ref instanceof String) {
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         id_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
-    
+
     // required string name = 2;
     public static final int NAME_FIELD_NUMBER = 2;
     private java.lang.Object name_;
+    /**
+     * <code>required string name = 2;</code>
+     */
     public boolean hasName() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public String getName() {
+    /**
+     * <code>required string name = 2;</code>
+     */
+    public java.lang.String getName() {
       java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           name_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getNameBytes() {
+    /**
+     * <code>required string name = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
       java.lang.Object ref = name_;
-      if (ref instanceof String) {
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         name_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
-    
+
     private void initFields() {
       id_ = "";
       name_ = "";
@@ -120,7 +236,7 @@ public final class PlayerInformation {
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
-      
+
       if (!hasId()) {
         memoizedIsInitialized = 0;
         return false;
@@ -132,7 +248,7 @@ public final class PlayerInformation {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -144,12 +260,12 @@ public final class PlayerInformation {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -163,94 +279,83 @@ public final class PlayerInformation {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
+
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerId parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(com.PsichiX.JustIDS.PlayerInformation.PlayerId prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code com.PsichiX.JustIDS.PlayerId}
+     */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder {
@@ -258,18 +363,21 @@ public final class PlayerInformation {
           getDescriptor() {
         return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable;
+        return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.PsichiX.JustIDS.PlayerInformation.PlayerId.class, com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder.class);
       }
-      
+
       // Construct using com.PsichiX.JustIDS.PlayerInformation.PlayerId.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -280,7 +388,7 @@ public final class PlayerInformation {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         id_ = "";
@@ -289,20 +397,20 @@ public final class PlayerInformation {
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.PsichiX.JustIDS.PlayerInformation.PlayerId.getDescriptor();
+        return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_descriptor;
       }
-      
+
       public com.PsichiX.JustIDS.PlayerInformation.PlayerId getDefaultInstanceForType() {
         return com.PsichiX.JustIDS.PlayerInformation.PlayerId.getDefaultInstance();
       }
-      
+
       public com.PsichiX.JustIDS.PlayerInformation.PlayerId build() {
         com.PsichiX.JustIDS.PlayerInformation.PlayerId result = buildPartial();
         if (!result.isInitialized()) {
@@ -310,17 +418,7 @@ public final class PlayerInformation {
         }
         return result;
       }
-      
-      private com.PsichiX.JustIDS.PlayerInformation.PlayerId buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        com.PsichiX.JustIDS.PlayerInformation.PlayerId result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
+
       public com.PsichiX.JustIDS.PlayerInformation.PlayerId buildPartial() {
         com.PsichiX.JustIDS.PlayerInformation.PlayerId result = new com.PsichiX.JustIDS.PlayerInformation.PlayerId(this);
         int from_bitField0_ = bitField0_;
@@ -337,7 +435,7 @@ public final class PlayerInformation {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.PsichiX.JustIDS.PlayerInformation.PlayerId) {
           return mergeFrom((com.PsichiX.JustIDS.PlayerInformation.PlayerId)other);
@@ -346,19 +444,23 @@ public final class PlayerInformation {
           return this;
         }
       }
-      
+
       public Builder mergeFrom(com.PsichiX.JustIDS.PlayerInformation.PlayerId other) {
         if (other == com.PsichiX.JustIDS.PlayerInformation.PlayerId.getDefaultInstance()) return this;
         if (other.hasId()) {
-          setId(other.getId());
+          bitField0_ |= 0x00000001;
+          id_ = other.id_;
+          onChanged();
         }
         if (other.hasName()) {
-          setName(other.getName());
+          bitField0_ |= 0x00000002;
+          name_ = other.name_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasId()) {
           
@@ -370,62 +472,69 @@ public final class PlayerInformation {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              id_ = input.readBytes();
-              break;
-            }
-            case 18: {
-              bitField0_ |= 0x00000002;
-              name_ = input.readBytes();
-              break;
-            }
+        com.PsichiX.JustIDS.PlayerInformation.PlayerId parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.PsichiX.JustIDS.PlayerInformation.PlayerId) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
+
       // required string id = 1;
       private java.lang.Object id_ = "";
+      /**
+       * <code>required string id = 1;</code>
+       */
       public boolean hasId() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public String getId() {
+      /**
+       * <code>required string id = 1;</code>
+       */
+      public java.lang.String getId() {
         java.lang.Object ref = id_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           id_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setId(String value) {
+      /**
+       * <code>required string id = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIdBytes() {
+        java.lang.Object ref = id_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          id_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string id = 1;</code>
+       */
+      public Builder setId(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -434,34 +543,72 @@ public final class PlayerInformation {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string id = 1;</code>
+       */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
         id_ = getDefaultInstance().getId();
         onChanged();
         return this;
       }
-      void setId(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000001;
+      /**
+       * <code>required string id = 1;</code>
+       */
+      public Builder setIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         id_ = value;
         onChanged();
+        return this;
       }
-      
+
       // required string name = 2;
       private java.lang.Object name_ = "";
+      /**
+       * <code>required string name = 2;</code>
+       */
       public boolean hasName() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public String getName() {
+      /**
+       * <code>required string name = 2;</code>
+       */
+      public java.lang.String getName() {
         java.lang.Object ref = name_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           name_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setName(String value) {
+      /**
+       * <code>required string name = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string name = 2;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -470,96 +617,262 @@ public final class PlayerInformation {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string name = 2;</code>
+       */
       public Builder clearName() {
         bitField0_ = (bitField0_ & ~0x00000002);
         name_ = getDefaultInstance().getName();
         onChanged();
         return this;
       }
-      void setName(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
+      /**
+       * <code>required string name = 2;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
         name_ = value;
         onChanged();
+        return this;
       }
-      
+
       // @@protoc_insertion_point(builder_scope:com.PsichiX.JustIDS.PlayerId)
     }
-    
+
     static {
       defaultInstance = new PlayerId(true);
       defaultInstance.initFields();
     }
-    
+
     // @@protoc_insertion_point(class_scope:com.PsichiX.JustIDS.PlayerId)
   }
-  
+
   public interface PlayerBroadcastInfoOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
-    
+
     // required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;</code>
+     */
     boolean hasType();
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;</code>
+     */
     com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType getType();
-    
+
     // required .com.PsichiX.JustIDS.PlayerId player_id = 2;
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     */
     boolean hasPlayerId();
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     */
     com.PsichiX.JustIDS.PlayerInformation.PlayerId getPlayerId();
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     */
     com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder getPlayerIdOrBuilder();
-    
+
     // optional double life_points = 3;
+    /**
+     * <code>optional double life_points = 3;</code>
+     *
+     * <pre>
+     * Only if type = STATE
+     * </pre>
+     */
     boolean hasLifePoints();
+    /**
+     * <code>optional double life_points = 3;</code>
+     *
+     * <pre>
+     * Only if type = STATE
+     * </pre>
+     */
     double getLifePoints();
-    
+
     // optional double attack_strength = 4;
+    /**
+     * <code>optional double attack_strength = 4;</code>
+     *
+     * <pre>
+     * Only if type = ATTACK 
+     * </pre>
+     */
     boolean hasAttackStrength();
+    /**
+     * <code>optional double attack_strength = 4;</code>
+     *
+     * <pre>
+     * Only if type = ATTACK 
+     * </pre>
+     */
     double getAttackStrength();
   }
+  /**
+   * Protobuf type {@code com.PsichiX.JustIDS.PlayerBroadcastInfo}
+   */
   public static final class PlayerBroadcastInfo extends
       com.google.protobuf.GeneratedMessage
       implements PlayerBroadcastInfoOrBuilder {
     // Use PlayerBroadcastInfo.newBuilder() to construct.
-    private PlayerBroadcastInfo(Builder builder) {
+    private PlayerBroadcastInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private PlayerBroadcastInfo(boolean noInit) {}
-    
+    private PlayerBroadcastInfo(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final PlayerBroadcastInfo defaultInstance;
     public static PlayerBroadcastInfo getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public PlayerBroadcastInfo getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PlayerBroadcastInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              int rawValue = input.readEnum();
+              com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType value = com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(1, rawValue);
+              } else {
+                bitField0_ |= 0x00000001;
+                type_ = value;
+              }
+              break;
+            }
+            case 18: {
+              com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                subBuilder = playerId_.toBuilder();
+              }
+              playerId_ = input.readMessage(com.PsichiX.JustIDS.PlayerInformation.PlayerId.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(playerId_);
+                playerId_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000002;
+              break;
+            }
+            case 25: {
+              bitField0_ |= 0x00000004;
+              lifePoints_ = input.readDouble();
+              break;
+            }
+            case 33: {
+              bitField0_ |= 0x00000008;
+              attackStrength_ = input.readDouble();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_fieldAccessorTable;
+      return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.class, com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<PlayerBroadcastInfo> PARSER =
+        new com.google.protobuf.AbstractParser<PlayerBroadcastInfo>() {
+      public PlayerBroadcastInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PlayerBroadcastInfo(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PlayerBroadcastInfo> getParserForType() {
+      return PARSER;
+    }
+
+    /**
+     * Protobuf enum {@code com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType}
+     */
     public enum BroadcastType
         implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>STATE = 0;</code>
+       */
       STATE(0, 0),
+      /**
+       * <code>ATTACK = 1;</code>
+       */
+      ATTACK(1, 1),
       ;
-      
-      public static final BroadcastType ATTACK = STATE;
+
+      /**
+       * <code>STATE = 0;</code>
+       */
       public static final int STATE_VALUE = 0;
-      public static final int ATTACK_VALUE = 0;
-      
-      
+      /**
+       * <code>ATTACK = 1;</code>
+       */
+      public static final int ATTACK_VALUE = 1;
+
+
       public final int getNumber() { return value; }
-      
+
       public static BroadcastType valueOf(int value) {
         switch (value) {
           case 0: return STATE;
+          case 1: return ATTACK;
           default: return null;
         }
       }
-      
+
       public static com.google.protobuf.Internal.EnumLiteMap<BroadcastType>
           internalGetValueMap() {
         return internalValueMap;
@@ -571,7 +884,7 @@ public final class PlayerInformation {
                 return BroadcastType.valueOf(number);
               }
             };
-      
+
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
           getValueDescriptor() {
         return getDescriptor().getValues().get(index);
@@ -584,11 +897,9 @@ public final class PlayerInformation {
           getDescriptor() {
         return com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.getDescriptor().getEnumTypes().get(0);
       }
-      
-      private static final BroadcastType[] VALUES = {
-        STATE, ATTACK, 
-      };
-      
+
+      private static final BroadcastType[] VALUES = values();
+
       public static BroadcastType valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
@@ -597,62 +908,105 @@ public final class PlayerInformation {
         }
         return VALUES[desc.getIndex()];
       }
-      
+
       private final int index;
       private final int value;
-      
+
       private BroadcastType(int index, int value) {
         this.index = index;
         this.value = value;
       }
-      
+
       // @@protoc_insertion_point(enum_scope:com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType)
     }
-    
+
     private int bitField0_;
     // required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;
     public static final int TYPE_FIELD_NUMBER = 1;
     private com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType type_;
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;</code>
+     */
     public boolean hasType() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;</code>
+     */
     public com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType getType() {
       return type_;
     }
-    
+
     // required .com.PsichiX.JustIDS.PlayerId player_id = 2;
     public static final int PLAYER_ID_FIELD_NUMBER = 2;
     private com.PsichiX.JustIDS.PlayerInformation.PlayerId playerId_;
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     */
     public boolean hasPlayerId() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     */
     public com.PsichiX.JustIDS.PlayerInformation.PlayerId getPlayerId() {
       return playerId_;
     }
+    /**
+     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     */
     public com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder getPlayerIdOrBuilder() {
       return playerId_;
     }
-    
+
     // optional double life_points = 3;
     public static final int LIFE_POINTS_FIELD_NUMBER = 3;
     private double lifePoints_;
+    /**
+     * <code>optional double life_points = 3;</code>
+     *
+     * <pre>
+     * Only if type = STATE
+     * </pre>
+     */
     public boolean hasLifePoints() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
+    /**
+     * <code>optional double life_points = 3;</code>
+     *
+     * <pre>
+     * Only if type = STATE
+     * </pre>
+     */
     public double getLifePoints() {
       return lifePoints_;
     }
-    
+
     // optional double attack_strength = 4;
     public static final int ATTACK_STRENGTH_FIELD_NUMBER = 4;
     private double attackStrength_;
+    /**
+     * <code>optional double attack_strength = 4;</code>
+     *
+     * <pre>
+     * Only if type = ATTACK 
+     * </pre>
+     */
     public boolean hasAttackStrength() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
+    /**
+     * <code>optional double attack_strength = 4;</code>
+     *
+     * <pre>
+     * Only if type = ATTACK 
+     * </pre>
+     */
     public double getAttackStrength() {
       return attackStrength_;
     }
-    
+
     private void initFields() {
       type_ = com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType.STATE;
       playerId_ = com.PsichiX.JustIDS.PlayerInformation.PlayerId.getDefaultInstance();
@@ -663,7 +1017,7 @@ public final class PlayerInformation {
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
-      
+
       if (!hasType()) {
         memoizedIsInitialized = 0;
         return false;
@@ -679,7 +1033,7 @@ public final class PlayerInformation {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -697,12 +1051,12 @@ public final class PlayerInformation {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -724,94 +1078,83 @@ public final class PlayerInformation {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
+
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code com.PsichiX.JustIDS.PlayerBroadcastInfo}
+     */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfoOrBuilder {
@@ -819,18 +1162,21 @@ public final class PlayerInformation {
           getDescriptor() {
         return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_fieldAccessorTable;
+        return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.class, com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.Builder.class);
       }
-      
+
       // Construct using com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -842,7 +1188,7 @@ public final class PlayerInformation {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         type_ = com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType.STATE;
@@ -859,20 +1205,20 @@ public final class PlayerInformation {
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.getDescriptor();
+        return com.PsichiX.JustIDS.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_descriptor;
       }
-      
+
       public com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo getDefaultInstanceForType() {
         return com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.getDefaultInstance();
       }
-      
+
       public com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo build() {
         com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -880,17 +1226,7 @@ public final class PlayerInformation {
         }
         return result;
       }
-      
-      private com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
+
       public com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo buildPartial() {
         com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo result = new com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo(this);
         int from_bitField0_ = bitField0_;
@@ -919,7 +1255,7 @@ public final class PlayerInformation {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo) {
           return mergeFrom((com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo)other);
@@ -928,7 +1264,7 @@ public final class PlayerInformation {
           return this;
         }
       }
-      
+
       public Builder mergeFrom(com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo other) {
         if (other == com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.getDefaultInstance()) return this;
         if (other.hasType()) {
@@ -946,7 +1282,7 @@ public final class PlayerInformation {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasType()) {
           
@@ -962,74 +1298,43 @@ public final class PlayerInformation {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 8: {
-              int rawValue = input.readEnum();
-              com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType value = com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(1, rawValue);
-              } else {
-                bitField0_ |= 0x00000001;
-                type_ = value;
-              }
-              break;
-            }
-            case 18: {
-              com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder subBuilder = com.PsichiX.JustIDS.PlayerInformation.PlayerId.newBuilder();
-              if (hasPlayerId()) {
-                subBuilder.mergeFrom(getPlayerId());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setPlayerId(subBuilder.buildPartial());
-              break;
-            }
-            case 25: {
-              bitField0_ |= 0x00000004;
-              lifePoints_ = input.readDouble();
-              break;
-            }
-            case 33: {
-              bitField0_ |= 0x00000008;
-              attackStrength_ = input.readDouble();
-              break;
-            }
+        com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
+
       // required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;
       private com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType type_ = com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType.STATE;
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;</code>
+       */
       public boolean hasType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;</code>
+       */
       public com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType getType() {
         return type_;
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;</code>
+       */
       public Builder setType(com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType value) {
         if (value == null) {
           throw new NullPointerException();
@@ -1039,20 +1344,29 @@ public final class PlayerInformation {
         onChanged();
         return this;
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerBroadcastInfo.BroadcastType type = 1;</code>
+       */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
         type_ = com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType.STATE;
         onChanged();
         return this;
       }
-      
+
       // required .com.PsichiX.JustIDS.PlayerId player_id = 2;
       private com.PsichiX.JustIDS.PlayerInformation.PlayerId playerId_ = com.PsichiX.JustIDS.PlayerInformation.PlayerId.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.PsichiX.JustIDS.PlayerInformation.PlayerId, com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder> playerIdBuilder_;
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       */
       public boolean hasPlayerId() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       */
       public com.PsichiX.JustIDS.PlayerInformation.PlayerId getPlayerId() {
         if (playerIdBuilder_ == null) {
           return playerId_;
@@ -1060,6 +1374,9 @@ public final class PlayerInformation {
           return playerIdBuilder_.getMessage();
         }
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       */
       public Builder setPlayerId(com.PsichiX.JustIDS.PlayerInformation.PlayerId value) {
         if (playerIdBuilder_ == null) {
           if (value == null) {
@@ -1073,6 +1390,9 @@ public final class PlayerInformation {
         bitField0_ |= 0x00000002;
         return this;
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       */
       public Builder setPlayerId(
           com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder builderForValue) {
         if (playerIdBuilder_ == null) {
@@ -1084,6 +1404,9 @@ public final class PlayerInformation {
         bitField0_ |= 0x00000002;
         return this;
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       */
       public Builder mergePlayerId(com.PsichiX.JustIDS.PlayerInformation.PlayerId value) {
         if (playerIdBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
@@ -1100,6 +1423,9 @@ public final class PlayerInformation {
         bitField0_ |= 0x00000002;
         return this;
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       */
       public Builder clearPlayerId() {
         if (playerIdBuilder_ == null) {
           playerId_ = com.PsichiX.JustIDS.PlayerInformation.PlayerId.getDefaultInstance();
@@ -1110,11 +1436,17 @@ public final class PlayerInformation {
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       */
       public com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder getPlayerIdBuilder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getPlayerIdFieldBuilder().getBuilder();
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       */
       public com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder getPlayerIdOrBuilder() {
         if (playerIdBuilder_ != null) {
           return playerIdBuilder_.getMessageOrBuilder();
@@ -1122,6 +1454,9 @@ public final class PlayerInformation {
           return playerId_;
         }
       }
+      /**
+       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
           com.PsichiX.JustIDS.PlayerInformation.PlayerId, com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder> 
           getPlayerIdFieldBuilder() {
@@ -1135,60 +1470,116 @@ public final class PlayerInformation {
         }
         return playerIdBuilder_;
       }
-      
+
       // optional double life_points = 3;
       private double lifePoints_ ;
+      /**
+       * <code>optional double life_points = 3;</code>
+       *
+       * <pre>
+       * Only if type = STATE
+       * </pre>
+       */
       public boolean hasLifePoints() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
+      /**
+       * <code>optional double life_points = 3;</code>
+       *
+       * <pre>
+       * Only if type = STATE
+       * </pre>
+       */
       public double getLifePoints() {
         return lifePoints_;
       }
+      /**
+       * <code>optional double life_points = 3;</code>
+       *
+       * <pre>
+       * Only if type = STATE
+       * </pre>
+       */
       public Builder setLifePoints(double value) {
         bitField0_ |= 0x00000004;
         lifePoints_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>optional double life_points = 3;</code>
+       *
+       * <pre>
+       * Only if type = STATE
+       * </pre>
+       */
       public Builder clearLifePoints() {
         bitField0_ = (bitField0_ & ~0x00000004);
         lifePoints_ = 0D;
         onChanged();
         return this;
       }
-      
+
       // optional double attack_strength = 4;
       private double attackStrength_ ;
+      /**
+       * <code>optional double attack_strength = 4;</code>
+       *
+       * <pre>
+       * Only if type = ATTACK 
+       * </pre>
+       */
       public boolean hasAttackStrength() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
+      /**
+       * <code>optional double attack_strength = 4;</code>
+       *
+       * <pre>
+       * Only if type = ATTACK 
+       * </pre>
+       */
       public double getAttackStrength() {
         return attackStrength_;
       }
+      /**
+       * <code>optional double attack_strength = 4;</code>
+       *
+       * <pre>
+       * Only if type = ATTACK 
+       * </pre>
+       */
       public Builder setAttackStrength(double value) {
         bitField0_ |= 0x00000008;
         attackStrength_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>optional double attack_strength = 4;</code>
+       *
+       * <pre>
+       * Only if type = ATTACK 
+       * </pre>
+       */
       public Builder clearAttackStrength() {
         bitField0_ = (bitField0_ & ~0x00000008);
         attackStrength_ = 0D;
         onChanged();
         return this;
       }
-      
+
       // @@protoc_insertion_point(builder_scope:com.PsichiX.JustIDS.PlayerBroadcastInfo)
     }
-    
+
     static {
       defaultInstance = new PlayerBroadcastInfo(true);
       defaultInstance.initFields();
     }
-    
+
     // @@protoc_insertion_point(class_scope:com.PsichiX.JustIDS.PlayerBroadcastInfo)
   }
-  
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_PsichiX_JustIDS_PlayerId_descriptor;
   private static
@@ -1199,7 +1590,7 @@ public final class PlayerInformation {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_fieldAccessorTable;
-  
+
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
@@ -1216,7 +1607,7 @@ public final class PlayerInformation {
       "r_id\030\002 \002(\0132\035.com.PsichiX.JustIDS.PlayerI" +
       "d\022\023\n\013life_points\030\003 \001(\001\022\027\n\017attack_strengt" +
       "h\030\004 \001(\001\"&\n\rBroadcastType\022\t\n\005STATE\020\000\022\n\n\006A" +
-      "TTACK\020\000B(\n\023com.PsichiX.JustIDSB\021PlayerIn" +
+      "TTACK\020\001B(\n\023com.PsichiX.JustIDSB\021PlayerIn" +
       "formation"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
@@ -1229,17 +1620,13 @@ public final class PlayerInformation {
           internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_PsichiX_JustIDS_PlayerId_descriptor,
-              new java.lang.String[] { "Id", "Name", },
-              com.PsichiX.JustIDS.PlayerInformation.PlayerId.class,
-              com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder.class);
+              new java.lang.String[] { "Id", "Name", });
           internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_descriptor,
-              new java.lang.String[] { "Type", "PlayerId", "LifePoints", "AttackStrength", },
-              com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.class,
-              com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.Builder.class);
+              new java.lang.String[] { "Type", "PlayerId", "LifePoints", "AttackStrength", });
           return null;
         }
       };
@@ -1248,6 +1635,6 @@ public final class PlayerInformation {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
   }
-  
+
   // @@protoc_insertion_point(outer_class_scope)
 }
