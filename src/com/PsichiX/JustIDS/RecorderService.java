@@ -71,4 +71,10 @@ public class RecorderService {
 		};
         cdt.start();
     }
+
+	public void stopRecording() {
+		mRecorder.reset();
+		mRecorder.release();
+		cdt.cancel();
+	}
 }

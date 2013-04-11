@@ -29,7 +29,7 @@ public class MainActivity extends XeActivity
 		String name = "USER NAME"; //TODO: Get the name from the user
 		boolean active = true; // TODO: set it to false in case we are only observer
 		
-		gsm = new GameStateManager(this, new BroadCastManager(), name, active);
+		gsm = new GameStateManager(this, name, active);
 		final GameState gs = new GameState(gsm);
 		gsm.setSomethingChangedListener(new Runnable() {
 			@Override
@@ -90,6 +90,12 @@ public class MainActivity extends XeActivity
 		gsm.resume();
 	}
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		gsm.destroy();
+		rs.stopRecording();
+	}
 //	@Override
 //	public void onBackPressed() {
 //		this.finish();

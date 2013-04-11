@@ -27,7 +27,7 @@ public class UDPActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_udp);
 		String name = "NAME: " + Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
-		gsm = new GameStateManager(this, new BroadCastManager(), name, true);
+		gsm = new GameStateManager(this, name, true);
 		button10 = (Button) findViewById(R.id.button1);
 		button10.setOnClickListener(new OnClickListener() {
 			@Override

@@ -28,6 +28,7 @@ public class BroadCastManager {
 			socket.setSoTimeout(200);
 		} catch (SocketException e) {
 			Log.e("SOCKET", e.getMessage());
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -74,6 +75,10 @@ public class BroadCastManager {
 		}
 		int len = packet.getLength();
 		return Arrays.copyOfRange(packet.getData(), 0, len);
+	}
+
+	public void destroy() {
+		socket.close();
 	}
 	
 }

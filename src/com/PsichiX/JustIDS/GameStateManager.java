@@ -174,9 +174,8 @@ public class GameStateManager {
 
 	private FinishedThread finishedThread;
 
-	public GameStateManager(Context context, BroadCastManager bcm, String name,
-			boolean active) {
-		this.bcm = bcm;
+	public GameStateManager(Context context, String name,boolean active) {
+		this.bcm = new BroadCastManager();
 		this.active = active;
 		String android_id = Secure.getString(context.getContentResolver(),
 				Secure.ANDROID_ID);
@@ -299,6 +298,10 @@ public class GameStateManager {
 	
 	public Collection<PlayerBroadcastInfo> getOthers() {
 		return others.values();
+	}
+
+	public void destroy() {
+		bcm.destroy();
 	}
 
 }
