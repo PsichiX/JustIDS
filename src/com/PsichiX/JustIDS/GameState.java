@@ -57,6 +57,10 @@ public class GameState extends State implements CommandQueue.Delegate
 		getApplication().getAssets().get(R.raw.badaboom_font, Font.class);
 		
 		getApplication().getPhoton().getRenderer().setClearBackground(true, 0.0f, 0.0f, 0.0f, 1.0f);
+		
+		// TODO: This should only be called after the list of players is displayed to the user
+		// And the user decides to start the game
+		gsm.startGame();
 	}
 	
 	@Override

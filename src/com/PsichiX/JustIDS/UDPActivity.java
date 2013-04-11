@@ -1,6 +1,7 @@
 package com.PsichiX.JustIDS;
 
 import android.os.Bundle;
+import android.provider.Settings.Secure;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.util.Log;
@@ -25,7 +26,8 @@ public class UDPActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_udp);
-		gsm = new GameStateManager(this, new BroadCastManager());
+		String name = "NAME: " + Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
+		gsm = new GameStateManager(this, new BroadCastManager(), name, true);
 		button10 = (Button) findViewById(R.id.button1);
 		button10.setOnClickListener(new OnClickListener() {
 			@Override

@@ -1,0 +1,21 @@
+package com.PsichiX.JustIDS;
+
+option java_package = "com.PsichiX.JustIDS";
+option java_outer_classname = "PlayerInformation";
+
+message PlayerId {
+	required string id = 1;
+	required string name = 2;
+}
+
+message PlayerBroadcastInfo {
+    enum BroadcastType {
+    	STATE = 0;
+    	ATTACK = 0;
+    }
+    required BroadcastType type = 1;
+	required PlayerId player_id = 2;
+	optional double life_points = 3; // Only if type = STATE
+	optional double attack_strength = 4; // Only if type = ATTACK 
+}
+

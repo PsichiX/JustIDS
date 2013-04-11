@@ -1,6 +1,7 @@
 package com.PsichiX.JustIDS;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -23,6 +24,7 @@ public class BroadCastManager {
 		try {
 			Log.i("INFO", "Opening datagram socket");
 			socket = new DatagramSocket(PORT);
+			socket.setSoTimeout(200);
 		} catch (SocketException e) {
 			Log.e("SOCKET", e.getMessage());
 		}
@@ -63,6 +65,9 @@ public class BroadCastManager {
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		try {
 			socket.receive(packet);
+		} catch (InterruptedIOException ioe) {
+			Log.i("SOCKET", "Timeout");
+			return null;
 		} catch (IOException e) {
 			Log.e("SOCKET", e.getMessage());
 		}

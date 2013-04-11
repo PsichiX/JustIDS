@@ -26,8 +26,10 @@ public class MainActivity extends XeActivity
 		// create application
 		super.onCreate(savedInstanceState);
 		
+		String name = "USER NAME"; //TODO: Get the name from the user
+		boolean active = true; // TODO: set it to false in case we are only observer
 		
-		gsm = new GameStateManager(this, new BroadCastManager());
+		gsm = new GameStateManager(this, new BroadCastManager(), name, active);
 		final GameState gs = new GameState(gsm);
 		gsm.setSomethingChangedListener(new Runnable() {
 			@Override
@@ -74,6 +76,18 @@ public class MainActivity extends XeActivity
 		getApplicationCore().run(gs);
 		
 		//startActivity(new Intent(this, AudioRecordTest.class));
+	}
+	
+	@Override
+	protected void onPause() {
+		gsm.pause();
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		gsm.resume();
 	}
 	
 //	@Override

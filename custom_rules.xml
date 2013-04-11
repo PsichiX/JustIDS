@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="custom">
+    <target name="-pre-build">
+        <exec executable="protoc">
+        	<arg value="-I=${basedir}/src"/>
+    	    <arg value="--java_out=${basedir}/src"/>
+    	    <arg value="${basedir}/src/com/PsichiX/JustIDS/playerInfo.proto"/>
+        </exec>
+    </target>
+</project>
