@@ -72,7 +72,7 @@ public class GameStateManager {
 					if (shouldICare(pbi)) {
 						Log.i("MSG", "Received message: " + pbi);
 						if (pbi.getType() == BroadcastType.STATE) {
-							others.put(pbi.getPlayerId().getId(), pbi);
+							others.put(pbi.getPlayerId().getId(), pbi.getPlayerId());
 						} else if (isAttackSuccessfull(pbi)) { 
 							decreaseLifePointsOfMine(pbi.getAttackStrength());
 							if (hitListener != null) {
@@ -115,7 +115,7 @@ public class GameStateManager {
 			if (DEBUG_SELF_SENDING) {
 				return true;
 			}
-			boolean mine = pbi.getPlayerId().getId().equals(playerId.getId());
+			boolean mine = pbi.getPlayerId().getId().equals(android_id);
 			if (mine) {
 				Log.i("MSG", "Skipping message (It's message from self): " + pbi);
 			}
@@ -128,7 +128,7 @@ public class GameStateManager {
 	private boolean DEBUG_SELF_SENDING = false;
 
 	private volatile double lifePointsOfMine;
-	private HashMap<String, PlayerBroadcastInfo> others = new HashMap<String, PlayerBroadcastInfo>();
+	private HashMap<String, PlayerId> others = new HashMap<String, PlayerId>();
 
 	public double getLifePointsOfMine() {
 		return lifePointsOfMine;
@@ -143,7 +143,7 @@ public class GameStateManager {
 			if (others.keySet().size() == 0) {
 				return false;
 			}
-			for (PlayerBroadcastInfo value : others.values()) {
+			for (PlayerId value : others.values()) {
 				if (value.getLifePoints() > MIN_LIFE_POINTS) {
 					return false;
 				}
@@ -166,27 +166,34 @@ public class GameStateManager {
 
 	private Runnable lostListener;
 
-	private PlayerId playerId;
-
 	private boolean paused;
 	
 	private boolean active;
 
 	private FinishedThread finishedThread;
 
+	private String android_id;
+
+	private String name;
+
 	public GameStateManager(Context context, String name,boolean active) {
 		this.bcm = new BroadCastManager();
+		this.name = name;
 		this.active = active;
-		String android_id = Secure.getString(context.getContentResolver(),
-				Secure.ANDROID_ID);
-		this.playerId = PlayerId.newBuilder().setId(android_id).setName(name)
-				.build();
+		this.android_id = Secure.getString(context.getContentResolver(),Secure.ANDROID_ID);
 		this.context = context;
 		this.vibratorUtil = new VibratorUtil(context);
 		resetGame();
 		resume();
 	}
 
+	private PlayerId getPlayerId() {
+		return PlayerId.newBuilder().
+				setId(android_id).
+				setName(name).
+				setLifePoints(lifePointsOfMine).
+				build();
+	}
 	private boolean isAttackSuccessfull(PlayerBroadcastInfo pbi) {
 		return gameStateEnum == GameStateEnum.IN_GAME && pbi.getAttackStrength() > 0.01 && active;
 	}
@@ -220,8 +227,9 @@ public class GameStateManager {
 		if (!active) {
 			return;
 		}
+		
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder()
-				.setPlayerId(playerId).setLifePoints(lp)
+				.setPlayerId(getPlayerId())
 				.setType(BroadcastType.STATE).build();
 		byte[] message = info.toByteArray();
 		this.bcm.sendBroadcast(context, message);
@@ -238,7 +246,7 @@ public class GameStateManager {
 			return;
 		}
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder()
-				.setPlayerId(playerId).setAttackStrength(strength)
+				.setPlayerId(getPlayerId()).setAttackStrength(strength)
 				.setType(BroadcastType.ATTACK).build();
 		byte[] message = info.toByteArray();
 		this.bcm.sendBroadcast(context, message);
@@ -296,7 +304,7 @@ public class GameStateManager {
 		this.active = active;
 	}
 	
-	public Collection<PlayerBroadcastInfo> getOthers() {
+	public Collection<PlayerId> getOthers() {
 		return others.values();
 	}
 

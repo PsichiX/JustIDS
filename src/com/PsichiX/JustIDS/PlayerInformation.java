@@ -40,6 +40,41 @@ public final class PlayerInformation {
      */
     com.google.protobuf.ByteString
         getNameBytes();
+
+    // required double life_points = 3;
+    /**
+     * <code>required double life_points = 3;</code>
+     */
+    boolean hasLifePoints();
+    /**
+     * <code>required double life_points = 3;</code>
+     */
+    double getLifePoints();
+
+    // required int32 seconds_in_game = 5;
+    /**
+     * <code>required int32 seconds_in_game = 5;</code>
+     */
+    boolean hasSecondsInGame();
+    /**
+     * <code>required int32 seconds_in_game = 5;</code>
+     */
+    int getSecondsInGame();
+
+    // optional string ip_address = 4;
+    /**
+     * <code>optional string ip_address = 4;</code>
+     */
+    boolean hasIpAddress();
+    /**
+     * <code>optional string ip_address = 4;</code>
+     */
+    java.lang.String getIpAddress();
+    /**
+     * <code>optional string ip_address = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getIpAddressBytes();
   }
   /**
    * Protobuf type {@code com.PsichiX.JustIDS.PlayerId}
@@ -100,6 +135,21 @@ public final class PlayerInformation {
             case 18: {
               bitField0_ |= 0x00000002;
               name_ = input.readBytes();
+              break;
+            }
+            case 25: {
+              bitField0_ |= 0x00000004;
+              lifePoints_ = input.readDouble();
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000010;
+              ipAddress_ = input.readBytes();
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000008;
+              secondsInGame_ = input.readInt32();
               break;
             }
           }
@@ -228,9 +278,87 @@ public final class PlayerInformation {
       }
     }
 
+    // required double life_points = 3;
+    public static final int LIFE_POINTS_FIELD_NUMBER = 3;
+    private double lifePoints_;
+    /**
+     * <code>required double life_points = 3;</code>
+     */
+    public boolean hasLifePoints() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required double life_points = 3;</code>
+     */
+    public double getLifePoints() {
+      return lifePoints_;
+    }
+
+    // required int32 seconds_in_game = 5;
+    public static final int SECONDS_IN_GAME_FIELD_NUMBER = 5;
+    private int secondsInGame_;
+    /**
+     * <code>required int32 seconds_in_game = 5;</code>
+     */
+    public boolean hasSecondsInGame() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 seconds_in_game = 5;</code>
+     */
+    public int getSecondsInGame() {
+      return secondsInGame_;
+    }
+
+    // optional string ip_address = 4;
+    public static final int IP_ADDRESS_FIELD_NUMBER = 4;
+    private java.lang.Object ipAddress_;
+    /**
+     * <code>optional string ip_address = 4;</code>
+     */
+    public boolean hasIpAddress() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional string ip_address = 4;</code>
+     */
+    public java.lang.String getIpAddress() {
+      java.lang.Object ref = ipAddress_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          ipAddress_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string ip_address = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIpAddressBytes() {
+      java.lang.Object ref = ipAddress_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        ipAddress_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       id_ = "";
       name_ = "";
+      lifePoints_ = 0D;
+      secondsInGame_ = 0;
+      ipAddress_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -242,6 +370,14 @@ public final class PlayerInformation {
         return false;
       }
       if (!hasName()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasLifePoints()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasSecondsInGame()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -257,6 +393,15 @@ public final class PlayerInformation {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, getNameBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeDouble(3, lifePoints_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(4, getIpAddressBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(5, secondsInGame_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -274,6 +419,18 @@ public final class PlayerInformation {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, getNameBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(3, lifePoints_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getIpAddressBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, secondsInGame_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -395,6 +552,12 @@ public final class PlayerInformation {
         bitField0_ = (bitField0_ & ~0x00000001);
         name_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
+        lifePoints_ = 0D;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        secondsInGame_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        ipAddress_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -431,6 +594,18 @@ public final class PlayerInformation {
           to_bitField0_ |= 0x00000002;
         }
         result.name_ = name_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.lifePoints_ = lifePoints_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.secondsInGame_ = secondsInGame_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.ipAddress_ = ipAddress_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -457,6 +632,17 @@ public final class PlayerInformation {
           name_ = other.name_;
           onChanged();
         }
+        if (other.hasLifePoints()) {
+          setLifePoints(other.getLifePoints());
+        }
+        if (other.hasSecondsInGame()) {
+          setSecondsInGame(other.getSecondsInGame());
+        }
+        if (other.hasIpAddress()) {
+          bitField0_ |= 0x00000010;
+          ipAddress_ = other.ipAddress_;
+          onChanged();
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -467,6 +653,14 @@ public final class PlayerInformation {
           return false;
         }
         if (!hasName()) {
+          
+          return false;
+        }
+        if (!hasLifePoints()) {
+          
+          return false;
+        }
+        if (!hasSecondsInGame()) {
           
           return false;
         }
@@ -640,6 +834,146 @@ public final class PlayerInformation {
         return this;
       }
 
+      // required double life_points = 3;
+      private double lifePoints_ ;
+      /**
+       * <code>required double life_points = 3;</code>
+       */
+      public boolean hasLifePoints() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required double life_points = 3;</code>
+       */
+      public double getLifePoints() {
+        return lifePoints_;
+      }
+      /**
+       * <code>required double life_points = 3;</code>
+       */
+      public Builder setLifePoints(double value) {
+        bitField0_ |= 0x00000004;
+        lifePoints_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required double life_points = 3;</code>
+       */
+      public Builder clearLifePoints() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        lifePoints_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      // required int32 seconds_in_game = 5;
+      private int secondsInGame_ ;
+      /**
+       * <code>required int32 seconds_in_game = 5;</code>
+       */
+      public boolean hasSecondsInGame() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 seconds_in_game = 5;</code>
+       */
+      public int getSecondsInGame() {
+        return secondsInGame_;
+      }
+      /**
+       * <code>required int32 seconds_in_game = 5;</code>
+       */
+      public Builder setSecondsInGame(int value) {
+        bitField0_ |= 0x00000008;
+        secondsInGame_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 seconds_in_game = 5;</code>
+       */
+      public Builder clearSecondsInGame() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        secondsInGame_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // optional string ip_address = 4;
+      private java.lang.Object ipAddress_ = "";
+      /**
+       * <code>optional string ip_address = 4;</code>
+       */
+      public boolean hasIpAddress() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional string ip_address = 4;</code>
+       */
+      public java.lang.String getIpAddress() {
+        java.lang.Object ref = ipAddress_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          ipAddress_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string ip_address = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIpAddressBytes() {
+        java.lang.Object ref = ipAddress_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          ipAddress_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string ip_address = 4;</code>
+       */
+      public Builder setIpAddress(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        ipAddress_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string ip_address = 4;</code>
+       */
+      public Builder clearIpAddress() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        ipAddress_ = getDefaultInstance().getIpAddress();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string ip_address = 4;</code>
+       */
+      public Builder setIpAddressBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        ipAddress_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:com.PsichiX.JustIDS.PlayerId)
     }
 
@@ -678,24 +1012,6 @@ public final class PlayerInformation {
      */
     com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder getPlayerIdOrBuilder();
 
-    // optional double life_points = 3;
-    /**
-     * <code>optional double life_points = 3;</code>
-     *
-     * <pre>
-     * Only if type = STATE
-     * </pre>
-     */
-    boolean hasLifePoints();
-    /**
-     * <code>optional double life_points = 3;</code>
-     *
-     * <pre>
-     * Only if type = STATE
-     * </pre>
-     */
-    double getLifePoints();
-
     // optional double attack_strength = 4;
     /**
      * <code>optional double attack_strength = 4;</code>
@@ -713,6 +1029,51 @@ public final class PlayerInformation {
      * </pre>
      */
     double getAttackStrength();
+
+    // repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    java.util.List<com.PsichiX.JustIDS.PlayerInformation.PlayerId> 
+        getAllPlayersList();
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    com.PsichiX.JustIDS.PlayerInformation.PlayerId getAllPlayers(int index);
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    int getAllPlayersCount();
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    java.util.List<? extends com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder> 
+        getAllPlayersOrBuilderList();
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder getAllPlayersOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code com.PsichiX.JustIDS.PlayerBroadcastInfo}
@@ -789,14 +1150,17 @@ public final class PlayerInformation {
               bitField0_ |= 0x00000002;
               break;
             }
-            case 25: {
+            case 33: {
               bitField0_ |= 0x00000004;
-              lifePoints_ = input.readDouble();
+              attackStrength_ = input.readDouble();
               break;
             }
-            case 33: {
-              bitField0_ |= 0x00000008;
-              attackStrength_ = input.readDouble();
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                allPlayers_ = new java.util.ArrayList<com.PsichiX.JustIDS.PlayerInformation.PlayerId>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              allPlayers_.add(input.readMessage(com.PsichiX.JustIDS.PlayerInformation.PlayerId.PARSER, extensionRegistry));
               break;
             }
           }
@@ -807,6 +1171,9 @@ public final class PlayerInformation {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          allPlayers_ = java.util.Collections.unmodifiableList(allPlayers_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -851,6 +1218,14 @@ public final class PlayerInformation {
        * <code>ATTACK = 1;</code>
        */
       ATTACK(1, 1),
+      /**
+       * <code>IWON = 2;</code>
+       */
+      IWON(2, 2),
+      /**
+       * <code>GAME_INFO = 3;</code>
+       */
+      GAME_INFO(3, 3),
       ;
 
       /**
@@ -861,6 +1236,14 @@ public final class PlayerInformation {
        * <code>ATTACK = 1;</code>
        */
       public static final int ATTACK_VALUE = 1;
+      /**
+       * <code>IWON = 2;</code>
+       */
+      public static final int IWON_VALUE = 2;
+      /**
+       * <code>GAME_INFO = 3;</code>
+       */
+      public static final int GAME_INFO_VALUE = 3;
 
 
       public final int getNumber() { return value; }
@@ -869,6 +1252,8 @@ public final class PlayerInformation {
         switch (value) {
           case 0: return STATE;
           case 1: return ATTACK;
+          case 2: return IWON;
+          case 3: return GAME_INFO;
           default: return null;
         }
       }
@@ -959,30 +1344,6 @@ public final class PlayerInformation {
       return playerId_;
     }
 
-    // optional double life_points = 3;
-    public static final int LIFE_POINTS_FIELD_NUMBER = 3;
-    private double lifePoints_;
-    /**
-     * <code>optional double life_points = 3;</code>
-     *
-     * <pre>
-     * Only if type = STATE
-     * </pre>
-     */
-    public boolean hasLifePoints() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>optional double life_points = 3;</code>
-     *
-     * <pre>
-     * Only if type = STATE
-     * </pre>
-     */
-    public double getLifePoints() {
-      return lifePoints_;
-    }
-
     // optional double attack_strength = 4;
     public static final int ATTACK_STRENGTH_FIELD_NUMBER = 4;
     private double attackStrength_;
@@ -994,7 +1355,7 @@ public final class PlayerInformation {
      * </pre>
      */
     public boolean hasAttackStrength() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>optional double attack_strength = 4;</code>
@@ -1007,11 +1368,67 @@ public final class PlayerInformation {
       return attackStrength_;
     }
 
+    // repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;
+    public static final int ALL_PLAYERS_FIELD_NUMBER = 5;
+    private java.util.List<com.PsichiX.JustIDS.PlayerInformation.PlayerId> allPlayers_;
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    public java.util.List<com.PsichiX.JustIDS.PlayerInformation.PlayerId> getAllPlayersList() {
+      return allPlayers_;
+    }
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    public java.util.List<? extends com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder> 
+        getAllPlayersOrBuilderList() {
+      return allPlayers_;
+    }
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    public int getAllPlayersCount() {
+      return allPlayers_.size();
+    }
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    public com.PsichiX.JustIDS.PlayerInformation.PlayerId getAllPlayers(int index) {
+      return allPlayers_.get(index);
+    }
+    /**
+     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+     *
+     * <pre>
+     * Only if type = GAME_INFO
+     * </pre>
+     */
+    public com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder getAllPlayersOrBuilder(
+        int index) {
+      return allPlayers_.get(index);
+    }
+
     private void initFields() {
       type_ = com.PsichiX.JustIDS.PlayerInformation.PlayerBroadcastInfo.BroadcastType.STATE;
       playerId_ = com.PsichiX.JustIDS.PlayerInformation.PlayerId.getDefaultInstance();
-      lifePoints_ = 0D;
       attackStrength_ = 0D;
+      allPlayers_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1030,6 +1447,12 @@ public final class PlayerInformation {
         memoizedIsInitialized = 0;
         return false;
       }
+      for (int i = 0; i < getAllPlayersCount(); i++) {
+        if (!getAllPlayers(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -1044,10 +1467,10 @@ public final class PlayerInformation {
         output.writeMessage(2, playerId_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeDouble(3, lifePoints_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeDouble(4, attackStrength_);
+      }
+      for (int i = 0; i < allPlayers_.size(); i++) {
+        output.writeMessage(5, allPlayers_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -1068,11 +1491,11 @@ public final class PlayerInformation {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(3, lifePoints_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.CodedOutputStream
           .computeDoubleSize(4, attackStrength_);
+      }
+      for (int i = 0; i < allPlayers_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, allPlayers_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1183,6 +1606,7 @@ public final class PlayerInformation {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getPlayerIdFieldBuilder();
+          getAllPlayersFieldBuilder();
         }
       }
       private static Builder create() {
@@ -1199,10 +1623,14 @@ public final class PlayerInformation {
           playerIdBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
-        lifePoints_ = 0D;
-        bitField0_ = (bitField0_ & ~0x00000004);
         attackStrength_ = 0D;
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
+        if (allPlayersBuilder_ == null) {
+          allPlayers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          allPlayersBuilder_.clear();
+        }
         return this;
       }
 
@@ -1246,11 +1674,16 @@ public final class PlayerInformation {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.lifePoints_ = lifePoints_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
-        }
         result.attackStrength_ = attackStrength_;
+        if (allPlayersBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            allPlayers_ = java.util.Collections.unmodifiableList(allPlayers_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
+          result.allPlayers_ = allPlayers_;
+        } else {
+          result.allPlayers_ = allPlayersBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1273,11 +1706,34 @@ public final class PlayerInformation {
         if (other.hasPlayerId()) {
           mergePlayerId(other.getPlayerId());
         }
-        if (other.hasLifePoints()) {
-          setLifePoints(other.getLifePoints());
-        }
         if (other.hasAttackStrength()) {
           setAttackStrength(other.getAttackStrength());
+        }
+        if (allPlayersBuilder_ == null) {
+          if (!other.allPlayers_.isEmpty()) {
+            if (allPlayers_.isEmpty()) {
+              allPlayers_ = other.allPlayers_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureAllPlayersIsMutable();
+              allPlayers_.addAll(other.allPlayers_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.allPlayers_.isEmpty()) {
+            if (allPlayersBuilder_.isEmpty()) {
+              allPlayersBuilder_.dispose();
+              allPlayersBuilder_ = null;
+              allPlayers_ = other.allPlayers_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              allPlayersBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getAllPlayersFieldBuilder() : null;
+            } else {
+              allPlayersBuilder_.addAllMessages(other.allPlayers_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1295,6 +1751,12 @@ public final class PlayerInformation {
         if (!getPlayerId().isInitialized()) {
           
           return false;
+        }
+        for (int i = 0; i < getAllPlayersCount(); i++) {
+          if (!getAllPlayers(i).isInitialized()) {
+            
+            return false;
+          }
         }
         return true;
       }
@@ -1471,55 +1933,6 @@ public final class PlayerInformation {
         return playerIdBuilder_;
       }
 
-      // optional double life_points = 3;
-      private double lifePoints_ ;
-      /**
-       * <code>optional double life_points = 3;</code>
-       *
-       * <pre>
-       * Only if type = STATE
-       * </pre>
-       */
-      public boolean hasLifePoints() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>optional double life_points = 3;</code>
-       *
-       * <pre>
-       * Only if type = STATE
-       * </pre>
-       */
-      public double getLifePoints() {
-        return lifePoints_;
-      }
-      /**
-       * <code>optional double life_points = 3;</code>
-       *
-       * <pre>
-       * Only if type = STATE
-       * </pre>
-       */
-      public Builder setLifePoints(double value) {
-        bitField0_ |= 0x00000004;
-        lifePoints_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional double life_points = 3;</code>
-       *
-       * <pre>
-       * Only if type = STATE
-       * </pre>
-       */
-      public Builder clearLifePoints() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        lifePoints_ = 0D;
-        onChanged();
-        return this;
-      }
-
       // optional double attack_strength = 4;
       private double attackStrength_ ;
       /**
@@ -1530,7 +1943,7 @@ public final class PlayerInformation {
        * </pre>
        */
       public boolean hasAttackStrength() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>optional double attack_strength = 4;</code>
@@ -1550,7 +1963,7 @@ public final class PlayerInformation {
        * </pre>
        */
       public Builder setAttackStrength(double value) {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         attackStrength_ = value;
         onChanged();
         return this;
@@ -1563,10 +1976,322 @@ public final class PlayerInformation {
        * </pre>
        */
       public Builder clearAttackStrength() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         attackStrength_ = 0D;
         onChanged();
         return this;
+      }
+
+      // repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;
+      private java.util.List<com.PsichiX.JustIDS.PlayerInformation.PlayerId> allPlayers_ =
+        java.util.Collections.emptyList();
+      private void ensureAllPlayersIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          allPlayers_ = new java.util.ArrayList<com.PsichiX.JustIDS.PlayerInformation.PlayerId>(allPlayers_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.PsichiX.JustIDS.PlayerInformation.PlayerId, com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder> allPlayersBuilder_;
+
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public java.util.List<com.PsichiX.JustIDS.PlayerInformation.PlayerId> getAllPlayersList() {
+        if (allPlayersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(allPlayers_);
+        } else {
+          return allPlayersBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public int getAllPlayersCount() {
+        if (allPlayersBuilder_ == null) {
+          return allPlayers_.size();
+        } else {
+          return allPlayersBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public com.PsichiX.JustIDS.PlayerInformation.PlayerId getAllPlayers(int index) {
+        if (allPlayersBuilder_ == null) {
+          return allPlayers_.get(index);
+        } else {
+          return allPlayersBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public Builder setAllPlayers(
+          int index, com.PsichiX.JustIDS.PlayerInformation.PlayerId value) {
+        if (allPlayersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAllPlayersIsMutable();
+          allPlayers_.set(index, value);
+          onChanged();
+        } else {
+          allPlayersBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public Builder setAllPlayers(
+          int index, com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder builderForValue) {
+        if (allPlayersBuilder_ == null) {
+          ensureAllPlayersIsMutable();
+          allPlayers_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          allPlayersBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public Builder addAllPlayers(com.PsichiX.JustIDS.PlayerInformation.PlayerId value) {
+        if (allPlayersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAllPlayersIsMutable();
+          allPlayers_.add(value);
+          onChanged();
+        } else {
+          allPlayersBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public Builder addAllPlayers(
+          int index, com.PsichiX.JustIDS.PlayerInformation.PlayerId value) {
+        if (allPlayersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAllPlayersIsMutable();
+          allPlayers_.add(index, value);
+          onChanged();
+        } else {
+          allPlayersBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public Builder addAllPlayers(
+          com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder builderForValue) {
+        if (allPlayersBuilder_ == null) {
+          ensureAllPlayersIsMutable();
+          allPlayers_.add(builderForValue.build());
+          onChanged();
+        } else {
+          allPlayersBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public Builder addAllPlayers(
+          int index, com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder builderForValue) {
+        if (allPlayersBuilder_ == null) {
+          ensureAllPlayersIsMutable();
+          allPlayers_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          allPlayersBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public Builder addAllAllPlayers(
+          java.lang.Iterable<? extends com.PsichiX.JustIDS.PlayerInformation.PlayerId> values) {
+        if (allPlayersBuilder_ == null) {
+          ensureAllPlayersIsMutable();
+          super.addAll(values, allPlayers_);
+          onChanged();
+        } else {
+          allPlayersBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public Builder clearAllPlayers() {
+        if (allPlayersBuilder_ == null) {
+          allPlayers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+          onChanged();
+        } else {
+          allPlayersBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public Builder removeAllPlayers(int index) {
+        if (allPlayersBuilder_ == null) {
+          ensureAllPlayersIsMutable();
+          allPlayers_.remove(index);
+          onChanged();
+        } else {
+          allPlayersBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder getAllPlayersBuilder(
+          int index) {
+        return getAllPlayersFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder getAllPlayersOrBuilder(
+          int index) {
+        if (allPlayersBuilder_ == null) {
+          return allPlayers_.get(index);  } else {
+          return allPlayersBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public java.util.List<? extends com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder> 
+           getAllPlayersOrBuilderList() {
+        if (allPlayersBuilder_ != null) {
+          return allPlayersBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(allPlayers_);
+        }
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder addAllPlayersBuilder() {
+        return getAllPlayersFieldBuilder().addBuilder(
+            com.PsichiX.JustIDS.PlayerInformation.PlayerId.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder addAllPlayersBuilder(
+          int index) {
+        return getAllPlayersFieldBuilder().addBuilder(
+            index, com.PsichiX.JustIDS.PlayerInformation.PlayerId.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 5;</code>
+       *
+       * <pre>
+       * Only if type = GAME_INFO
+       * </pre>
+       */
+      public java.util.List<com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder> 
+           getAllPlayersBuilderList() {
+        return getAllPlayersFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.PsichiX.JustIDS.PlayerInformation.PlayerId, com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder> 
+          getAllPlayersFieldBuilder() {
+        if (allPlayersBuilder_ == null) {
+          allPlayersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              com.PsichiX.JustIDS.PlayerInformation.PlayerId, com.PsichiX.JustIDS.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.PlayerInformation.PlayerIdOrBuilder>(
+                  allPlayers_,
+                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  getParentForChildren(),
+                  isClean());
+          allPlayers_ = null;
+        }
+        return allPlayersBuilder_;
       }
 
       // @@protoc_insertion_point(builder_scope:com.PsichiX.JustIDS.PlayerBroadcastInfo)
@@ -1600,15 +2325,18 @@ public final class PlayerInformation {
   static {
     java.lang.String[] descriptorData = {
       "\n$com/PsichiX/JustIDS/playerInfo.proto\022\023" +
-      "com.PsichiX.JustIDS\"$\n\010PlayerId\022\n\n\002id\030\001 " +
-      "\002(\t\022\014\n\004name\030\002 \002(\t\"\343\001\n\023PlayerBroadcastInf" +
-      "o\022D\n\004type\030\001 \002(\01626.com.PsichiX.JustIDS.Pl" +
-      "ayerBroadcastInfo.BroadcastType\0220\n\tplaye" +
-      "r_id\030\002 \002(\0132\035.com.PsichiX.JustIDS.PlayerI" +
-      "d\022\023\n\013life_points\030\003 \001(\001\022\027\n\017attack_strengt" +
-      "h\030\004 \001(\001\"&\n\rBroadcastType\022\t\n\005STATE\020\000\022\n\n\006A" +
-      "TTACK\020\001B(\n\023com.PsichiX.JustIDSB\021PlayerIn" +
-      "formation"
+      "com.PsichiX.JustIDS\"f\n\010PlayerId\022\n\n\002id\030\001 " +
+      "\002(\t\022\014\n\004name\030\002 \002(\t\022\023\n\013life_points\030\003 \002(\001\022\027" +
+      "\n\017seconds_in_game\030\005 \002(\005\022\022\n\nip_address\030\004 " +
+      "\001(\t\"\233\002\n\023PlayerBroadcastInfo\022D\n\004type\030\001 \002(" +
+      "\01626.com.PsichiX.JustIDS.PlayerBroadcastI" +
+      "nfo.BroadcastType\0220\n\tplayer_id\030\002 \002(\0132\035.c" +
+      "om.PsichiX.JustIDS.PlayerId\022\027\n\017attack_st" +
+      "rength\030\004 \001(\001\0222\n\013all_players\030\005 \003(\0132\035.com." +
+      "PsichiX.JustIDS.PlayerId\"?\n\rBroadcastTyp",
+      "e\022\t\n\005STATE\020\000\022\n\n\006ATTACK\020\001\022\010\n\004IWON\020\002\022\r\n\tGA" +
+      "ME_INFO\020\003B(\n\023com.PsichiX.JustIDSB\021Player" +
+      "Information"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1620,13 +2348,13 @@ public final class PlayerInformation {
           internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_PsichiX_JustIDS_PlayerId_descriptor,
-              new java.lang.String[] { "Id", "Name", });
+              new java.lang.String[] { "Id", "Name", "LifePoints", "SecondsInGame", "IpAddress", });
           internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_descriptor,
-              new java.lang.String[] { "Type", "PlayerId", "LifePoints", "AttackStrength", });
+              new java.lang.String[] { "Type", "PlayerId", "AttackStrength", "AllPlayers", });
           return null;
         }
       };
