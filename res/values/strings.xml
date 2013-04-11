@@ -8,5 +8,7 @@
     <string name="title_activity_microphone">MicrophoneActivity</string>
     <string name="title_activity_audio_record_test">AudioRecordTest</string>
     <string name="title_activity_udp">UDPActivity</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

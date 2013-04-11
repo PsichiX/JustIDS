@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        android:padding="20dp" >
+
+        <TextView
+            android:id="@+id/txt_yourname_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="left"
+            android:text="Your name is:"
+            android:textSize="20dp"
+            tools:context=".MainMenuActivity" />
+
+        <TextView
+            android:id="@+id/txt_yourname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Son Goku"
+            android:textSize="40dp"
+            tools:context=".MainMenuActivity" />
+
+        <Button
+            android:id="@+id/button_profile_generate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Generate"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/button_profile_enter"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/txt_nameinput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:visibility="gone"
+            android:inputType="textPersonName" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/txt_yourname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="left"
+            android:text="Statistics:"
+            android:textSize="20dp"
+            tools:context=".MainMenuActivity" />
+        
+                <TextView
+            android:id="@+id/txt_yourname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="left"
+            android:text="Kamehamas:	27
+Fights Won:	14
+Strongest hit:	1400
+Longest Shout: 5s"
+            android:textSize="25dp"
+            tools:context=".MainMenuActivity" />
+    </LinearLayout>
+
+</RelativeLayout>
