@@ -18,33 +18,16 @@ public class GameStateManager {
 	enum GameStateEnum {
 		WAITING_FOR_PLAYERS,
 		IN_GAME,
-		FINISHED
-	}
-
-	GameStateEnum gameStateEnum;
-
-	private void goToSleep(long time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			Log.e("ERR", e.getMessage());
-		}
-	}
+		FINISHED,
+		GAME_FINISHED
+	}	
 	
-	
-	/**
-	 * Send my state message periodically, so that others for sure know that I finished
-	 */
-	private final class FinishedThread extends Thread {
+	private final class PingThread extends Thread {
 		@Override
 		public void run() {
 			while (!paused) { 
-				if (gameStateEnum == GameStateEnum.FINISHED) {
-					if (isLost()) {
-						sendMyState(0.0);
-					}
-					goToSleep(150);
-				} else {
+				if (gameStateEnum != GameStateEnum.GAME_FINISHED) {
+					sendMyState();
 					goToSleep(300);
 				}
 			}
@@ -63,7 +46,6 @@ public class GameStateManager {
 					continue;
 				}
 				try {
-					Log.d("RCVD:", Arrays.toString(message));
 					PlayerBroadcastInfo pbi = PlayerBroadcastInfo
 							.parseFrom(message);
 					if (gameStateEnum == GameStateEnum.FINISHED) {
@@ -130,6 +112,17 @@ public class GameStateManager {
 	private volatile double lifePointsOfMine;
 	private HashMap<String, PlayerId> others = new HashMap<String, PlayerId>();
 
+	GameStateEnum gameStateEnum;
+
+	private void goToSleep(long time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			Log.e("ERR", e.getMessage());
+		}
+	}
+	
+	
 	public double getLifePointsOfMine() {
 		return lifePointsOfMine;
 	}
@@ -170,7 +163,7 @@ public class GameStateManager {
 	
 	private boolean active;
 
-	private FinishedThread finishedThread;
+	private PingThread pingThread;
 
 	private String android_id;
 
@@ -220,21 +213,19 @@ public class GameStateManager {
 	}
 
 	public void decreaseLifePointsOfMine(double decreaseBy) {
-		double lp = decreaseInternally(decreaseBy);
-		sendMyState(lp);
+		decreaseInternally(decreaseBy);
+		sendMyState();
 	}
 
-	private void sendMyState(double lp) {
+	private void sendMyState() {
 		if (!active) {
 			return;
 		}
-		
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder()
 				.setPlayerId(myPlayerId())
 				.setType(BroadcastType.STATE).build();
 		byte[] message = info.toByteArray();
 		this.bcm.sendBroadcast(context, message);
-		Log.d("SENT:", Arrays.toString(message));
 	}
 
 	public boolean hasFinished() {
@@ -251,11 +242,10 @@ public class GameStateManager {
 				.setType(BroadcastType.ATTACK).build();
 		byte[] message = info.toByteArray();
 		this.bcm.sendBroadcast(context, message);
-		Log.d("SENT:", Arrays.toString(message));
 	}
 
 	public void iLostTheGame() {
-		sendMyState(0.0);
+		sendMyState();
 	}
 
 	public void setSomethingChangedListener(Runnable runnable) {
@@ -290,15 +280,15 @@ public class GameStateManager {
 	public void pause() {
 		paused = true;
 		this.readingThread = null;
-		this.finishedThread = null;
+		this.pingThread = null;
 	}
 	
 	public void resume() {
 		paused = false;
 		readingThread = new ReadingThread();
 		readingThread.start();	
-		finishedThread = new FinishedThread();
-		finishedThread.start();	
+		pingThread = new PingThread();
+		pingThread.start();	
 	}
 	
 	public void setActive(boolean active) {
