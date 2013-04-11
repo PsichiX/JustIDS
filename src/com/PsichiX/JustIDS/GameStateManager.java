@@ -187,11 +187,12 @@ public class GameStateManager {
 		resume();
 	}
 
-	private PlayerId getPlayerId() {
+	private PlayerId myPlayerId() {
 		return PlayerId.newBuilder().
 				setId(android_id).
 				setName(name).
 				setLifePoints(lifePointsOfMine).
+				setSecondsInGame(0). // For now. TODO: add tracking
 				build();
 	}
 	private boolean isAttackSuccessfull(PlayerBroadcastInfo pbi) {
@@ -229,7 +230,7 @@ public class GameStateManager {
 		}
 		
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder()
-				.setPlayerId(getPlayerId())
+				.setPlayerId(myPlayerId())
 				.setType(BroadcastType.STATE).build();
 		byte[] message = info.toByteArray();
 		this.bcm.sendBroadcast(context, message);
@@ -246,7 +247,7 @@ public class GameStateManager {
 			return;
 		}
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder()
-				.setPlayerId(getPlayerId()).setAttackStrength(strength)
+				.setPlayerId(myPlayerId()).setAttackStrength(strength)
 				.setType(BroadcastType.ATTACK).build();
 		byte[] message = info.toByteArray();
 		this.bcm.sendBroadcast(context, message);
