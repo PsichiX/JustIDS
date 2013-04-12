@@ -4,13 +4,14 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".MicrophoneActivity" />
+        android:gravity="center_vertical|center_horizontal"
+        android:scrollHorizontally="false"
+        android:text="!!! WiFi is not enabled !!! Turn it on, connect to a network with other player and restart the game"
+        android:textSize="30dp"
+        tools:context=".WifiErrorActivity" />
 
 </RelativeLayout>
-

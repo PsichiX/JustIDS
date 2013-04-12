@@ -23,7 +23,8 @@ public class ProfileActivity extends Activity {
 	TextView nameView;
 	Button btnEnter;
 	EditText nameInput;
-	Random rnd;
+	static Random rnd;
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,8 @@ public class ProfileActivity extends Activity {
 		btnGenerate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				generateName();
+				MainScreenActivity.playerName = generateName();
+				nameView.setText(MainScreenActivity.playerName);
 			}
 		});
 		
@@ -62,17 +64,17 @@ public class ProfileActivity extends Activity {
 		});
 	}
 
-	private void generateName() {
+	public static String generateName() {
 		String[] first = {"Son", "Kim", "Ve", "Obi", "Qui"};
 		String[] middle = {"Go", "Dzong", "Wan", "Gon", "Ge"};
 		String[] last = {"Ku", "Il", "Un", "Sen", "Jin", "Ke", "Ta"};
 		
 		if(rnd==null)  rnd = new Random(Calendar.getInstance().get(Calendar.MILLISECOND));
-		String name = first[rnd.nextInt(first.length-1)] + " " +
+		String playerName = first[rnd.nextInt(first.length-1)] + " " +
 			middle[rnd.nextInt(middle.length-1)] +
 			last[rnd.nextInt(last.length-1)];
 		
-		nameView.setText(name);
+		return playerName;
 	}
 
 	@Override

@@ -10,5 +10,8 @@
     <string name="title_activity_udp">UDPActivity</string>
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_main_screen">MainScreenActivity</string>
+    <string name="title_activity_wifi_error">WifiErrorActivity</string>
+    <string name="title_activity_spectate">SpectateActivity</string>
 
 </resources>

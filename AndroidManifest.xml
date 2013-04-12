@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="7"
         android:targetSdkVersion="10" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -33,6 +33,16 @@
         <activity
             android:name=".display.MainMenuActivity"
             android:label="@string/title_activity_main_menu" >
+        </activity>
+        <activity
+            android:name=".display.ProfileActivity"
+            android:label="@string/title_activity_profile" >
+        </activity>
+        <activity
+            android:name=".display.MainScreenActivity"
+            android:label="@string/title_activity_main_screen"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,13 +50,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".display.ProfileActivity"
-            android:label="@string/title_activity_profile" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".display.WifiErrorActivity"
+            android:label="@string/title_activity_wifi_error" >
+        </activity>
+        <activity
+            android:name=".SpectateActivity"
+            android:label="@string/title_activity_spectate" 
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >>
         </activity>
     </application>
 
