@@ -27,20 +27,20 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.PsichiX.JustIDS.AudioRecordTest"
+            android:name=".trash.AudioRecordTest"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".display.MainMenuActivity"
-            android:label="@string/title_activity_main_menu" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".display.ProfileActivity"
-            android:label="@string/title_activity_profile" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".display.MainScreenActivity"
-            android:label="@string/title_activity_main_screen"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
@@ -51,13 +51,22 @@
         </activity>
         <activity
             android:name=".display.WifiErrorActivity"
-            android:label="@string/title_activity_wifi_error" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".SpectateActivity"
-            android:label="@string/title_activity_spectate" 
+            android:label="@string/app_name"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".trash.WifiAP"
+            android:label="@string/title_activity_wifi_ap" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -1,8 +1,8 @@
 package com.PsichiX.JustIDS.display;
 
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 
-import com.PsichiX.JustIDS.AudioRecordTest;
 import com.PsichiX.JustIDS.MainActivity;
 import com.PsichiX.JustIDS.PlayerInformation;
 import com.PsichiX.JustIDS.R;
@@ -10,6 +10,8 @@ import com.PsichiX.JustIDS.R.layout;
 import com.PsichiX.JustIDS.R.menu;
 import com.PsichiX.JustIDS.SpectateActivity;
 import com.PsichiX.JustIDS.logic.Player;
+import com.PsichiX.JustIDS.services.WifiService;
+import com.PsichiX.JustIDS.trash.AudioRecordTest;
 
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -35,6 +37,7 @@ public class MainScreenActivity extends Activity {
 	public static String playerName;
 	
 	LayoutInflater inflater;
+	WifiService wifi;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,11 +49,12 @@ public class MainScreenActivity extends Activity {
         //TESTOWE!!!
         Player pi = new Player();
         pi.name = ProfileActivity.generateName();
-        //players.add(pi);
+        players.add(pi);
         
         //sprawdzenie czy WiFI jest on.
-        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-    	if (!wifi.isWifiEnabled()){
+        
+        wifi = new WifiService(this);
+    	if (!wifi.isWifiInWorkingState()){
     		startActivity(new Intent(this, WifiErrorActivity.class));
     		Log.d(tag , "WIFI DISABLED!");
     		this.finish();
@@ -62,9 +66,16 @@ public class MainScreenActivity extends Activity {
         
     	playerName = ProfileActivity.generateName();
         
+    	setPlayersView();
     	//TODO: @Jarek odpalic siec, zaczac zbierac graczy i wysylac swoje imie i id, okreœlic czy jest juz walka w sieci. 
     	
-    	
+    	setUpScreen();
+    }
+
+    /**
+     * Listenery na guzikach, adaptery itp
+     */
+    private void setUpScreen()	{
     	//Pozostala konfiguracja ekranu
         TextView playerNameView = (TextView) findViewById(R.id.txt_yourname);
         playerNameView.setText(playerName);
@@ -76,8 +87,6 @@ public class MainScreenActivity extends Activity {
 				gotoProfile();
 			}	
 		});
-        
-        setPlayersView();
         
         Button btnFight = (Button) findViewById(R.id.button_fight);
         btnFight.setOnClickListener(new OnClickListener() {
@@ -113,7 +122,7 @@ public class MainScreenActivity extends Activity {
 		ListView playersList = (ListView) findViewById(R.id.players_list);
 		playersList.setAdapter(playersAdapter);
     }
-
+    
     /**
      * Do wywo³ania przy odœwierzeniu listy graczy
      */
@@ -148,6 +157,8 @@ public class MainScreenActivity extends Activity {
     public void gotoSpectate()	{
     	startActivity(new Intent(this, SpectateActivity.class));
     }
+    
+
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

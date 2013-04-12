@@ -1,9 +1,9 @@
-package com.PsichiX.JustIDS;
+package com.PsichiX.JustIDS.services;
 
 import java.io.IOException;
 
-import com.PsichiX.JustIDS.AudioRecordTest.PlayButton;
-import com.PsichiX.JustIDS.AudioRecordTest.RecordButton;
+import com.PsichiX.JustIDS.GameState;
+import com.PsichiX.JustIDS.trash.AudioRecordTest;
 
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -16,10 +16,8 @@ public class RecorderService {
     private static final String LOG_TAG = "AudioRecordTest";
     private static String mFileName = null;
 
-    private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
 
-    private PlayButton   mPlayButton = null;
     private MediaPlayer   mPlayer = null;
     
 	CountDownTimer cdt;

@@ -1,5 +1,6 @@
 package com.PsichiX.JustIDS;
 
+import com.PsichiX.JustIDS.services.RecorderService;
 import com.PsichiX.XenonCoreDroid.XeActivity;
 import com.PsichiX.XenonCoreDroid.XeApplication;
 import com.PsichiX.XenonCoreDroid.XePhoton;

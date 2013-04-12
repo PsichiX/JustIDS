@@ -13,5 +13,6 @@
     <string name="title_activity_main_screen">MainScreenActivity</string>
     <string name="title_activity_wifi_error">WifiErrorActivity</string>
     <string name="title_activity_spectate">SpectateActivity</string>
+    <string name="title_activity_wifi_ap">WifiAP</string>
 
 </resources>

@@ -8,7 +8,7 @@
  * <uses-permission android:name="android.permission.RECORD_AUDIO" />
  *
  */
-package com.PsichiX.JustIDS;
+package com.PsichiX.JustIDS.trash;
 
 import android.app.Activity;
 import android.widget.LinearLayout;
@@ -27,6 +27,8 @@ import android.media.MediaRecorder;
 import android.media.MediaPlayer;
 
 import java.io.IOException;
+
+import com.PsichiX.JustIDS.GameState;
 
 
 public class AudioRecordTest extends Activity
@@ -160,7 +162,7 @@ public class AudioRecordTest extends Activity
         }
     }
 
-    class PlayButton extends Button {
+    public class PlayButton extends Button {
         boolean mStartPlaying = true;
 
         OnClickListener clicker = new OnClickListener() {

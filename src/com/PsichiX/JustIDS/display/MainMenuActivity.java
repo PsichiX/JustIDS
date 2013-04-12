@@ -1,10 +1,10 @@
 package com.PsichiX.JustIDS.display;
 
-import com.PsichiX.JustIDS.AudioRecordTest;
 import com.PsichiX.JustIDS.MainActivity;
 import com.PsichiX.JustIDS.R;
 import com.PsichiX.JustIDS.R.layout;
 import com.PsichiX.JustIDS.R.menu;
+import com.PsichiX.JustIDS.trash.AudioRecordTest;
 
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
