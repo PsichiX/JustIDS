@@ -23,6 +23,9 @@ public class MainActivity extends XeActivity
 		XeApplication.SETUP_WINDOW_FULLSCREEN = true;
 		XeApplication.SETUP_SCREEN_ORIENTATION = XeApplication.Orientation.PORTRAIT;
 		XeApplication.SETUP_SENSORS_RATE = android.hardware.SensorManager.SENSOR_DELAY_GAME;
+		// To ponizej zalatwia wylaczenie modulu Photon silnika, czyli nie bedzie renderowal nic.
+		// TODO: trzeba zaaplikowac widok z layoutu, ale brak widoku z paskami
+//		XeApplication.SETUP_MODULES_ENABLED = XeApplication.MODULE_ALL &~ XeApplication.MODULE_PHOTON;
 		
 		// create application
 		super.onCreate(savedInstanceState);
@@ -68,11 +71,11 @@ public class MainActivity extends XeActivity
 		// run state
 		app = getApplicationCore();
 		Utils.initModule(getApplicationCore().getAssets());
-		Graphics.initModule(getApplicationCore().getAssets(), getApplicationCore().getPhoton());
+//		Graphics.initModule(getApplicationCore().getAssets(), getApplicationCore().getPhoton());
 		getApplicationCore().getTimer().setFixedStep(1000 / 30);
-		getApplicationCore().getPhoton().getRenderer().getTimer().setFixedStep(1000 / 30);
-		getApplicationCore().getPhoton().setRenderMode(XePhoton.RenderMode.QUEUE, true);
-		getApplicationCore().getPhoton().getRenderer().setClearBackground(true, 0.0f, 0.0f, 0.0f, 1.0f);
+//		getApplicationCore().getPhoton().getRenderer().getTimer().setFixedStep(1000 / 30);
+//		getApplicationCore().getPhoton().setRenderMode(XePhoton.RenderMode.QUEUE, true);
+//		getApplicationCore().getPhoton().getRenderer().setClearBackground(true, 0.0f, 0.0f, 0.0f, 1.0f);
 		getApplicationCore().getSense().use(XeSense.Type.LINEAR_ACCELERATION);
 		getApplicationCore().run(gs);
 		
@@ -97,8 +100,4 @@ public class MainActivity extends XeActivity
 		gsm.destroy();
 		rs.stopRecording();
 	}
-//	@Override
-//	public void onBackPressed() {
-//		this.finish();
-//	}
 }
