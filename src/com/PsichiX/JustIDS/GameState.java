@@ -2,6 +2,7 @@ package com.PsichiX.JustIDS;
 
 import android.util.Log;
 
+import com.PsichiX.JustIDS.game.GameManager;
 import com.PsichiX.XenonCoreDroid.XeApplication.*;
 import com.PsichiX.XenonCoreDroid.Framework.Graphics.*;
 import com.PsichiX.XenonCoreDroid.XeUtils.*;
@@ -23,10 +24,10 @@ public class GameState extends State implements CommandQueue.Delegate
 	private boolean _forceRecording = false;
 	private Sprite Mana;
 	private Sprite Health;
-	private GameStateManager gsm;
+	private GameManager gm;
 	
-	public GameState(GameStateManager gsm) {
-		this.gsm = gsm;
+	public GameState(GameManager gsm) {
+		this.gm = gsm;
 	}
 	
 	@Override
@@ -50,7 +51,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		Health.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		Health.setPosition( _cam.getViewWidth() * 0.5f, 0.0f);
 		_scn.attach(Health);
-		gsm.resetGame();
+		gm.resetGame();
 		manaLevel = 0;
 		
 		getApplication().getAssets().get(R.raw.badaboom_material, Material.class);
@@ -60,7 +61,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		
 		// TODO: This should only be called after the list of players is displayed to the user
 		// And the user decides to start the game
-		gsm.startGame();
+		gm.joinGame();
 	}
 	
 	@Override
@@ -116,7 +117,7 @@ public class GameState extends State implements CommandQueue.Delegate
 		{
 			Log.d("ATTACK", "STOP");
 			double strength = calculateStrength();
-			gsm.attackWithStrength(strength);
+			gm.attackWithStrength(strength);
 			manaLevel = 0.0f;
 			_forceRecording = false;
 			_maxForce = 0.0f;

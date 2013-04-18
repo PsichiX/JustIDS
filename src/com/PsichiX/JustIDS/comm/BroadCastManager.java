@@ -1,4 +1,4 @@
-	package com.PsichiX.JustIDS;
+	package com.PsichiX.JustIDS.comm;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -6,7 +6,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.Arrays;
 
 import android.content.Context;
 import android.net.DhcpInfo;
@@ -14,14 +13,19 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.MulticastLock;
 import android.util.Log;
 
+import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 
-public class BroadCastManager {
+
+public class BroadCastManager implements BroadcastManagerInterface {
 
 	private static int PORT = 14444;
 	DatagramSocket socket;
+	private Context context;
 	
-	public BroadCastManager() {
+	public BroadCastManager(Context context) {
+		this.context = context;
 		try {
 			Log.i("INFO", "Opening datagram socket");
 			socket = new DatagramSocket(PORT);
@@ -32,7 +36,7 @@ public class BroadCastManager {
 		}
 	}
 	
-	public InetAddress getBroadcastAddress(Context context) throws IOException {
+	private InetAddress getBroadcastAddress(Context context) throws IOException {
 	    WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 	    MulticastLock ml = wifi.createMulticastLock("some tag");
 	    ml.acquire();
@@ -46,7 +50,7 @@ public class BroadCastManager {
 	    return InetAddress.getByAddress(quads);
 	}
 	
-	public void sendBroadcast(final Context context, final byte [] data) {
+	private void sendBroadcast(final Context context, final byte [] data) {
 			new Thread() { 
 				@Override
 				public void run() {
@@ -62,7 +66,7 @@ public class BroadCastManager {
 			}.start();
 	}
 	
-	public byte [] receiveBroadCast(Context context)  {
+	private byte [] receiveBroadCast(Context context)  {
 		byte[] buf = new byte[1024];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		try {
@@ -74,11 +78,49 @@ public class BroadCastManager {
 			Log.e("SOCKET", e.getMessage());
 		}
 		int len = packet.getLength();
-		return Arrays.copyOfRange(packet.getData(), 0, len);
+		byte [] newArray = new byte[len];
+		byte [] oldArray = packet.getData();
+		for (int i=0; i<len; i++) {
+			newArray[i] = oldArray[i];
+		}
+		return newArray;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.PsichiX.JustIDS.comm.BroadcastManagerInterface#destroy()
+	 */
+	@Override
 	public void destroy() {
 		socket.close();
 	}
+
+	/* (non-Javadoc)
+	 * @see com.PsichiX.JustIDS.comm.BroadcastManagerInterface#sendBroadcast(com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo)
+	 */
+	@Override
+	public void sendBroadcast(PlayerBroadcastInfo info) {
+		byte[] message = info.toByteArray();
+		sendBroadcast(context, message);		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.PsichiX.JustIDS.comm.BroadcastManagerInterface#receiveBroadCast()
+	 */
+	@Override
+	public PlayerBroadcastInfo receiveBroadCast() {
+		final byte[] message = receiveBroadCast(context);
+		if (message == null)  {
+			return null;
+		}
+		try {
+			PlayerBroadcastInfo pbi = PlayerBroadcastInfo
+					.parseFrom(message);
+			return pbi;
+		} catch (InvalidProtocolBufferException e) {
+			Log.e("ERR", e.getMessage());
+			return null;
+		}
+	}
+	
 	
 }

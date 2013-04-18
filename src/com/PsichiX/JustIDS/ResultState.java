@@ -1,11 +1,11 @@
 package com.PsichiX.JustIDS;
 
-import android.util.Log;
-
-import com.PsichiX.XenonCoreDroid.XeApplication.*;
-import com.PsichiX.XenonCoreDroid.Framework.Graphics.*;
-import com.PsichiX.XenonCoreDroid.XeUtils.*;
-import com.PsichiX.XenonCoreDroid.XeSense;
+import com.PsichiX.XenonCoreDroid.XeApplication.State;
+import com.PsichiX.XenonCoreDroid.Framework.Graphics.Camera2D;
+import com.PsichiX.XenonCoreDroid.Framework.Graphics.Font;
+import com.PsichiX.XenonCoreDroid.Framework.Graphics.Material;
+import com.PsichiX.XenonCoreDroid.Framework.Graphics.Scene;
+import com.PsichiX.XenonCoreDroid.Framework.Graphics.Text;
 
 public class ResultState extends State {
 	private Camera2D _cam;
