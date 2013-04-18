@@ -154,7 +154,7 @@ public class GameManager {
 		return false;
 	}
 	
-	private PlayerId myPlayerId() {
+	public PlayerId myPlayerId() {
 		return PlayerId.newBuilder().setId(androidId).setName(name)
 				.setLifePoints(lifePointsOfMine).setState(gameStateMachine.getMyState())
 				.setSecondsInGame(0). // For now. TODO: add tracking
@@ -300,10 +300,6 @@ public class GameManager {
 		return name;
 	}
 
-	public double getLifePointsOfMine() {
-		return lifePointsOfMine;
-	}
-
 	public synchronized Collection<PlayerId> getPlayers() {
 		return players.values();
 	}
@@ -315,6 +311,6 @@ public class GameManager {
 	 */
     static void overrideUnitTestMilliseconds(int unit) {
 		UNIT_OF_TIME_MILLIS = unit;
-	}	
+	}
 
 }

@@ -1,10 +1,13 @@
 package com.PsichiX.JustIDS;
 
+import java.util.Collection;
+
 import android.provider.Settings.Secure;
 
 import com.PsichiX.JustIDS.comm.BroadCastManager;
 import com.PsichiX.JustIDS.game.GameManager;
 import com.PsichiX.JustIDS.game.GameStateMachine;
+import com.PsichiX.JustIDS.message.PlayerInformation.PlayerId;
 import com.PsichiX.JustIDS.services.RecorderService;
 import com.PsichiX.XenonCoreDroid.XeActivity;
 import com.PsichiX.XenonCoreDroid.XeApplication;
@@ -26,28 +29,48 @@ public class MainActivity extends XeActivity {
 				GameStateMachine.GameStateNotificationEnum gameStateNotification) {
 			switch (gameStateNotification) {
 			case SOMETHING_CHANGED:
-				GameState.healthLevel = gm.getLifePointsOfMine();
-				break;
-			case HIT:
-				vibratorUtil.vibrate(300);
+				PlayerId myPlayerId = gm.myPlayerId();
+				GameState.healthLevel = myPlayerId.getLifePoints();
+				Collection<PlayerId> allPlayers = gm.getPlayers();
+				// TODO: here you should display state of mine and others
+				// Note - this also can happen before game is started or after finished.
 				break;
 			case GAME_STARTED_OBSERVER:
-				vibratorUtil.vibrate(200);
+				// TODO: Here we should automatically switch the view to observer when two other players joined the game.
+				// I am now observer and till the end of the game I won't be able to play.
 				break;
 			case GAME_STARTED_PLAYER:
+				// TODO: This is an indication that I am a player and the other player also joined.
+				// Here the battle begins. We should enable the player to fight here.
 				vibratorUtil.vibrate(200);
 				break;
 			case GAME_FINISHED_OBSERVER:
+				// TODO: This is an indication that game finished for the observer. There should be LOST/WON 
+				// in the player list. We should display the result and let the user reset game here
 				vibratorUtil.vibrate(200);
 				break;
+			case HIT:
+				// TODO: Here we are hit but not necessarily points are taken. We still have a chance to react
+				// which might decrease the damage for us. We should make some flashing that there is a hit.
+				// Note: this is only notified to players, not to observers. Observers just see (SOMETHING CHANGED)
+				vibratorUtil.vibrate(20);
+				break;
 			case LIFE_DECREASED:
+				// TODO: This is an indication that after hit our life has actually been decreased.
+				// You can read the current life points by runnning gm.myPlayerId().
+				// We should somehow indicate that life has been decreased.
+				// Note: this is only notified to players, not to observers. Observers just see (SOMETHING CHANGED)
 				vibratorUtil.vibrate(500);
 				break;
 			case GAME_FINISHED_PLAYER_LOST:
+				// TODO: This is an indication that I lost the game
+				// Note: this is only notified to players, not to observers. Observers just see (SOMETHING CHANGED)
 				vibratorUtil.vibrate(1000);
 				gs.youLost();
 				break;
 			case GAME_FINISHED_PLAYER_WON:
+				// TODO: This is an indication that I won	 the game
+				// Note: this is only notified to players, not to observers. Observers just see (SOMETHING CHANGED)
 				vibratorUtil.vibrate(1000);
 				gs.youWon();
 				break;
