@@ -3,7 +3,7 @@ package com.PsichiX.JustIDS.game;
 import java.util.Collection;
 import java.util.logging.Logger;
 
-import com.PsichiX.JustIDS.message.PlayerInformation.PlayerId;
+import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerState;
 
 public class GameStateMachine {
@@ -56,13 +56,13 @@ public class GameStateMachine {
 		return (myState == PlayerState.WON || myState == PlayerState.LOST || myState == PlayerState.GAME_FINISHED);
 	}
 
-	public boolean isMyself(PlayerId player) {
+	public boolean isMyself(Player player) {
 		return player.getId().equals(androidId);
 	}
 
-	public void startGameIfAllReady(Collection<PlayerId> players) {
+	public void startGameIfAllReady(Collection<Player> players) {
 		int otherPlayersCount =0;
-		for (PlayerId player : players) {
+		for (Player player : players) {
 			if (isInGame(player.getState()) && !isMyself(player)) {
 				otherPlayersCount++;
 				if (amIInGame() && myState != PlayerState.PLAYING) {

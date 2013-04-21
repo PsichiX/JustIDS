@@ -1,8 +1,9 @@
-package com.PsichiX.JustIDS;
+package com.PsichiX.JustIDS.display;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import com.PsichiX.JustIDS.R;
 
 public class SpectateActivity extends Activity {
 

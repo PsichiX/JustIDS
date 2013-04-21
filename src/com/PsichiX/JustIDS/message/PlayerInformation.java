@@ -135,7 +135,7 @@ public final class PlayerInformation {
     // @@protoc_insertion_point(enum_scope:com.PsichiX.JustIDS.PlayerState)
   }
 
-  public interface PlayerIdOrBuilder
+  public interface PlayerOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
     // required string id = 1;
@@ -193,16 +193,6 @@ public final class PlayerInformation {
     com.google.protobuf.ByteString
         getIpAddressBytes();
 
-    // required int32 seconds_in_game = 5;
-    /**
-     * <code>required int32 seconds_in_game = 5;</code>
-     */
-    boolean hasSecondsInGame();
-    /**
-     * <code>required int32 seconds_in_game = 5;</code>
-     */
-    int getSecondsInGame();
-
     // required .com.PsichiX.JustIDS.PlayerState state = 6;
     /**
      * <code>required .com.PsichiX.JustIDS.PlayerState state = 6;</code>
@@ -214,24 +204,24 @@ public final class PlayerInformation {
     com.PsichiX.JustIDS.message.PlayerInformation.PlayerState getState();
   }
   /**
-   * Protobuf type {@code com.PsichiX.JustIDS.PlayerId}
+   * Protobuf type {@code com.PsichiX.JustIDS.Player}
    */
-  public static final class PlayerId extends
+  public static final class Player extends
       com.google.protobuf.GeneratedMessage
-      implements PlayerIdOrBuilder {
-    // Use PlayerId.newBuilder() to construct.
-    private PlayerId(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      implements PlayerOrBuilder {
+    // Use Player.newBuilder() to construct.
+    private Player(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private PlayerId(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private Player(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final PlayerId defaultInstance;
-    public static PlayerId getDefaultInstance() {
+    private static final Player defaultInstance;
+    public static Player getDefaultInstance() {
       return defaultInstance;
     }
 
-    public PlayerId getDefaultInstanceForType() {
+    public Player getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -241,7 +231,7 @@ public final class PlayerInformation {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private PlayerId(
+    private Player(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -284,18 +274,13 @@ public final class PlayerInformation {
               ipAddress_ = input.readBytes();
               break;
             }
-            case 40: {
-              bitField0_ |= 0x00000010;
-              secondsInGame_ = input.readInt32();
-              break;
-            }
             case 48: {
               int rawValue = input.readEnum();
               com.PsichiX.JustIDS.message.PlayerInformation.PlayerState value = com.PsichiX.JustIDS.message.PlayerInformation.PlayerState.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(6, rawValue);
               } else {
-                bitField0_ |= 0x00000020;
+                bitField0_ |= 0x00000010;
                 state_ = value;
               }
               break;
@@ -314,28 +299,28 @@ public final class PlayerInformation {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_descriptor;
+      return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_Player_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable
+      return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_Player_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.class, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder.class);
+              com.PsichiX.JustIDS.message.PlayerInformation.Player.class, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<PlayerId> PARSER =
-        new com.google.protobuf.AbstractParser<PlayerId>() {
-      public PlayerId parsePartialFrom(
+    public static com.google.protobuf.Parser<Player> PARSER =
+        new com.google.protobuf.AbstractParser<Player>() {
+      public Player parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new PlayerId(input, extensionRegistry);
+        return new Player(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<PlayerId> getParserForType() {
+    public com.google.protobuf.Parser<Player> getParserForType() {
       return PARSER;
     }
 
@@ -485,22 +470,6 @@ public final class PlayerInformation {
       }
     }
 
-    // required int32 seconds_in_game = 5;
-    public static final int SECONDS_IN_GAME_FIELD_NUMBER = 5;
-    private int secondsInGame_;
-    /**
-     * <code>required int32 seconds_in_game = 5;</code>
-     */
-    public boolean hasSecondsInGame() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
-    }
-    /**
-     * <code>required int32 seconds_in_game = 5;</code>
-     */
-    public int getSecondsInGame() {
-      return secondsInGame_;
-    }
-
     // required .com.PsichiX.JustIDS.PlayerState state = 6;
     public static final int STATE_FIELD_NUMBER = 6;
     private com.PsichiX.JustIDS.message.PlayerInformation.PlayerState state_;
@@ -508,7 +477,7 @@ public final class PlayerInformation {
      * <code>required .com.PsichiX.JustIDS.PlayerState state = 6;</code>
      */
     public boolean hasState() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>required .com.PsichiX.JustIDS.PlayerState state = 6;</code>
@@ -522,7 +491,6 @@ public final class PlayerInformation {
       name_ = "";
       lifePoints_ = 0D;
       ipAddress_ = "";
-      secondsInGame_ = 0;
       state_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerState.WAITING;
     }
     private byte memoizedIsInitialized = -1;
@@ -539,10 +507,6 @@ public final class PlayerInformation {
         return false;
       }
       if (!hasLifePoints()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasSecondsInGame()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -570,9 +534,6 @@ public final class PlayerInformation {
         output.writeBytes(4, getIpAddressBytes());
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeInt32(5, secondsInGame_);
-      }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeEnum(6, state_.getNumber());
       }
       getUnknownFields().writeTo(output);
@@ -602,10 +563,6 @@ public final class PlayerInformation {
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, secondsInGame_);
-      }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(6, state_.getNumber());
       }
       size += getUnknownFields().getSerializedSize();
@@ -620,53 +577,53 @@ public final class PlayerInformation {
       return super.writeReplace();
     }
 
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseFrom(
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseFrom(
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseFrom(byte[] data)
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseFrom(
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseFrom(java.io.InputStream input)
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseFrom(
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseDelimitedFrom(java.io.InputStream input)
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseDelimitedFrom(
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseFrom(
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parseFrom(
+    public static com.PsichiX.JustIDS.message.PlayerInformation.Player parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -675,7 +632,7 @@ public final class PlayerInformation {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.PsichiX.JustIDS.message.PlayerInformation.PlayerId prototype) {
+    public static Builder newBuilder(com.PsichiX.JustIDS.message.PlayerInformation.Player prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -687,24 +644,24 @@ public final class PlayerInformation {
       return builder;
     }
     /**
-     * Protobuf type {@code com.PsichiX.JustIDS.PlayerId}
+     * Protobuf type {@code com.PsichiX.JustIDS.Player}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder {
+       implements com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_descriptor;
+        return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_Player_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable
+        return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_Player_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.class, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder.class);
+                com.PsichiX.JustIDS.message.PlayerInformation.Player.class, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder.class);
       }
 
-      // Construct using com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.newBuilder()
+      // Construct using com.PsichiX.JustIDS.message.PlayerInformation.Player.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -732,10 +689,8 @@ public final class PlayerInformation {
         bitField0_ = (bitField0_ & ~0x00000004);
         ipAddress_ = "";
         bitField0_ = (bitField0_ & ~0x00000008);
-        secondsInGame_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000010);
         state_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerState.WAITING;
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -745,23 +700,23 @@ public final class PlayerInformation {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_PlayerId_descriptor;
+        return com.PsichiX.JustIDS.message.PlayerInformation.internal_static_com_PsichiX_JustIDS_Player_descriptor;
       }
 
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId getDefaultInstanceForType() {
-        return com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.getDefaultInstance();
+      public com.PsichiX.JustIDS.message.PlayerInformation.Player getDefaultInstanceForType() {
+        return com.PsichiX.JustIDS.message.PlayerInformation.Player.getDefaultInstance();
       }
 
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId build() {
-        com.PsichiX.JustIDS.message.PlayerInformation.PlayerId result = buildPartial();
+      public com.PsichiX.JustIDS.message.PlayerInformation.Player build() {
+        com.PsichiX.JustIDS.message.PlayerInformation.Player result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId buildPartial() {
-        com.PsichiX.JustIDS.message.PlayerInformation.PlayerId result = new com.PsichiX.JustIDS.message.PlayerInformation.PlayerId(this);
+      public com.PsichiX.JustIDS.message.PlayerInformation.Player buildPartial() {
+        com.PsichiX.JustIDS.message.PlayerInformation.Player result = new com.PsichiX.JustIDS.message.PlayerInformation.Player(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -783,10 +738,6 @@ public final class PlayerInformation {
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
-        result.secondsInGame_ = secondsInGame_;
-        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
-          to_bitField0_ |= 0x00000020;
-        }
         result.state_ = state_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -794,16 +745,16 @@ public final class PlayerInformation {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.PsichiX.JustIDS.message.PlayerInformation.PlayerId) {
-          return mergeFrom((com.PsichiX.JustIDS.message.PlayerInformation.PlayerId)other);
+        if (other instanceof com.PsichiX.JustIDS.message.PlayerInformation.Player) {
+          return mergeFrom((com.PsichiX.JustIDS.message.PlayerInformation.Player)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.PsichiX.JustIDS.message.PlayerInformation.PlayerId other) {
-        if (other == com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.PsichiX.JustIDS.message.PlayerInformation.Player other) {
+        if (other == com.PsichiX.JustIDS.message.PlayerInformation.Player.getDefaultInstance()) return this;
         if (other.hasId()) {
           bitField0_ |= 0x00000001;
           id_ = other.id_;
@@ -821,9 +772,6 @@ public final class PlayerInformation {
           bitField0_ |= 0x00000008;
           ipAddress_ = other.ipAddress_;
           onChanged();
-        }
-        if (other.hasSecondsInGame()) {
-          setSecondsInGame(other.getSecondsInGame());
         }
         if (other.hasState()) {
           setState(other.getState());
@@ -845,10 +793,6 @@ public final class PlayerInformation {
           
           return false;
         }
-        if (!hasSecondsInGame()) {
-          
-          return false;
-        }
         if (!hasState()) {
           
           return false;
@@ -860,11 +804,11 @@ public final class PlayerInformation {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.PsichiX.JustIDS.message.PlayerInformation.PlayerId parsedMessage = null;
+        com.PsichiX.JustIDS.message.PlayerInformation.Player parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.PsichiX.JustIDS.message.PlayerInformation.PlayerId) e.getUnfinishedMessage();
+          parsedMessage = (com.PsichiX.JustIDS.message.PlayerInformation.Player) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -1130,46 +1074,13 @@ public final class PlayerInformation {
         return this;
       }
 
-      // required int32 seconds_in_game = 5;
-      private int secondsInGame_ ;
-      /**
-       * <code>required int32 seconds_in_game = 5;</code>
-       */
-      public boolean hasSecondsInGame() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
-      }
-      /**
-       * <code>required int32 seconds_in_game = 5;</code>
-       */
-      public int getSecondsInGame() {
-        return secondsInGame_;
-      }
-      /**
-       * <code>required int32 seconds_in_game = 5;</code>
-       */
-      public Builder setSecondsInGame(int value) {
-        bitField0_ |= 0x00000010;
-        secondsInGame_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required int32 seconds_in_game = 5;</code>
-       */
-      public Builder clearSecondsInGame() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        secondsInGame_ = 0;
-        onChanged();
-        return this;
-      }
-
       // required .com.PsichiX.JustIDS.PlayerState state = 6;
       private com.PsichiX.JustIDS.message.PlayerInformation.PlayerState state_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerState.WAITING;
       /**
        * <code>required .com.PsichiX.JustIDS.PlayerState state = 6;</code>
        */
       public boolean hasState() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>required .com.PsichiX.JustIDS.PlayerState state = 6;</code>
@@ -1184,7 +1095,7 @@ public final class PlayerInformation {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000010;
         state_ = value;
         onChanged();
         return this;
@@ -1193,21 +1104,21 @@ public final class PlayerInformation {
        * <code>required .com.PsichiX.JustIDS.PlayerState state = 6;</code>
        */
       public Builder clearState() {
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000010);
         state_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerState.WAITING;
         onChanged();
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:com.PsichiX.JustIDS.PlayerId)
+      // @@protoc_insertion_point(builder_scope:com.PsichiX.JustIDS.Player)
     }
 
     static {
-      defaultInstance = new PlayerId(true);
+      defaultInstance = new Player(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:com.PsichiX.JustIDS.PlayerId)
+    // @@protoc_insertion_point(class_scope:com.PsichiX.JustIDS.Player)
   }
 
   public interface PlayerBroadcastInfoOrBuilder
@@ -1223,19 +1134,19 @@ public final class PlayerInformation {
      */
     com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo.BroadcastType getType();
 
-    // required .com.PsichiX.JustIDS.PlayerId player_id = 2;
+    // required .com.PsichiX.JustIDS.Player player_id = 2;
     /**
-     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
      */
     boolean hasPlayerId();
     /**
-     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
      */
-    com.PsichiX.JustIDS.message.PlayerInformation.PlayerId getPlayerId();
+    com.PsichiX.JustIDS.message.PlayerInformation.Player getPlayerId();
     /**
-     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
      */
-    com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder getPlayerIdOrBuilder();
+    com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder getPlayerIdOrBuilder();
 
     // optional double attack_strength = 3;
     /**
@@ -1255,26 +1166,26 @@ public final class PlayerInformation {
      */
     double getAttackStrength();
 
-    // repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;
+    // repeated .com.PsichiX.JustIDS.Player all_players = 4;
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
      * </pre>
      */
-    java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.PlayerId> 
+    java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.Player> 
         getAllPlayersList();
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
      * </pre>
      */
-    com.PsichiX.JustIDS.message.PlayerInformation.PlayerId getAllPlayers(int index);
+    com.PsichiX.JustIDS.message.PlayerInformation.Player getAllPlayers(int index);
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
@@ -1282,22 +1193,22 @@ public final class PlayerInformation {
      */
     int getAllPlayersCount();
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
      * </pre>
      */
-    java.util.List<? extends com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder> 
+    java.util.List<? extends com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder> 
         getAllPlayersOrBuilderList();
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
      * </pre>
      */
-    com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder getAllPlayersOrBuilder(
+    com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder getAllPlayersOrBuilder(
         int index);
   }
   /**
@@ -1363,11 +1274,11 @@ public final class PlayerInformation {
               break;
             }
             case 18: {
-              com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder subBuilder = null;
+              com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder subBuilder = null;
               if (((bitField0_ & 0x00000002) == 0x00000002)) {
                 subBuilder = playerId_.toBuilder();
               }
-              playerId_ = input.readMessage(com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.PARSER, extensionRegistry);
+              playerId_ = input.readMessage(com.PsichiX.JustIDS.message.PlayerInformation.Player.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(playerId_);
                 playerId_ = subBuilder.buildPartial();
@@ -1382,10 +1293,10 @@ public final class PlayerInformation {
             }
             case 34: {
               if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-                allPlayers_ = new java.util.ArrayList<com.PsichiX.JustIDS.message.PlayerInformation.PlayerId>();
+                allPlayers_ = new java.util.ArrayList<com.PsichiX.JustIDS.message.PlayerInformation.Player>();
                 mutable_bitField0_ |= 0x00000008;
               }
-              allPlayers_.add(input.readMessage(com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.PARSER, extensionRegistry));
+              allPlayers_.add(input.readMessage(com.PsichiX.JustIDS.message.PlayerInformation.Player.PARSER, extensionRegistry));
               break;
             }
           }
@@ -1529,25 +1440,25 @@ public final class PlayerInformation {
       return type_;
     }
 
-    // required .com.PsichiX.JustIDS.PlayerId player_id = 2;
+    // required .com.PsichiX.JustIDS.Player player_id = 2;
     public static final int PLAYER_ID_FIELD_NUMBER = 2;
-    private com.PsichiX.JustIDS.message.PlayerInformation.PlayerId playerId_;
+    private com.PsichiX.JustIDS.message.PlayerInformation.Player playerId_;
     /**
-     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
      */
     public boolean hasPlayerId() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
      */
-    public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId getPlayerId() {
+    public com.PsichiX.JustIDS.message.PlayerInformation.Player getPlayerId() {
       return playerId_;
     }
     /**
-     * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+     * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
      */
-    public com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder getPlayerIdOrBuilder() {
+    public com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder getPlayerIdOrBuilder() {
       return playerId_;
     }
 
@@ -1575,32 +1486,32 @@ public final class PlayerInformation {
       return attackStrength_;
     }
 
-    // repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;
+    // repeated .com.PsichiX.JustIDS.Player all_players = 4;
     public static final int ALL_PLAYERS_FIELD_NUMBER = 4;
-    private java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.PlayerId> allPlayers_;
+    private java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.Player> allPlayers_;
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
      * </pre>
      */
-    public java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.PlayerId> getAllPlayersList() {
+    public java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.Player> getAllPlayersList() {
       return allPlayers_;
     }
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
      * </pre>
      */
-    public java.util.List<? extends com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder> 
+    public java.util.List<? extends com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder> 
         getAllPlayersOrBuilderList() {
       return allPlayers_;
     }
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
@@ -1610,30 +1521,30 @@ public final class PlayerInformation {
       return allPlayers_.size();
     }
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
      * </pre>
      */
-    public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId getAllPlayers(int index) {
+    public com.PsichiX.JustIDS.message.PlayerInformation.Player getAllPlayers(int index) {
       return allPlayers_.get(index);
     }
     /**
-     * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+     * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
      *
      * <pre>
      * Only if type = GAME_INFO
      * </pre>
      */
-    public com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder getAllPlayersOrBuilder(
+    public com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder getAllPlayersOrBuilder(
         int index) {
       return allPlayers_.get(index);
     }
 
     private void initFields() {
       type_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo.BroadcastType.STATE;
-      playerId_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.getDefaultInstance();
+      playerId_ = com.PsichiX.JustIDS.message.PlayerInformation.Player.getDefaultInstance();
       attackStrength_ = 0D;
       allPlayers_ = java.util.Collections.emptyList();
     }
@@ -1825,7 +1736,7 @@ public final class PlayerInformation {
         type_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo.BroadcastType.STATE;
         bitField0_ = (bitField0_ & ~0x00000001);
         if (playerIdBuilder_ == null) {
-          playerId_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.getDefaultInstance();
+          playerId_ = com.PsichiX.JustIDS.message.PlayerInformation.Player.getDefaultInstance();
         } else {
           playerIdBuilder_.clear();
         }
@@ -2023,20 +1934,20 @@ public final class PlayerInformation {
         return this;
       }
 
-      // required .com.PsichiX.JustIDS.PlayerId player_id = 2;
-      private com.PsichiX.JustIDS.message.PlayerInformation.PlayerId playerId_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.getDefaultInstance();
+      // required .com.PsichiX.JustIDS.Player player_id = 2;
+      private com.PsichiX.JustIDS.message.PlayerInformation.Player playerId_ = com.PsichiX.JustIDS.message.PlayerInformation.Player.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.PsichiX.JustIDS.message.PlayerInformation.PlayerId, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder> playerIdBuilder_;
+          com.PsichiX.JustIDS.message.PlayerInformation.Player, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder> playerIdBuilder_;
       /**
-       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
        */
       public boolean hasPlayerId() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
        */
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId getPlayerId() {
+      public com.PsichiX.JustIDS.message.PlayerInformation.Player getPlayerId() {
         if (playerIdBuilder_ == null) {
           return playerId_;
         } else {
@@ -2044,9 +1955,9 @@ public final class PlayerInformation {
         }
       }
       /**
-       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
        */
-      public Builder setPlayerId(com.PsichiX.JustIDS.message.PlayerInformation.PlayerId value) {
+      public Builder setPlayerId(com.PsichiX.JustIDS.message.PlayerInformation.Player value) {
         if (playerIdBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2060,10 +1971,10 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
        */
       public Builder setPlayerId(
-          com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder builderForValue) {
+          com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder builderForValue) {
         if (playerIdBuilder_ == null) {
           playerId_ = builderForValue.build();
           onChanged();
@@ -2074,14 +1985,14 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
        */
-      public Builder mergePlayerId(com.PsichiX.JustIDS.message.PlayerInformation.PlayerId value) {
+      public Builder mergePlayerId(com.PsichiX.JustIDS.message.PlayerInformation.Player value) {
         if (playerIdBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
-              playerId_ != com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.getDefaultInstance()) {
+              playerId_ != com.PsichiX.JustIDS.message.PlayerInformation.Player.getDefaultInstance()) {
             playerId_ =
-              com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.newBuilder(playerId_).mergeFrom(value).buildPartial();
+              com.PsichiX.JustIDS.message.PlayerInformation.Player.newBuilder(playerId_).mergeFrom(value).buildPartial();
           } else {
             playerId_ = value;
           }
@@ -2093,11 +2004,11 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
        */
       public Builder clearPlayerId() {
         if (playerIdBuilder_ == null) {
-          playerId_ = com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.getDefaultInstance();
+          playerId_ = com.PsichiX.JustIDS.message.PlayerInformation.Player.getDefaultInstance();
           onChanged();
         } else {
           playerIdBuilder_.clear();
@@ -2106,17 +2017,17 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
        */
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder getPlayerIdBuilder() {
+      public com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder getPlayerIdBuilder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getPlayerIdFieldBuilder().getBuilder();
       }
       /**
-       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
        */
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder getPlayerIdOrBuilder() {
+      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder getPlayerIdOrBuilder() {
         if (playerIdBuilder_ != null) {
           return playerIdBuilder_.getMessageOrBuilder();
         } else {
@@ -2124,14 +2035,14 @@ public final class PlayerInformation {
         }
       }
       /**
-       * <code>required .com.PsichiX.JustIDS.PlayerId player_id = 2;</code>
+       * <code>required .com.PsichiX.JustIDS.Player player_id = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          com.PsichiX.JustIDS.message.PlayerInformation.PlayerId, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder> 
+          com.PsichiX.JustIDS.message.PlayerInformation.Player, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder> 
           getPlayerIdFieldBuilder() {
         if (playerIdBuilder_ == null) {
           playerIdBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.PsichiX.JustIDS.message.PlayerInformation.PlayerId, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder>(
+              com.PsichiX.JustIDS.message.PlayerInformation.Player, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder>(
                   playerId_,
                   getParentForChildren(),
                   isClean());
@@ -2189,27 +2100,27 @@ public final class PlayerInformation {
         return this;
       }
 
-      // repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;
-      private java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.PlayerId> allPlayers_ =
+      // repeated .com.PsichiX.JustIDS.Player all_players = 4;
+      private java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.Player> allPlayers_ =
         java.util.Collections.emptyList();
       private void ensureAllPlayersIsMutable() {
         if (!((bitField0_ & 0x00000008) == 0x00000008)) {
-          allPlayers_ = new java.util.ArrayList<com.PsichiX.JustIDS.message.PlayerInformation.PlayerId>(allPlayers_);
+          allPlayers_ = new java.util.ArrayList<com.PsichiX.JustIDS.message.PlayerInformation.Player>(allPlayers_);
           bitField0_ |= 0x00000008;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.PsichiX.JustIDS.message.PlayerInformation.PlayerId, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder> allPlayersBuilder_;
+          com.PsichiX.JustIDS.message.PlayerInformation.Player, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder> allPlayersBuilder_;
 
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
-      public java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.PlayerId> getAllPlayersList() {
+      public java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.Player> getAllPlayersList() {
         if (allPlayersBuilder_ == null) {
           return java.util.Collections.unmodifiableList(allPlayers_);
         } else {
@@ -2217,7 +2128,7 @@ public final class PlayerInformation {
         }
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
@@ -2231,13 +2142,13 @@ public final class PlayerInformation {
         }
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId getAllPlayers(int index) {
+      public com.PsichiX.JustIDS.message.PlayerInformation.Player getAllPlayers(int index) {
         if (allPlayersBuilder_ == null) {
           return allPlayers_.get(index);
         } else {
@@ -2245,14 +2156,14 @@ public final class PlayerInformation {
         }
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
       public Builder setAllPlayers(
-          int index, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId value) {
+          int index, com.PsichiX.JustIDS.message.PlayerInformation.Player value) {
         if (allPlayersBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2266,14 +2177,14 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
       public Builder setAllPlayers(
-          int index, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder builderForValue) {
+          int index, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder builderForValue) {
         if (allPlayersBuilder_ == null) {
           ensureAllPlayersIsMutable();
           allPlayers_.set(index, builderForValue.build());
@@ -2284,13 +2195,13 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
-      public Builder addAllPlayers(com.PsichiX.JustIDS.message.PlayerInformation.PlayerId value) {
+      public Builder addAllPlayers(com.PsichiX.JustIDS.message.PlayerInformation.Player value) {
         if (allPlayersBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2304,14 +2215,14 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
       public Builder addAllPlayers(
-          int index, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId value) {
+          int index, com.PsichiX.JustIDS.message.PlayerInformation.Player value) {
         if (allPlayersBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2325,14 +2236,14 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
       public Builder addAllPlayers(
-          com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder builderForValue) {
+          com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder builderForValue) {
         if (allPlayersBuilder_ == null) {
           ensureAllPlayersIsMutable();
           allPlayers_.add(builderForValue.build());
@@ -2343,14 +2254,14 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
       public Builder addAllPlayers(
-          int index, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder builderForValue) {
+          int index, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder builderForValue) {
         if (allPlayersBuilder_ == null) {
           ensureAllPlayersIsMutable();
           allPlayers_.add(index, builderForValue.build());
@@ -2361,14 +2272,14 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
       public Builder addAllAllPlayers(
-          java.lang.Iterable<? extends com.PsichiX.JustIDS.message.PlayerInformation.PlayerId> values) {
+          java.lang.Iterable<? extends com.PsichiX.JustIDS.message.PlayerInformation.Player> values) {
         if (allPlayersBuilder_ == null) {
           ensureAllPlayersIsMutable();
           super.addAll(values, allPlayers_);
@@ -2379,7 +2290,7 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
@@ -2396,7 +2307,7 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
@@ -2413,24 +2324,24 @@ public final class PlayerInformation {
         return this;
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder getAllPlayersBuilder(
+      public com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder getAllPlayersBuilder(
           int index) {
         return getAllPlayersFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder getAllPlayersOrBuilder(
+      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder getAllPlayersOrBuilder(
           int index) {
         if (allPlayersBuilder_ == null) {
           return allPlayers_.get(index);  } else {
@@ -2438,13 +2349,13 @@ public final class PlayerInformation {
         }
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
-      public java.util.List<? extends com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder> 
+      public java.util.List<? extends com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder> 
            getAllPlayersOrBuilderList() {
         if (allPlayersBuilder_ != null) {
           return allPlayersBuilder_.getMessageOrBuilderList();
@@ -2453,45 +2364,45 @@ public final class PlayerInformation {
         }
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder addAllPlayersBuilder() {
+      public com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder addAllPlayersBuilder() {
         return getAllPlayersFieldBuilder().addBuilder(
-            com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.getDefaultInstance());
+            com.PsichiX.JustIDS.message.PlayerInformation.Player.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
-      public com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder addAllPlayersBuilder(
+      public com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder addAllPlayersBuilder(
           int index) {
         return getAllPlayersFieldBuilder().addBuilder(
-            index, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.getDefaultInstance());
+            index, com.PsichiX.JustIDS.message.PlayerInformation.Player.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.PsichiX.JustIDS.PlayerId all_players = 4;</code>
+       * <code>repeated .com.PsichiX.JustIDS.Player all_players = 4;</code>
        *
        * <pre>
        * Only if type = GAME_INFO
        * </pre>
        */
-      public java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder> 
+      public java.util.List<com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder> 
            getAllPlayersBuilderList() {
         return getAllPlayersFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.PsichiX.JustIDS.message.PlayerInformation.PlayerId, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder> 
+          com.PsichiX.JustIDS.message.PlayerInformation.Player, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder> 
           getAllPlayersFieldBuilder() {
         if (allPlayersBuilder_ == null) {
           allPlayersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              com.PsichiX.JustIDS.message.PlayerInformation.PlayerId, com.PsichiX.JustIDS.message.PlayerInformation.PlayerId.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerIdOrBuilder>(
+              com.PsichiX.JustIDS.message.PlayerInformation.Player, com.PsichiX.JustIDS.message.PlayerInformation.Player.Builder, com.PsichiX.JustIDS.message.PlayerInformation.PlayerOrBuilder>(
                   allPlayers_,
                   ((bitField0_ & 0x00000008) == 0x00000008),
                   getParentForChildren(),
@@ -2513,10 +2424,10 @@ public final class PlayerInformation {
   }
 
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_PsichiX_JustIDS_PlayerId_descriptor;
+    internal_static_com_PsichiX_JustIDS_Player_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable;
+      internal_static_com_PsichiX_JustIDS_Player_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_descriptor;
   private static
@@ -2532,33 +2443,33 @@ public final class PlayerInformation {
   static {
     java.lang.String[] descriptorData = {
       "\n,com/PsichiX/JustIDS/message/playerInfo" +
-      ".proto\022\023com.PsichiX.JustIDS\"\227\001\n\010PlayerId" +
-      "\022\n\n\002id\030\001 \002(\t\022\014\n\004name\030\002 \002(\t\022\023\n\013life_point" +
-      "s\030\003 \002(\001\022\022\n\nip_address\030\004 \001(\t\022\027\n\017seconds_i" +
-      "n_game\030\005 \002(\005\022/\n\005state\030\006 \002(\0162 .com.Psichi" +
-      "X.JustIDS.PlayerState\"\202\002\n\023PlayerBroadcas" +
-      "tInfo\022D\n\004type\030\001 \002(\01626.com.PsichiX.JustID" +
-      "S.PlayerBroadcastInfo.BroadcastType\0220\n\tp" +
-      "layer_id\030\002 \002(\0132\035.com.PsichiX.JustIDS.Pla" +
-      "yerId\022\027\n\017attack_strength\030\003 \001(\001\0222\n\013all_pl",
-      "ayers\030\004 \003(\0132\035.com.PsichiX.JustIDS.Player" +
-      "Id\"&\n\rBroadcastType\022\t\n\005STATE\020\000\022\n\n\006ATTACK" +
-      "\020\001*h\n\013PlayerState\022\013\n\007WAITING\020\000\022\013\n\007IN_GAM" +
-      "E\020\001\022\013\n\007PLAYING\020\002\022\014\n\010OBSERVER\020\003\022\007\n\003WON\020\004\022" +
-      "\010\n\004LOST\020\005\022\021\n\rGAME_FINISHED\020\006B0\n\033com.Psic" +
-      "hiX.JustIDS.messageB\021PlayerInformation"
+      ".proto\022\023com.PsichiX.JustIDS\"|\n\006Player\022\n\n" +
+      "\002id\030\001 \002(\t\022\014\n\004name\030\002 \002(\t\022\023\n\013life_points\030\003" +
+      " \002(\001\022\022\n\nip_address\030\004 \001(\t\022/\n\005state\030\006 \002(\0162" +
+      " .com.PsichiX.JustIDS.PlayerState\"\376\001\n\023Pl" +
+      "ayerBroadcastInfo\022D\n\004type\030\001 \002(\01626.com.Ps" +
+      "ichiX.JustIDS.PlayerBroadcastInfo.Broadc" +
+      "astType\022.\n\tplayer_id\030\002 \002(\0132\033.com.PsichiX" +
+      ".JustIDS.Player\022\027\n\017attack_strength\030\003 \001(\001" +
+      "\0220\n\013all_players\030\004 \003(\0132\033.com.PsichiX.Just",
+      "IDS.Player\"&\n\rBroadcastType\022\t\n\005STATE\020\000\022\n" +
+      "\n\006ATTACK\020\001*h\n\013PlayerState\022\013\n\007WAITING\020\000\022\013" +
+      "\n\007IN_GAME\020\001\022\013\n\007PLAYING\020\002\022\014\n\010OBSERVER\020\003\022\007" +
+      "\n\003WON\020\004\022\010\n\004LOST\020\005\022\021\n\rGAME_FINISHED\020\006B0\n\033" +
+      "com.PsichiX.JustIDS.messageB\021PlayerInfor" +
+      "mation"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_com_PsichiX_JustIDS_PlayerId_descriptor =
+          internal_static_com_PsichiX_JustIDS_Player_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_com_PsichiX_JustIDS_PlayerId_fieldAccessorTable = new
+          internal_static_com_PsichiX_JustIDS_Player_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_PsichiX_JustIDS_PlayerId_descriptor,
-              new java.lang.String[] { "Id", "Name", "LifePoints", "IpAddress", "SecondsInGame", "State", });
+              internal_static_com_PsichiX_JustIDS_Player_descriptor,
+              new java.lang.String[] { "Id", "Name", "LifePoints", "IpAddress", "State", });
           internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_com_PsichiX_JustIDS_PlayerBroadcastInfo_fieldAccessorTable = new

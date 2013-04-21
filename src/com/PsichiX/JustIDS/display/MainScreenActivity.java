@@ -14,30 +14,28 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.PsichiX.JustIDS.MainActivity;
 import com.PsichiX.JustIDS.R;
-import com.PsichiX.JustIDS.SpectateActivity;
-import com.PsichiX.JustIDS.message.PlayerInformation.PlayerId;
+import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.services.WifiService;
 import com.PsichiX.JustIDS.trash.AudioRecordTest;
 
 public class MainScreenActivity extends Activity {
-    private String tag = "MainScreenActivity";
+    private String TAG = MainScreenActivity.class.getName();
 
     public static String playerName;
 
-    private PlayerId[] allPlayers = new PlayerId[0];
-    private PlayerId myPlayerId;
+    private Player[] allPlayers = new Player[0];
+    private Player myPlayerId;
 
     LayoutInflater inflater;
     WifiService wifi;
-    private ArrayAdapter<PlayerId> playersAdapter;
+    private ArrayAdapter<Player> playersAdapter;
 
     private class GameNotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            MainScreenActivity.this.myPlayerId = (PlayerId) intent.getSerializableExtra("MY_PLAYER");
-            MainScreenActivity.this.allPlayers = (PlayerId[]) intent.getSerializableExtra("ALL_PLAYERS");
+            MainScreenActivity.this.myPlayerId = (Player) intent.getSerializableExtra("MY_PLAYER");
+            MainScreenActivity.this.allPlayers = (Player[]) intent.getSerializableExtra("ALL_PLAYERS");
             setPlayersView();
         }
     }
@@ -52,16 +50,16 @@ public class MainScreenActivity extends Activity {
         wifi = new WifiService(this);
         if (!wifi.isWifiInWorkingState()) {
             startActivity(new Intent(this, WifiErrorActivity.class));
-            Log.d(tag, "WIFI DISABLED!");
+            Log.d(TAG, "WIFI DISABLED!");
             this.finish();
             return;
         } else {
-            Log.d(tag, "WIFI ENABLED, carry on");
+            Log.d(TAG, "WIFI ENABLED, carry on");
         }
 
         playerName = ProfileActivity.generateName();
 
-        playersAdapter = new ArrayAdapter<PlayerId>(this,R.layout.listitem_player) {
+        playersAdapter = new ArrayAdapter<Player>(this,R.layout.listitem_player) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row;
@@ -94,7 +92,7 @@ public class MainScreenActivity extends Activity {
         playerNameView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(tag, "clicked: PROFILE ");
+                Log.d(TAG, "clicked: PROFILE ");
                 gotoProfile();
             }
         });
@@ -103,7 +101,7 @@ public class MainScreenActivity extends Activity {
         btnFight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(tag, "clicked: FIGHT ");
+                Log.d(TAG, "clicked: FIGHT ");
                 gotoFight();
             }
         });
@@ -112,7 +110,7 @@ public class MainScreenActivity extends Activity {
         btnHowto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(tag, "clicked: HOWTO ");
+                Log.d(TAG, "clicked: HOWTO ");
                 gotoHowto();
             }
         });
@@ -130,7 +128,7 @@ public class MainScreenActivity extends Activity {
         if (allPlayers.length > 0) {
             //JE�LI GRACZE SA W SIECI, TO SUPER:
             playersAdapter.clear();
-            for (PlayerId playerId: allPlayers) {
+            for (Player playerId: allPlayers) {
                 playersAdapter.add(playerId);
             }
             playersAdapter.notifyDataSetChanged();
@@ -150,7 +148,9 @@ public class MainScreenActivity extends Activity {
     }
 
     public void gotoFight() {
-        startActivity(new Intent(this, MainActivity.class));
+        Intent intent = new Intent("com.PsichiX.JustIDS.joinGame");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        startActivity(new Intent(this, GameActivity.class));
     }
 
     public void gotoHowto() {

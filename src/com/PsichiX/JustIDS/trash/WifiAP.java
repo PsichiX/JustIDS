@@ -24,6 +24,8 @@ import com.PsichiX.JustIDS.R;
  */
 public class WifiAP extends Activity {
 
+    private static final String TAG = WifiAP.class.getName();
+
     // boolean mIsWifiEnabled = false;
     private static final int WIFI_AP_STATE_UNKNOWN = -1;
     private static final int WIFI_AP_STATE_DISABLING = 0;
@@ -77,7 +79,7 @@ public class WifiAP extends Activity {
      * @return WifiAP state
      */
     private int setWifiApEnabled(boolean enabled) {
-        Log.d("WifiAP", "*** setWifiApEnabled CALLED **** " + enabled);
+        Log.d(TAG, "*** setWifiApEnabled CALLED **** " + enabled);
         if (enabled && wifi.getConnectionInfo() !=null) {
             wifi.setWifiEnabled(false);
             try {Thread.sleep(1500);} catch (Exception e) {}
@@ -94,7 +96,7 @@ public class WifiAP extends Activity {
             Method method2 = wifi.getClass().getMethod("getWifiApState");
             state = (Integer) method2.invoke(wifi);
         } catch (Exception e) {
-           Log.e(WIFI_SERVICE, e.getMessage());
+           Log.e(TAG, e.getMessage());
            // toastText += "ERROR " + e.getMessage();
         }
 
@@ -124,7 +126,7 @@ public class WifiAP extends Activity {
             Method method2 = wifi.getClass().getMethod("getWifiApState");
             state = (Integer) method2.invoke(wifi);
         } catch (Exception e) {}
-        Log.d("WifiAP", "getWifiAPState.state " + (state==-1?"UNKNOWN":WIFI_STATE_TEXTSTATE[state]));
+        Log.d(TAG, "getWifiAPState.state " + (state==-1?"UNKNOWN":WIFI_STATE_TEXTSTATE[state]));
         return state;
     }
     

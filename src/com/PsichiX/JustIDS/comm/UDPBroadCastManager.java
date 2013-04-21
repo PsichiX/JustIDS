@@ -19,7 +19,9 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 
 
-public class BroadCastManager implements BroadcastManagerInterface {
+public class UDPBroadCastManager implements BroadcastManagerInterface {
+
+    private static final String TAG = UDPBroadCastManager.class.getName();
 
     public static interface ChainedReceiver {
         void forwardReceivedMessage(PlayerBroadcastInfo pbi);
@@ -31,14 +33,14 @@ public class BroadCastManager implements BroadcastManagerInterface {
 
     private LinkedList<ChainedReceiver> chainedReceiverList = new LinkedList<ChainedReceiver>();
 	
-	public BroadCastManager(Context context) {
+	public UDPBroadCastManager(Context context) {
 		this.context = context;
 		try {
-			Log.i("INFO", "Opening datagram socket");
+			Log.v(TAG, "Opening datagram socket");
 			socket = new DatagramSocket(PORT);
 			socket.setSoTimeout(200);
 		} catch (SocketException e) {
-			Log.e("SOCKET", e.getMessage());
+			Log.e(TAG, e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -67,7 +69,7 @@ public class BroadCastManager implements BroadcastManagerInterface {
 							    getBroadcastAddress(context), PORT);
 							socket.send(packet);
 					} catch (IOException e) {
-						Log.e("SOCKET", e.getMessage());
+						Log.e(TAG, e.getMessage(), e);
 					}
 				}
 			}.start();
@@ -79,10 +81,10 @@ public class BroadCastManager implements BroadcastManagerInterface {
 		try {
 			socket.receive(packet);
 		} catch (InterruptedIOException ioe) {
-			Log.i("SOCKET", "Timeout");
+			Log.v(TAG, "Timeout");
 			return null;
 		} catch (IOException e) {
-			Log.e("SOCKET", e.getMessage());
+			Log.e(TAG, e.getMessage(), e);
 		}
 		int len = packet.getLength();
 		byte [] newArray = new byte[len];
@@ -126,7 +128,7 @@ public class BroadCastManager implements BroadcastManagerInterface {
             }
 			return pbi;
 		} catch (InvalidProtocolBufferException e) {
-			Log.e("ERR", e.getMessage());
+			Log.e(TAG, e.getMessage(), e);
 			return null;
 		}
 	}

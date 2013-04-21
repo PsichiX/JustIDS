@@ -1,5 +1,6 @@
-package com.PsichiX.JustIDS;
+package com.PsichiX.JustIDS.states;
 
+import com.PsichiX.JustIDS.R;
 import com.PsichiX.XenonCoreDroid.XeApplication.State;
 import com.PsichiX.XenonCoreDroid.Framework.Graphics.Camera2D;
 import com.PsichiX.XenonCoreDroid.Framework.Graphics.Font;

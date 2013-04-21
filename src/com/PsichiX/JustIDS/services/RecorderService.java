@@ -2,8 +2,7 @@ package com.PsichiX.JustIDS.services;
 
 import java.io.IOException;
 
-import com.PsichiX.JustIDS.GameState;
-import com.PsichiX.JustIDS.trash.AudioRecordTest;
+import com.PsichiX.JustIDS.states.GameState;
 
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -13,7 +12,7 @@ import android.util.Log;
 
 public class RecorderService {
 	
-    private static final String LOG_TAG = "AudioRecordTest";
+    private static final String TAG = RecorderService.class.getName();
     private static String mFileName = null;
 
     private MediaRecorder mRecorder = null;
@@ -40,7 +39,7 @@ public class RecorderService {
             mRecorder.prepare();
         } catch (IOException e) {
         	e.printStackTrace();
-            Log.e(LOG_TAG, "prepare() failed");
+            Log.e(TAG, "prepare() failed", e);
         }
 
         mRecorder.start();

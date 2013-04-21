@@ -1,12 +1,14 @@
-package com.PsichiX.JustIDS;
+package com.PsichiX.JustIDS.display;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Vibrator;
 import android.support.v4.content.LocalBroadcastManager;
+import com.PsichiX.JustIDS.states.GameState;
 import com.PsichiX.JustIDS.game.GameStateMachine.GameStateNotificationEnum;
-import com.PsichiX.JustIDS.message.PlayerInformation.PlayerId;
+import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.services.RecorderService;
 import com.PsichiX.XenonCoreDroid.Framework.Graphics.Graphics;
 import com.PsichiX.XenonCoreDroid.Framework.Utils.Utils;
@@ -15,11 +17,24 @@ import com.PsichiX.XenonCoreDroid.XeApplication;
 import com.PsichiX.XenonCoreDroid.XePhoton;
 import com.PsichiX.XenonCoreDroid.XeSense;
 
-public class MainActivity extends XeActivity {
+public class GameActivity extends XeActivity {
     public static XeApplication app;
 	RecorderService rs;
 	private VibratorUtil vibratorUtil;
     private GameState gs;
+
+
+    private static class VibratorUtil {
+       Vibrator v;
+
+        public VibratorUtil(Context c) {
+            v = (Vibrator) c.getSystemService(VIBRATOR_SERVICE);
+        }
+
+        public void vibrate(int repeat)	{
+            v.vibrate(repeat);
+        }
+    }
 
     private class GameNotificationReceiver extends BroadcastReceiver {
 
@@ -27,8 +42,8 @@ public class MainActivity extends XeActivity {
         public void onReceive(Context context, Intent intent) {
             int oridinal = intent.getIntExtra("NOTIFICATION_TYPE", -1);
             GameStateNotificationEnum notification = GameStateNotificationEnum.values()[oridinal];
-            PlayerId myPlayerId = (PlayerId) intent.getSerializableExtra("MY_PLAYER");
-            PlayerId allPlayers[] = (PlayerId[]) intent.getSerializableExtra("ALL_PLAYERS");
+            Player myPlayerId = (Player) intent.getSerializableExtra("MY_PLAYER");
+            Player allPlayers[] = (Player[]) intent.getSerializableExtra("ALL_PLAYERS");
 
             switch (notification) {
                 case SOMETHING_CHANGED:
@@ -58,7 +73,7 @@ public class MainActivity extends XeActivity {
                     break;
                 case LIFE_DECREASED:
                     // TODO: This is an indication that after hit our life has actually been decreased.
-                    // You can read the current life points by runnning gm.myPlayerId().
+                    // You can read the current life points by runnning gm.getMyPlayerId().
                     // We should somehow indicate that life has been decreased.
                     // Note: this is only notified to players, not to observers. Observers just see (SOMETHING CHANGED)
                     vibratorUtil.vibrate(500);
@@ -120,9 +135,6 @@ public class MainActivity extends XeActivity {
 				.setClearBackground(true, 0.0f, 0.0f, 0.0f, 1.0f);
 		getApplicationCore().getSense().use(XeSense.Type.LINEAR_ACCELERATION);
 		getApplicationCore().run(gs);
-
-        Intent intent = new Intent("com.PsichiX.JustIDS.join");
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
 
@@ -131,4 +143,5 @@ public class MainActivity extends XeActivity {
 		super.onDestroy();
 		rs.stopRecording();
 	}
+
 }

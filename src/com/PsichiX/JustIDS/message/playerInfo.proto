@@ -13,12 +13,11 @@ enum PlayerState {
 	GAME_FINISHED = 6;
 }
 
-message PlayerId {
+message Player {
 	required string id = 1;
 	required string name = 2;
 	required double life_points = 3;
 	optional string ip_address = 4;	
-	required int32 seconds_in_game = 5;
 	required PlayerState state = 6;
 }
 
@@ -28,7 +27,7 @@ message PlayerBroadcastInfo {
     	ATTACK = 1;
     }
     required BroadcastType type = 1;
-	required PlayerId player_id = 2;
+	required Player player_id = 2;
 	optional double attack_strength = 3; // Only if type = ATTACK 
-	repeated PlayerId all_players = 4; // Only if type = GAME_INFO
+	repeated Player all_players = 4; // Only if type = GAME_INFO
 }

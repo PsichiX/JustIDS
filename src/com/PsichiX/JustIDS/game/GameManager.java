@@ -9,7 +9,7 @@ import com.PsichiX.JustIDS.comm.BroadcastManagerInterface;
 import com.PsichiX.JustIDS.game.GameStateMachine.GameStateChangeListener;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo.BroadcastType;
-import com.PsichiX.JustIDS.message.PlayerInformation.PlayerId;
+import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerState;
 
 /**
@@ -30,7 +30,7 @@ public class GameManager {
 	private static final double MIN_LIFE_POINTS = 0.01;
 	static int UNIT_OF_TIME_MILLIS = 100;
 
-	private HashMap<String, PlayerId> players = new HashMap<String, PlayerId>();
+	private HashMap<String, Player> players = new HashMap<String, Player>();
 	
 	private volatile double lifePointsOfMine;
 	BroadcastManagerInterface bcm;
@@ -42,20 +42,16 @@ public class GameManager {
 	private String androidId;
 	private String name;
 	boolean paused;
-    private boolean broadCasting = false;
 
-    public GameManager(BroadcastManagerInterface broadcastManager, String androidId, GameStateChangeListener listener) {
+    public GameManager(BroadcastManagerInterface broadcastManager, String androidId,
+                       String name, GameStateChangeListener listener) {
 		this.bcm = broadcastManager;
 		this.androidId = androidId;
 		this.gameStateMachine = new GameStateMachine(androidId, listener);
-	}
-
-    public void readyToPlay(String name) {
         this.name = name;
         resetGame();
         resume();
-        broadCasting = true;
-    }
+	}
 
 	/**
 	 * Determines whether the broadcast message received is one that we are interested in.
@@ -125,7 +121,7 @@ public class GameManager {
 			if (players.keySet().size() == 0) {
 				return false;
 			}
-			for (PlayerId player : players.values()) {
+			for (Player player : players.values()) {
 				if (player.getState() == PlayerState.LOST && !gameStateMachine.isMyself(player)) {
 					return true;
 				}
@@ -145,7 +141,7 @@ public class GameManager {
 		if (players.keySet().size() == 0) {
 			return false;
 		}
-		for (PlayerId player : getAllPlayersInfo()) {
+		for (Player player : getAllPlayersInfo()) {
 			if (player.getState() == PlayerState.WON || player.getState() == PlayerState.LOST) {
 				return true;
 			}
@@ -153,18 +149,16 @@ public class GameManager {
 		return false;
 	}
 	
-	public PlayerId myPlayerId() {
-		return PlayerId.newBuilder().setId(androidId).setName(name)
+	public Player getMyPlayerId() {
+		return Player.newBuilder().setId(androidId).setName(name)
 				.setLifePoints(lifePointsOfMine).setState(gameStateMachine.getMyState())
-				.setSecondsInGame(0). // For now. TODO: add tracking
-				build();
+				.build();
 	}
 	
-	private PlayerId copyPlayerIdAndSetState(PlayerId originalPlayerId, PlayerState playerState) {
-		return PlayerId.newBuilder().setId(originalPlayerId.getId()).setName(originalPlayerId.getName())
+	private Player copyPlayerIdAndSetState(Player originalPlayerId, PlayerState playerState) {
+		return Player.newBuilder().setId(originalPlayerId.getId()).setName(originalPlayerId.getName())
 				.setLifePoints(originalPlayerId.getLifePoints()).setState(playerState)
-				.setSecondsInGame(originalPlayerId.getSecondsInGame()).
-				build();
+                .build();
 	}
 	
 	private boolean isAttackSuccessfull(PlayerBroadcastInfo pbi) {
@@ -187,7 +181,7 @@ public class GameManager {
 	}
 
 	public void sendMyState() {
-		PlayerId myId = myPlayerId();
+		Player myId = getMyPlayerId();
 		players.put(myId.getId(), myId);
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder().
 				setPlayerId(myId).
@@ -196,15 +190,15 @@ public class GameManager {
 		this.bcm.sendBroadcast(info);
 	}
 
-	public boolean isMyself(PlayerId player) {
+	public boolean isMyself(Player player) {
 		return player.getId().equals(androidId);
 	}
 
-	private Collection<PlayerId> getAllPlayersInfo() {
-		Collection<PlayerId> playerValues =  players.values();
+	private Collection<Player> getAllPlayersInfo() {
+		Collection<Player> playerValues =  players.values();
 		if (gameStateMachine.amIInGame()) {
-			Collection<PlayerId> newList = new LinkedList<PlayerId>();
-			for (PlayerId player : playerValues) {
+			Collection<Player> newList = new LinkedList<Player>();
+			for (Player player : playerValues) {
 				if (GameStateMachine.isInGame(player.getState()) && !isMyself(player)) {
 					if (didILoose() ) {
 						newList.add(copyPlayerIdAndSetState(player, PlayerState.WON));
@@ -233,7 +227,7 @@ public class GameManager {
 			return;
 		}
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder()
-				.setPlayerId(myPlayerId()).setAttackStrength(strength)
+				.setPlayerId(getMyPlayerId()).setAttackStrength(strength)
 				.setType(BroadcastType.ATTACK).build();
 		this.bcm.sendBroadcast(info);
 	}
@@ -248,15 +242,12 @@ public class GameManager {
 	}
 
 	/**
-	 * Starts the game. In case the player is not in "Waiting" state It will
+	 * Joins the game. In case the player is not in "Waiting" state It will
 	 * return false and will not start the game.
 	 * 
 	 * @return
 	 */
 	public synchronized boolean joinGame() {
-        if (!broadCasting) {
-            throw new RuntimeException("BroadCasting has not started. Pleas run readyToPlay first. ");
-        }
 		boolean res = gameStateMachine.joinGame();
 		sendMyState();
 		gameStateMachine.startGameIfAllReady(players.values());
@@ -302,9 +293,9 @@ public class GameManager {
 		return name;
 	}
 
-	public synchronized PlayerId[] getPlayers() {
-        Collection<PlayerId> values = players.values();
-        return values.toArray(new PlayerId[values.size()]);
+	public synchronized Player[] getPlayers() {
+        Collection<Player> values = players.values();
+        return values.toArray(new Player[values.size()]);
 	}
 	
 	/**

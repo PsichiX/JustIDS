@@ -19,16 +19,14 @@ import android.os.Environment;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.content.Context;
 import android.util.Log;
-import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
 
 import java.io.IOException;
 
-import com.PsichiX.JustIDS.GameState;
+import com.PsichiX.JustIDS.states.GameState;
 
 
 public class AudioRecordTest extends Activity
@@ -41,7 +39,7 @@ public class AudioRecordTest extends Activity
 	int ITERATIONS_PER_SECOND = 30;
 	int lastlevel =0;
 	
-    private static final String LOG_TAG = "AudioRecordTest";
+    private static final String TAG = AudioRecordTest.class.getName();
     private static String mFileName = null;
 
     private RecordButton mRecordButton = null;
@@ -73,7 +71,7 @@ public class AudioRecordTest extends Activity
             mPlayer.prepare();
             mPlayer.start();
         } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
+            Log.e(TAG, "prepare() failed", e);
         }
     }
 
@@ -98,7 +96,7 @@ public class AudioRecordTest extends Activity
             mRecorder.prepare();
         } catch (IOException e) {
         	e.printStackTrace();
-            Log.e(LOG_TAG, "prepare() failed");
+            Log.e(TAG, "prepare() failed", e);
         }
 
         mRecorder.start();

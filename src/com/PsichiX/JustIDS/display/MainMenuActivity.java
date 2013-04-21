@@ -1,9 +1,6 @@
 package com.PsichiX.JustIDS.display;
 
-import com.PsichiX.JustIDS.MainActivity;
 import com.PsichiX.JustIDS.R;
-import com.PsichiX.JustIDS.R.layout;
-import com.PsichiX.JustIDS.R.menu;
 import com.PsichiX.JustIDS.trash.AudioRecordTest;
 
 import android.net.wifi.WifiManager;
@@ -51,7 +48,7 @@ public class MainMenuActivity extends Activity {
     public void gotoFight()	{
     	WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
     	if (wifi.isWifiEnabled()){
-    		startActivity(new Intent(this, MainActivity.class));
+    		startActivity(new Intent(this, GameActivity.class));
     	}
     	else	{
     		Toast.makeText(this, "TURN ON WIFI, THEN RESTART THE GAME!!!", Toast.LENGTH_LONG).show();
@@ -59,7 +56,7 @@ public class MainMenuActivity extends Activity {
     }
    
     public void gotoSpectate()	{
-    	//TODO: Jak to ma wygl¹dac ? 
+    	//TODO: Jak to ma wyglï¿½dac ? 
     	//lista graczy z health i powiadomienia kto co rzucil?
     }
     
