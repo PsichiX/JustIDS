@@ -21,12 +21,12 @@ public class Simulator {
 
             try {
                 if (SIMULATE_OBSERVERS) {
-                    Thread.sleep(400);
+                    Thread.sleep(1000);
                     simulatedOservers = new SimulatedPlayer[SIMULATED_OBSERVER_NUMBER];
                     for (int i = 0; i < SIMULATED_OBSERVER_NUMBER; i++) {
                         simulatedOservers[i] = new SimulatedPlayer(context, "Observer-" + i,
                                 true, dependentBroadCastManager);
-                        Thread.sleep(400);
+                        Thread.sleep(1000);
                     }
                 }
             } catch (InterruptedException e) {
