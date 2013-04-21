@@ -27,7 +27,7 @@ message PlayerBroadcastInfo {
     	ATTACK = 1;
     }
     required BroadcastType type = 1;
-	required Player player_id = 2;
+	required Player my_player = 2;
 	optional double attack_strength = 3; // Only if type = ATTACK 
 	repeated Player all_players = 4; // Only if type = GAME_INFO
 }

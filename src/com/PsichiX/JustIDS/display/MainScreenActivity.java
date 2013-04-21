@@ -8,19 +8,20 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.*;
 import com.PsichiX.JustIDS.R;
 import com.PsichiX.JustIDS.game.GameStateMachine.GameStateNotificationEnum;
 import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.services.WifiService;
+import com.PsichiX.JustIDS.simulator.SimulatedScenarioEnum;
 import com.PsichiX.JustIDS.trash.AudioRecordTest;
 
 public class MainScreenActivity extends Activity {
+
+    private static boolean ENABLE_SIMULATION = true;
+
     private String TAG = MainScreenActivity.class.getName();
 
     public static String playerName;
@@ -170,9 +171,47 @@ public class MainScreenActivity extends Activity {
         startActivity(new Intent(this, SpectateActivity.class));
     }
 
+
+    public void startSimulation(SimulatedScenarioEnum scenarioEnum) {
+        Intent intent = new Intent("com.PsichiX.JustIDS.startSimulation");
+        intent.putExtra("SCENARIO", scenarioEnum.ordinal());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_start_simulation_fight_back_stronger:
+                startSimulation(SimulatedScenarioEnum.FIGHT_BACK_STRONGER);
+                break;
+            case R.id.menu_start_simulation_fight_back_weaker:
+                startSimulation(SimulatedScenarioEnum.FIGHT_BACK_WEAKER);
+                break;
+            case R.id.menu_start_simulation_fight_continuous:
+                startSimulation(SimulatedScenarioEnum.ATTACK_CONTINUOUSLY);
+                break;
+            case R.id.menu_start_simulation_fight_counter_attack:
+                startSimulation(SimulatedScenarioEnum.COOUNTER_ATTACK_QUICKLY);
+                break;
+            case R.id.menu_start_simulation_fight_observer_only:
+                startSimulation(SimulatedScenarioEnum.OBSERVER_ONLY);
+                break;
+            case R.id.menu_start_simulation_fight_passive:
+                startSimulation(SimulatedScenarioEnum.DONT_FIGHT_BACK);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main_screen, menu);
-        return true;
+        if (ENABLE_SIMULATION) {
+            getMenuInflater().inflate(R.menu.activity_main_screen, menu);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

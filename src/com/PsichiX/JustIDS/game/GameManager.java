@@ -1,5 +1,6 @@
 package com.PsichiX.JustIDS.game;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,6 +26,8 @@ import com.PsichiX.JustIDS.message.PlayerInformation.PlayerState;
  */
 public class GameManager {
 
+    // Here we are using java logger not the android logger on purpose...
+    // We want to test the game manager logic outside of android
 	Logger logger = Logger.getLogger(GameManager.class.getName());
 
 	private static final double MIN_LIFE_POINTS = 0.01;
@@ -49,9 +52,12 @@ public class GameManager {
 		this.androidId = androidId;
 		this.gameStateMachine = new GameStateMachine(androidId, listener);
         this.name = name;
+	}
+
+    public void startGameManager() {
         resetGame();
         resume();
-	}
+    }
 
 	/**
 	 * Determines whether the broadcast message received is one that we are interested in.
@@ -61,12 +67,12 @@ public class GameManager {
 	 */
 	public boolean shouldICareAboutThisBroadcast(PlayerBroadcastInfo pbi) {
 		if (hasFinished()) {
-			logger.info(name + ":Skipping message (I finished already): " + pbi);
+			logger.fine(name + ":Skipping message (I finished already): " + pbi);
 			return false;
 		}
-		boolean mine = pbi.getPlayerId().getId().equals(androidId);
+		boolean mine = pbi.getMyPlayer().getId().equals(androidId);
 		if (mine) {
-			logger.info(name + ":Skipping message (It's message from self): " + pbi);
+			logger.fine(name + ":Skipping message (It's message from self): " + pbi);
 		}
 		return !mine;
 	}
@@ -77,16 +83,36 @@ public class GameManager {
 	 * 
 	 * @param pbi
 	 */
-	synchronized void receiveMessage(PlayerBroadcastInfo pbi) {
+	synchronized boolean receiveMessage(PlayerBroadcastInfo pbi) {
+        boolean somethingHasChanged = false;
+        for (Player newPlayer: pbi.getAllPlayersList()) {
+            String playerId = newPlayer.getId();
+            if (playerId.equals(getMyPlayer().getId())) {
+                //skip myself
+                continue;
+            }
+            Player oldPlayer = players.get(playerId);
+            if (oldPlayer != null) {
+                byte oldPlayerAsByteArray[] = oldPlayer.toByteArray();
+                byte newPlayerAsByteArray[] = newPlayer.toByteArray();
+                if (!Arrays.equals(oldPlayerAsByteArray, newPlayerAsByteArray)) {
+                    somethingHasChanged = true;
+                    players.put(playerId, newPlayer);
+                }
+            } else {
+                somethingHasChanged = true;
+                players.put(playerId, newPlayer);
+            }
+        }
 		if (pbi.getType() == BroadcastType.STATE) {
-			players.put(pbi.getPlayerId().getId(), pbi.getPlayerId());
 			gameStateMachine.startGameIfAllReady(players.values());
 		} else if (isAttackSuccessfull(pbi)) {
-			logger.info("Attack successful" + pbi);
+			logger.info("Attack successful" + pbi + " to " + getMyPlayer());
 			decreaseLifePointsOfMine(pbi.getAttackStrength());
 			gameStateMachine.hit();
 			gameStateMachine.successfulAttack();
 		}
+        return somethingHasChanged;
 	}
 
 	/**
@@ -149,7 +175,7 @@ public class GameManager {
 		return false;
 	}
 	
-	public Player getMyPlayerId() {
+	public Player getMyPlayer() {
 		return Player.newBuilder().setId(androidId).setName(name)
 				.setLifePoints(lifePointsOfMine).setState(gameStateMachine.getMyState())
 				.build();
@@ -163,7 +189,7 @@ public class GameManager {
 	
 	private boolean isAttackSuccessfull(PlayerBroadcastInfo pbi) {
 		boolean res = gameStateMachine.amIInGame() && pbi.getAttackStrength() > 0.01;
-		logger.info("Checked if attack is successful:" + pbi + ":" + res);
+		logger.fine("Checked if attack is successful:" + pbi + ":" + res);
 		return res;
 	}
 
@@ -181,10 +207,10 @@ public class GameManager {
 	}
 
 	public void sendMyState() {
-		Player myId = getMyPlayerId();
-		players.put(myId.getId(), myId);
+		Player myPlayer = getMyPlayer();
+		players.put(myPlayer.getId(), myPlayer);
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder().
-				setPlayerId(myId).
+				setMyPlayer(myPlayer).
 				setType(BroadcastType.STATE).
 				addAllAllPlayers(getAllPlayersInfo()).build();
 		this.bcm.sendBroadcast(info);
@@ -227,7 +253,7 @@ public class GameManager {
 			return;
 		}
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder()
-				.setPlayerId(getMyPlayerId()).setAttackStrength(strength)
+				.setMyPlayer(getMyPlayer()).setAttackStrength(strength)
 				.setType(BroadcastType.ATTACK).build();
 		this.bcm.sendBroadcast(info);
 	}
@@ -279,7 +305,7 @@ public class GameManager {
 	 * Destroys the object. Should be called whenever we stop needing the game manager.
 	 * 
 	 */
-	public void destroy() {
+	public void stopGameManager() {
 		pause();
 		bcm.destroy();
 	}

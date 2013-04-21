@@ -1,14 +1,11 @@
 package com.PsichiX.JustIDS.game;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.logging.Logger;
-
 import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerState;
 
 public class GameStateMachine {
-
-	Logger logger = Logger.getLogger(GameStateMachine.class.getName());
 
 	private GameStateChangeListener notificationStateListener;
 
@@ -102,6 +99,7 @@ public class GameStateMachine {
 	}
 
 	void runSomethingChangedListener() {
+        // run it only if something really changed
 		sendNotification(GameStateNotificationEnum.SOMETHING_CHANGED);
 	}
 

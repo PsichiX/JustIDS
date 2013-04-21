@@ -23,11 +23,11 @@ final class PingThread extends Thread {
 			if (gameStateMachine.isStateFinished()) {
 				if (--finishGameBroadcastCount > 0) {
 					gameManager.sendMyState();
-					gameManager.goToSleep(1 * GameManager.UNIT_OF_TIME_MILLIS);
+					gameManager.goToSleep(2 * GameManager.UNIT_OF_TIME_MILLIS); // broadcast finished state every 200 ms
 				}
 			} else {
 				gameManager.sendMyState();
-				gameManager.goToSleep(3 * GameManager.UNIT_OF_TIME_MILLIS);
+				gameManager.goToSleep(10 * GameManager.UNIT_OF_TIME_MILLIS); // ping every second
 			}
 		}
 	}

@@ -20,9 +20,11 @@ import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerState;
 
 public class GameTest extends TestCase {
+    // Here we are using java logger not the android logger on purpose...
+    // We want to test the game manager logic outside of android
 	private static Logger logger = Logger.getLogger(GameTest.class.getName());
 	
-	private static final int TIME_UNIT = 10;
+	private static final int TIME_UNIT = 50;
 
 	private class MockListener implements GameStateChangeListener {
 
@@ -36,7 +38,7 @@ public class GameTest extends TestCase {
 		public void notifyStateChange(
 				GameStateNotificationEnum gameStateNotification) {
 			notifications.add(gameStateNotification);
-			logger.info("Listener:" + number + ":Received notification " + gameStateNotification);
+			logger.fine("Listener:" + number + ":Received notification " + gameStateNotification);
 		}
 		
 		@Override
@@ -75,198 +77,197 @@ public class GameTest extends TestCase {
 			assertEquals(message, expectedPoints[i], points[i],0.01);
 		}
 	}
-	
+
+    private GameManager [] createAndStartGameManagers(int numberOfGameManagers){
+        GameManager gameManagers[] = new GameManager[numberOfGameManagers];
+        for (int i=0; i< numberOfGameManagers; i++) {
+            gameManagers[i] = new GameManager(new MockBroadCastManager(), "id" + i, "Name" + i, new MockListener(i));
+            gameManagers[i].startGameManager();
+        }
+        return gameManagers;
+    }
+
+    private void stopGameManagers(GameManager[] gameManagers) {
+        for (int i=0; i<gameManagers.length; i++) {
+            gameManagers[i].stopGameManager();
+        }
+    }
+
+    private void printGameManagers(GameManager[] gameManagers) {
+        for (int i=0; i<gameManagers.length; i++) {
+            logger.info("GM" + i + ":" + gameManagers[i].getGameStateMachine().getNotificationStateListener().toString());
+        }
+    }
+
 	@Test
 	public void testSimpleGameWithTwoPeopleOneWinning() throws Exception {
-		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", "Name 1", new MockListener(1));
-		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", "Name 2", new MockListener(2));
-		assertEquals(PlayerState.WAITING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
+        GameManager[] gms = createAndStartGameManagers(2);
+
+		assertEquals(PlayerState.WAITING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[1].getGameStateMachine().getMyState());
 		Thread.sleep(4*TIME_UNIT);
-		gm1.joinGame();
+        gms[0].joinGame();
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.IN_GAME,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
-		gm2.joinGame();
+		assertEquals(PlayerState.IN_GAME,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[1].getGameStateMachine().getMyState());
+        gms[1].joinGame();
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.PLAYING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.PLAYING,gm2.getGameStateMachine().getMyState());
-		gm1.attackWithStrength(100.0);
+		assertEquals(PlayerState.PLAYING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.PLAYING,gms[1].getGameStateMachine().getMyState());
+        gms[0].attackWithStrength(100.0);
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.WON,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.LOST,gm2.getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WON,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.LOST,gms[1].getGameStateMachine().getMyState());
 		Thread.sleep(4*TIME_UNIT);
 
-		logger.info("GM1:" + gm1.getGameStateMachine().getNotificationStateListener().toString());
-		logger.info("GM2:" + gm2.getGameStateMachine().getNotificationStateListener().toString());
-		gm1.destroy();
-		gm2.destroy();
+        printGameManagers(gms);
+        stopGameManagers(gms);
 	}
 
 	@Test
 	public void testSimpleGameWithThreePeopleOneWinning() throws Exception {
-		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", "Name 1", new MockListener(1));
-		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", "Name 2", new MockListener(2));
-		GameManager gm3 = new GameManager(new MockBroadCastManager(), "id3", "Name 3", new MockListener(3));
-		assertEquals(PlayerState.WAITING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm3.getGameStateMachine().getMyState());
+        GameManager[] gms = createAndStartGameManagers(3);
+
+		assertEquals(PlayerState.WAITING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[2].getGameStateMachine().getMyState());
 		Thread.sleep(4*TIME_UNIT);
-		gm1.joinGame();
+		gms[0].joinGame();
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.IN_GAME,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm3.getGameStateMachine().getMyState());
-		gm2.joinGame();
+		assertEquals(PlayerState.IN_GAME,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[2].getGameStateMachine().getMyState());
+		gms[1].joinGame();
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.PLAYING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.PLAYING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm3.getGameStateMachine().getMyState());
-		gm1.attackWithStrength(100.0);
+		assertEquals(PlayerState.PLAYING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.PLAYING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[2].getGameStateMachine().getMyState());
+		gms[0].attackWithStrength(100.0);
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.WON,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.LOST,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.GAME_FINISHED,gm3.getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WON,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.LOST,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.GAME_FINISHED,gms[2].getGameStateMachine().getMyState());
 		Thread.sleep(4*TIME_UNIT);
 
-		logger.info("GM1:" + gm1.getGameStateMachine().getNotificationStateListener().toString());
-		logger.info("GM2:" + gm2.getGameStateMachine().getNotificationStateListener().toString());
-		logger.info("GM3:" + gm3.getGameStateMachine().getNotificationStateListener().toString());
-		gm1.destroy();
-		gm2.destroy();
-		gm3.destroy();
+        printGameManagers(gms);
+        stopGameManagers(gms);
 	}
 
 	@Test
 	public void testSimpleGameWithFourPeopleOneWinning() throws Exception {
-		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", "Name 1", new MockListener(1));
-		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", "Name 2", new MockListener(2));
-		GameManager gm3 = new GameManager(new MockBroadCastManager(), "id3", "Name 3", new MockListener(3));
-		GameManager gm4 = new GameManager(new MockBroadCastManager(), "id4", "Name 4", new MockListener(4));
-		assertEquals(PlayerState.WAITING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm4.getGameStateMachine().getMyState());
+        GameManager[] gms = createAndStartGameManagers(4);
+
+		assertEquals(PlayerState.WAITING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[3].getGameStateMachine().getMyState());
 		Thread.sleep(4*TIME_UNIT);
-		gm1.joinGame();
+		gms[0].joinGame();
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.IN_GAME,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm4.getGameStateMachine().getMyState());
-		gm2.joinGame();
+		assertEquals(PlayerState.IN_GAME,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[3].getGameStateMachine().getMyState());
+		gms[1].joinGame();
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.PLAYING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.PLAYING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm4.getGameStateMachine().getMyState());
-		gm1.attackWithStrength(100.0);
+		assertEquals(PlayerState.PLAYING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.PLAYING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[3].getGameStateMachine().getMyState());
+		gms[0].attackWithStrength(100.0);
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.WON,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.LOST,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.GAME_FINISHED,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.GAME_FINISHED,gm4.getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WON,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.LOST,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.GAME_FINISHED,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.GAME_FINISHED,gms[3].getGameStateMachine().getMyState());
 		Thread.sleep(4*TIME_UNIT);
 
-		logger.info("GM1:" + gm1.getGameStateMachine().getNotificationStateListener().toString());
-		logger.info("GM2:" + gm2.getGameStateMachine().getNotificationStateListener().toString());
-		logger.info("GM3:" + gm3.getGameStateMachine().getNotificationStateListener().toString());
-		logger.info("GM4:" + gm3.getGameStateMachine().getNotificationStateListener().toString());
-		gm1.destroy();
-		gm2.destroy();
-		gm3.destroy();
-		gm4.destroy();
+        printGameManagers(gms);
+        stopGameManagers(gms);
 	}
 
 	@Test
 	public void testSimpleGameWithFourPeoplePartialAttacks() throws Exception {
-        GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", "Name 1", new MockListener(1));
-        GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", "Name 2", new MockListener(2));
-        GameManager gm3 = new GameManager(new MockBroadCastManager(), "id3", "Name 3", new MockListener(3));
-        GameManager gm4 = new GameManager(new MockBroadCastManager(), "id4", "Name 4", new MockListener(4));
+        GameManager[] gms = createAndStartGameManagers(4);
+
 		double expectedPoints[] = {100.0,100.0,100.0,100.0};
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.WAITING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm4.getGameStateMachine().getMyState());
-		expectedPlayerLifeEquals(gm1, expectedPoints);
-		expectedPlayerLifeEquals(gm2, expectedPoints);
-		expectedPlayerLifeEquals(gm3, expectedPoints);
-		expectedPlayerLifeEquals(gm4, expectedPoints);
-		gm1.joinGame();
+		assertEquals(PlayerState.WAITING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[3].getGameStateMachine().getMyState());
+		expectedPlayerLifeEquals(gms[0], expectedPoints);
+		expectedPlayerLifeEquals(gms[1], expectedPoints);
+		expectedPlayerLifeEquals(gms[2], expectedPoints);
+		expectedPlayerLifeEquals(gms[3], expectedPoints);
+		gms[0].joinGame();
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.IN_GAME,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.WAITING,gm4.getGameStateMachine().getMyState());
-		expectedPlayerLifeEquals(gm1, expectedPoints);
-		expectedPlayerLifeEquals(gm2, expectedPoints);
-		expectedPlayerLifeEquals(gm3, expectedPoints);
-		expectedPlayerLifeEquals(gm4, expectedPoints);
-		gm2.joinGame();
+		assertEquals(PlayerState.IN_GAME,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.WAITING,gms[3].getGameStateMachine().getMyState());
+		expectedPlayerLifeEquals(gms[0], expectedPoints);
+		expectedPlayerLifeEquals(gms[1], expectedPoints);
+		expectedPlayerLifeEquals(gms[2], expectedPoints);
+		expectedPlayerLifeEquals(gms[3], expectedPoints);
+		gms[1].joinGame();
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.PLAYING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.PLAYING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm4.getGameStateMachine().getMyState());
-		gm1.attackWithStrength(30.0);
+		assertEquals(PlayerState.PLAYING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.PLAYING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[3].getGameStateMachine().getMyState());
+		gms[0].attackWithStrength(30.0);
 		expectedPoints[1] = 70.0;
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.PLAYING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.PLAYING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm4.getGameStateMachine().getMyState());
-		expectedPlayerLifeEquals(gm1, expectedPoints);
-		expectedPlayerLifeEquals(gm2, expectedPoints);
-		expectedPlayerLifeEquals(gm3, expectedPoints);
-		expectedPlayerLifeEquals(gm4, expectedPoints);
-		gm1.attackWithStrength(60.0);
+		assertEquals(PlayerState.PLAYING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.PLAYING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[3].getGameStateMachine().getMyState());
+		expectedPlayerLifeEquals(gms[0], expectedPoints);
+		expectedPlayerLifeEquals(gms[1], expectedPoints);
+		expectedPlayerLifeEquals(gms[2], expectedPoints);
+		expectedPlayerLifeEquals(gms[3], expectedPoints);
+		gms[0].attackWithStrength(60.0);
 		expectedPoints[1] = 10.0;
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.PLAYING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.PLAYING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm4.getGameStateMachine().getMyState());
-		expectedPlayerLifeEquals(gm1, expectedPoints);
-		expectedPlayerLifeEquals(gm2, expectedPoints);
-		expectedPlayerLifeEquals(gm3, expectedPoints);
-		expectedPlayerLifeEquals(gm4, expectedPoints);
-		gm2.attackWithStrength(50.0);
+		assertEquals(PlayerState.PLAYING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.PLAYING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[3].getGameStateMachine().getMyState());
+		expectedPlayerLifeEquals(gms[0], expectedPoints);
+		expectedPlayerLifeEquals(gms[1], expectedPoints);
+		expectedPlayerLifeEquals(gms[2], expectedPoints);
+		expectedPlayerLifeEquals(gms[3], expectedPoints);
+		gms[1].attackWithStrength(50.0);
 		expectedPoints[0] = 50.0;
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.PLAYING,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.PLAYING,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.OBSERVER,gm4.getGameStateMachine().getMyState());
-		expectedPlayerLifeEquals(gm1, expectedPoints);
-		expectedPlayerLifeEquals(gm2, expectedPoints);
-		expectedPlayerLifeEquals(gm3, expectedPoints);
-		expectedPlayerLifeEquals(gm4, expectedPoints);
-		gm1.attackWithStrength(30.0);
+		assertEquals(PlayerState.PLAYING,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.PLAYING,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.OBSERVER,gms[3].getGameStateMachine().getMyState());
+		expectedPlayerLifeEquals(gms[0], expectedPoints);
+		expectedPlayerLifeEquals(gms[1], expectedPoints);
+		expectedPlayerLifeEquals(gms[2], expectedPoints);
+		expectedPlayerLifeEquals(gms[3], expectedPoints);
+		gms[0].attackWithStrength(30.0);
 		expectedPoints[1] = 0.0;
 		Thread.sleep(4*TIME_UNIT);
-		assertEquals(PlayerState.WON,gm1.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.LOST,gm2.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.GAME_FINISHED,gm3.getGameStateMachine().getMyState());
-		assertEquals(PlayerState.GAME_FINISHED,gm4.getGameStateMachine().getMyState());
-		expectedPlayerLifeEquals(gm1, expectedPoints);
-		expectedPlayerLifeEquals(gm2, expectedPoints);
-		expectedPlayerLifeEquals(gm3, expectedPoints);
-		expectedPlayerLifeEquals(gm4, expectedPoints);
+		assertEquals(PlayerState.WON,gms[0].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.LOST,gms[1].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.GAME_FINISHED,gms[2].getGameStateMachine().getMyState());
+		assertEquals(PlayerState.GAME_FINISHED,gms[3].getGameStateMachine().getMyState());
+		expectedPlayerLifeEquals(gms[0], expectedPoints);
+		expectedPlayerLifeEquals(gms[1], expectedPoints);
+		expectedPlayerLifeEquals(gms[2], expectedPoints);
+		expectedPlayerLifeEquals(gms[3], expectedPoints);
 		Thread.sleep(4*TIME_UNIT);
-		expectedPlayerLifeEquals(gm1, expectedPoints);
-		expectedPlayerLifeEquals(gm2, expectedPoints);
-		expectedPlayerLifeEquals(gm3, expectedPoints);
-		expectedPlayerLifeEquals(gm4, expectedPoints);
-		logger.info("GM1:" + gm1.getGameStateMachine().getNotificationStateListener().toString());
-		logger.info("GM2:" + gm2.getGameStateMachine().getNotificationStateListener().toString());
-		logger.info("GM3:" + gm3.getGameStateMachine().getNotificationStateListener().toString());
-		logger.info("GM4:" + gm4.getGameStateMachine().getNotificationStateListener().toString());
-		gm1.destroy();
-		gm2.destroy();
-		gm3.destroy();
-		gm4.destroy();
+		expectedPlayerLifeEquals(gms[0], expectedPoints);
+		expectedPlayerLifeEquals(gms[1], expectedPoints);
+		expectedPlayerLifeEquals(gms[2], expectedPoints);
+		expectedPlayerLifeEquals(gms[3], expectedPoints);
+
+        printGameManagers(gms);
+        stopGameManagers(gms);
 	}
 	
 	

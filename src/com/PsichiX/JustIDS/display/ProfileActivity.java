@@ -77,9 +77,4 @@ public class ProfileActivity extends Activity {
 		return playerName;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_profile, menu);
-		return true;
-	}
 }

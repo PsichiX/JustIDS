@@ -96,7 +96,7 @@ public class UDPBroadCastManager implements BroadcastManagerInterface {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.PsichiX.JustIDS.comm.BroadcastManagerInterface#destroy()
+	 * @see com.PsichiX.JustIDS.comm.BroadcastManagerInterface#stopGameManager()
 	 */
 	@Override
 	public void destroy() {

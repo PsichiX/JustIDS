@@ -5,33 +5,36 @@ import android.os.Looper;
 import com.PsichiX.JustIDS.comm.UDPBroadCastManager;
 
 public class Simulator {
-    public static final int DELAY_BETWEEN_OBSERVER_START = 1000;
+    public static final int DELAY_BETWEEN_USERS_START = 500;
     private final Context context;
     private final UDPBroadCastManager dependentBroadCastManager;
     private final int numberOfObservers;
     private final SimulatedScenarioEnum scenario;
+    private Looper myLopper;
 
-    private class SimulatorCreationThread extends Thread {
-        @Override
-        public void run() {
-            Looper.prepare();
-            simulatedPlayer = new SimulatedPlayer(context, "Simulated Player", false, dependentBroadCastManager, scenario);
-            simulatedObservers = new SimulatedPlayer[numberOfObservers];
-            try {
-                for (int i = 0; i < numberOfObservers; i++) {
-                    Thread.sleep(DELAY_BETWEEN_OBSERVER_START);
-                    simulatedObservers[i] = new SimulatedPlayer(context, "Simulated Observer " + i,
-                                true, dependentBroadCastManager, scenario);
-                }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            Looper.loop();
+    SimulatedUser simulatedPlayers[];
+    SimulatedUser simulatedObservers[];
+
+    public void startSimulator() {
+        int delay = 0;
+        for (SimulatedUser simulatedPlayer: simulatedPlayers) {
+            simulatedPlayer.startSimulatedUser(delay);
+            delay += DELAY_BETWEEN_USERS_START;
+        }
+        for (SimulatedUser simulatedObserver: simulatedObservers) {
+            simulatedObserver.startSimulatedUser(delay);
+            delay += DELAY_BETWEEN_USERS_START;
         }
     }
 
-    SimulatedPlayer simulatedPlayer;
-    SimulatedPlayer simulatedObservers[];
+    public void stopSimulator() {
+        for (SimulatedUser simulatedPlayer: simulatedPlayers) {
+            simulatedPlayer.stopSimulatedUser();
+        }
+        for (SimulatedUser simulatedObserver: simulatedObservers) {
+            simulatedObserver.stopSimulatedUser();
+        }
+    }
 
     public Simulator(Context context, UDPBroadCastManager dependentBroadCastManager, int numberOfObservers,
                      SimulatedScenarioEnum scenario) {
@@ -39,6 +42,22 @@ public class Simulator {
         this.dependentBroadCastManager = dependentBroadCastManager;
         this.numberOfObservers = numberOfObservers;
         this.scenario = scenario;
-        new SimulatorCreationThread().start();
+        if (scenario != SimulatedScenarioEnum.OBSERVER_ONLY) {
+            simulatedPlayers = new SimulatedUser[1];
+            simulatedPlayers[0] = new SimulatedUser(context, "Simulated Player",
+                    false, dependentBroadCastManager, scenario);
+        } else {
+            simulatedPlayers = new SimulatedUser[2];
+            simulatedPlayers[0] = new SimulatedUser(context, "Simulated Player 0",
+                    false, dependentBroadCastManager, scenario);
+            simulatedPlayers[0] = new SimulatedUser(context, "Simulated Player 1",
+                    false, dependentBroadCastManager, scenario);
+        }
+        simulatedObservers = new SimulatedUser[numberOfObservers];
+        for (int i = 0; i < numberOfObservers; i++) {
+            simulatedObservers[i] = new SimulatedUser(context, "Simulated Observer " + i,
+                    true, dependentBroadCastManager, scenario);
+        }
     }
+
 }
