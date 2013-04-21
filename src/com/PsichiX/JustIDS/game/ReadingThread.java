@@ -1,15 +1,18 @@
 package com.PsichiX.JustIDS.game;
 
+import com.PsichiX.JustIDS.display.PrintCurrentState;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo;
 
-import java.util.Arrays;
+import java.util.logging.Logger;
 
 final class ReadingThread extends Thread {
 	private final GameManager gameManager;
 	private GameStateMachine gameStateMachine;
 	private String name;
 
-	/**
+    Logger logger = Logger.getLogger(ReadingThread.class.getName());
+
+    /**
 	 * @param gameManager
 	 */
 	ReadingThread(GameManager gameManager, GameStateMachine gameStateMachine) {
@@ -36,12 +39,14 @@ final class ReadingThread extends Thread {
 			} else if (gameManager.didILoose()) {
                 somethingChanged = true;
 				gameStateMachine.processILost();
-				gameManager.sendMyState();
+                gameManager.sendMyState();
 			} else if (gameManager.isGameFinished()) {
                 somethingChanged = true;
 				gameStateMachine.processGameFinishedObserver();
 			}
             if (somethingChanged) {
+                logger.info("Sending state change notification :" +
+                        PrintCurrentState.getCurrentStateAsString(gameManager.getMyPlayer(), gameManager.getPlayers()));
     			gameStateMachine.runSomethingChangedListener();
             }
 		}

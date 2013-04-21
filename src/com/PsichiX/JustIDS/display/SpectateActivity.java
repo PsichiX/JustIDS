@@ -3,8 +3,10 @@ package com.PsichiX.JustIDS.display;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import com.PsichiX.JustIDS.R;
@@ -13,6 +15,7 @@ import com.PsichiX.JustIDS.message.PlayerInformation;
 import com.PsichiX.JustIDS.states.GameState;
 
 public class SpectateActivity extends Activity {
+
 
     private static final String TAG = SpectateActivity.class.getName();
 
@@ -29,15 +32,18 @@ public class SpectateActivity extends Activity {
 
             switch (notification) {
                 case SOMETHING_CHANGED:
+                    Log.i(TAG, "Something changed: " + PrintCurrentState.getCurrentStateAsString(myPlayer, allPlayers));
                     // TODO: here you should display state of mine and others
                     // Note - this also can happen before game is started or after finished.
                     break;
                 case GAME_STARTED_OBSERVER:
+                    Log.i(TAG, "Game started: " + PrintCurrentState.getCurrentStateAsString(myPlayer, allPlayers));
                     // TODO: the game has started. We should indicate it somehow in the views
                     // Game started
                     vibratorUtil.vibrate(200);
                     break;
                 case GAME_FINISHED_OBSERVER:
+                    Log.i(TAG, "Game finished: " + PrintCurrentState.getCurrentStateAsString(myPlayer, allPlayers));
                     // TODO: the game has finished. We should indicate it somehow in the views
                     vibratorUtil.vibrate(1000);
                     break;
@@ -60,8 +66,10 @@ public class SpectateActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.vibratorUtil = new VibratorUtil(this);
-
         setContentView(R.layout.activity_spectate);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(new SpectateNotificationReceiver(),
+                new IntentFilter("com.PsichiX.JustIDS.ScreamFightNotificationService"));
     }
 
 }

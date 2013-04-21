@@ -38,13 +38,15 @@ public class MainScreenActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             MainScreenActivity.this.myPlayer = (Player) intent.getSerializableExtra("MY_PLAYER");
             MainScreenActivity.this.allPlayers = (Player[]) intent.getSerializableExtra("ALL_PLAYERS");
-
             GameStateNotificationEnum gameStateNotificationEnum =
                     GameStateNotificationEnum.values()[intent.getIntExtra("NOTIFICATION_TYPE", -1)];
             switch (gameStateNotificationEnum) {
                 case GAME_STARTED_OBSERVER:
                     // now I automatically became observer because 2 players joined the game
                     gotoSpectate();
+                    break;
+                case GAME_STARTED_PLAYER:
+                    gotoPlaying();
                     break;
                 default:
                     refreshPlayersView();
@@ -78,7 +80,9 @@ public class MainScreenActivity extends Activity {
                 View row;
                 row = inflater.inflate(R.layout.listitem_player, null);
                 TextView name = (TextView) row.findViewById(R.id.listitem_player_name);
-                name.setText(getItem(position).getName());
+                Player player = getItem(position);
+                String playerName = player.getName() + " [" + player.getState().name() + "]";
+                name.setText(playerName);
                 return row;
             }
         };
@@ -159,6 +163,9 @@ public class MainScreenActivity extends Activity {
     public void gotoFight() {
         Intent intent = new Intent("com.PsichiX.JustIDS.joinGame");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    public void gotoPlaying() {
         startActivity(new Intent(this, GameActivity.class));
     }
 
@@ -178,8 +185,14 @@ public class MainScreenActivity extends Activity {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
+    public void stopSimulation() {
+        Intent intent = new Intent("com.PsichiX.JustIDS.stopSimulation");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // game is always reset when simulation is started
         switch (item.getItemId()) {
             case R.id.menu_start_simulation_fight_back_stronger:
                 startSimulation(SimulatedScenarioEnum.FIGHT_BACK_STRONGER);
@@ -203,6 +216,18 @@ public class MainScreenActivity extends Activity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // reset game and eventually simulation always at entering this activity
+        if (ENABLE_SIMULATION) {
+            stopSimulation(); // game is always reset when simulation is stopped
+        } else {
+            Intent intent = new Intent("com.PsichiX.JustIDS.resetGame");
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        }
     }
 
     @Override

@@ -17,11 +17,10 @@ import android.view.SurfaceView;
 import android.view.View;
 
 public class HorizontalBarHealth extends HorizontalBar {
-
+ 
 	public HorizontalBarHealth(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		barResourceID = R.drawable.mw_fight_bar_hp;
-
 	}
 
 	@Override

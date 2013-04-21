@@ -7,13 +7,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import com.PsichiX.JustIDS.comm.UDPBroadCastManager;
+import com.PsichiX.JustIDS.display.PrintCurrentState;
 import com.PsichiX.JustIDS.game.GameManager;
 import com.PsichiX.JustIDS.game.GameStateMachine;
 import com.PsichiX.JustIDS.simulator.SimulatedScenarioEnum;
 import com.PsichiX.JustIDS.simulator.Simulator;
 
 public class ScreamFightApplication extends Application {
+
+    private static final String TAG = ScreamFightApplication.class.getName();
 
     private Simulator simulator = null;
 
@@ -62,14 +66,23 @@ public class ScreamFightApplication extends Application {
             SimulatedScenarioEnum scenario = SimulatedScenarioEnum.values()[intent.getIntExtra("SCENARIO", -1)];
             if (simulator != null) {
                 simulator.stopSimulator();
-                gm.resetGame();
             }
+            gm.resetGame();
             // start simulation with 3 observers
             simulator = new Simulator(ScreamFightApplication.this, ubm, 3, scenario);
             simulator.startSimulator();
         }
     }
 
+    private class StopSimulationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (simulator != null) {
+                simulator.stopSimulator();
+                gm.resetGame();
+            }
+        }
+    }
 
     private class NotificationListener implements GameStateMachine.GameStateChangeListener {
         @Override
@@ -78,6 +91,8 @@ public class ScreamFightApplication extends Application {
                 intent.putExtra("NOTIFICATION_TYPE", gameStateNotification.ordinal()); //passing enum as integer. Fast.
             intent.putExtra("MY_PLAYER", gm.getMyPlayer());
             intent.putExtra("ALL_PLAYERS", gm.getPlayers());
+            Log.i(TAG, "Sending local broadcast notification (" + gm.getName() + "): " + gameStateNotification + ":" +
+                    PrintCurrentState.getCurrentStateAsString(gm.getMyPlayer(), gm.getPlayers()));
             LocalBroadcastManager.getInstance(ScreamFightApplication.this).sendBroadcast(intent);
         }
     }
@@ -99,6 +114,8 @@ public class ScreamFightApplication extends Application {
                 new IntentFilter("com.PsichiX.JustIDS.attackWithStrength"));
         localBroadcastManager.registerReceiver(new StartSimulationReceiver(),
                 new IntentFilter("com.PsichiX.JustIDS.startSimulation"));
+        localBroadcastManager.registerReceiver(new StopSimulationReceiver(),
+                new IntentFilter("com.PsichiX.JustIDS.stopSimulation"));
     }
 
 }

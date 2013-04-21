@@ -16,13 +16,14 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class SimulatedUser {
-    private static final long JOIN_GAME_DELAY = 1000;
+    private static final long JOIN_GAME_DELAY = 6000;
     private static final long FIGHT_BACK_DELAY = 2000;
     private static final long QUICK_COUNTER_ATTACK_DELAY = 300;
     public static final int STRONG_ATTACK = 30;
     public static final int WEAK_ATTACK = 10;
-    private static final long RESET_GAME_DELAY_AFTER_END = 3000;
-    private static final long CONTINUOUS_ATTACK_DELAY = 2000;
+    private static final long RESET_GAME_DELAY_AFTER_END =10000;
+    private static final long CONTINUOUS_ATTACK_DELAY = 4000;
+    private static final long CONTINUOUS_ATTACK_STRENGTH = 30;
     private final String TAG;
 
     private final Context context;
@@ -83,6 +84,7 @@ public class SimulatedUser {
 
         @Override
         public void run() {
+            Log.i(TAG,"Attacking with strength " + strength);
             gm.attackWithStrength(strength);
         }
     }
@@ -104,6 +106,8 @@ public class SimulatedUser {
     private Runnable repeatedAttack = new Runnable() {
         @Override
         public void run() {
+            double strength = CONTINUOUS_ATTACK_STRENGTH;
+            Log.i(TAG,"Continuously attacking with strength " + strength);
             gm.attackWithStrength(30);
             handler.postDelayed(this, CONTINUOUS_ATTACK_DELAY);
         }
@@ -179,10 +183,10 @@ public class SimulatedUser {
                 public void run() {
                     SimulatedUser.this.gm.startGameManager();
                     if (!amIObserver) {
-                        handler.postDelayed(new JoinGame(), JOIN_GAME_DELAY); //join game after 4s.
+                        handler.postDelayed(new JoinGame(), JOIN_GAME_DELAY); //join game after some delay
                         if (scenario == SimulatedScenarioEnum.ATTACK_CONTINUOUSLY ||
                                 scenario == SimulatedScenarioEnum.OBSERVER_ONLY) {
-                            handler.postDelayed(repeatedAttack, CONTINUOUS_ATTACK_DELAY);
+                            handler.postDelayed(repeatedAttack, JOIN_GAME_DELAY + CONTINUOUS_ATTACK_DELAY);
                         }
                     }
                 }

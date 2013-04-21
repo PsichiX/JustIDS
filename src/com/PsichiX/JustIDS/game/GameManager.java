@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import com.PsichiX.JustIDS.comm.BroadcastManagerInterface;
+import com.PsichiX.JustIDS.display.PrintCurrentState;
 import com.PsichiX.JustIDS.game.GameStateMachine.GameStateChangeListener;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo.BroadcastType;
@@ -203,17 +204,33 @@ public class GameManager {
 
 	public void decreaseLifePointsOfMine(double decreaseBy) {
 		decreaseLifePointsInternally(decreaseBy);
-		sendMyState();
+        sendMyState();
 	}
 
-	public void sendMyState() {
-		Player myPlayer = getMyPlayer();
-		players.put(myPlayer.getId(), myPlayer);
+	public synchronized void sendMyState() {
+		Player newPlayer = getMyPlayer();
+        String playerId = newPlayer.getId();
+        Player oldPlayer = players.get(playerId);
+        boolean somethingHasChanged = false;
+        if (oldPlayer != null) {
+            if (!Arrays.equals(oldPlayer.toByteArray(),newPlayer.toByteArray())){
+                somethingHasChanged = true;
+                players.put(playerId, newPlayer);
+            }
+        } else {
+            somethingHasChanged = true;
+            players.put(playerId, newPlayer);
+        }
 		PlayerBroadcastInfo info = PlayerBroadcastInfo.newBuilder().
-				setMyPlayer(myPlayer).
+				setMyPlayer(newPlayer).
 				setType(BroadcastType.STATE).
 				addAllAllPlayers(getAllPlayersInfo()).build();
 		this.bcm.sendBroadcast(info);
+        if (somethingHasChanged) {
+            logger.info("Sending state change:" +
+                    PrintCurrentState.getCurrentStateAsString(getMyPlayer(), getPlayers()));
+            gameStateMachine.runSomethingChangedListener();
+        }
 	}
 
 	public boolean isMyself(Player player) {
@@ -275,8 +292,8 @@ public class GameManager {
 	 */
 	public synchronized boolean joinGame() {
 		boolean res = gameStateMachine.joinGame();
-		sendMyState();
 		gameStateMachine.startGameIfAllReady(players.values());
+        sendMyState();
 		return res;
 	}	
 	

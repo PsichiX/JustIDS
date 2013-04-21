@@ -12,8 +12,8 @@ public class Simulator {
     private final SimulatedScenarioEnum scenario;
     private Looper myLopper;
 
-    SimulatedUser simulatedPlayers[];
-    SimulatedUser simulatedObservers[];
+    private SimulatedUser simulatedPlayers[];
+    private SimulatedUser simulatedObservers[];
 
     public void startSimulator() {
         int delay = 0;
@@ -50,7 +50,7 @@ public class Simulator {
             simulatedPlayers = new SimulatedUser[2];
             simulatedPlayers[0] = new SimulatedUser(context, "Simulated Player 0",
                     false, dependentBroadCastManager, scenario);
-            simulatedPlayers[0] = new SimulatedUser(context, "Simulated Player 1",
+            simulatedPlayers[1] = new SimulatedUser(context, "Simulated Player 1",
                     false, dependentBroadCastManager, scenario);
         }
         simulatedObservers = new SimulatedUser[numberOfObservers];

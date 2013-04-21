@@ -55,9 +55,6 @@ public class GameState extends State implements CommandQueue.Delegate
 		Health.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		Health.setPosition( _cam.getViewWidth() * 0.5f, 0.0f);
 		_scn.attach(Health);
-
-        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent("com.PsichiX.JustIDS.resetGame"));
-
 		manaLevel = 0;
 		
 		getApplication().getAssets().get(R.raw.badaboom_material, Material.class);

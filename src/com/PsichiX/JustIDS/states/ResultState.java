@@ -68,7 +68,5 @@ public class ResultState extends State {
 	public void onExit()
 	{
 		_scn.releaseAll();
-        Intent intent = new Intent("com.PsichiX.JustIDS.resetGame");
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 }
