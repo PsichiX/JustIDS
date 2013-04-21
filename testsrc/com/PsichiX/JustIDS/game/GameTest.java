@@ -1,7 +1,6 @@
 package com.PsichiX.JustIDS.game;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,7 +59,7 @@ public class GameTest extends TestCase {
 		
 	}
  	private void expectedPlayerLifeEquals(GameManager gm, double expectedPoints[]) {
-		Collection<PlayerId> players = gm.getPlayers();
+		PlayerId players[] = gm.getPlayers();
 		SortedSet<PlayerId> sortedPlayers = new TreeSet<PlayerId>(new PlayerIdComparator());
 		for (PlayerId player: players) {
 			sortedPlayers.add(player);
@@ -79,8 +78,10 @@ public class GameTest extends TestCase {
 	
 	@Test
 	public void testSimpleGameWithTwoPeopleOneWinning() throws Exception {
-		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", "Name 1", new MockListener(1));
-		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", "Name 2", new MockListener(2));
+		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", new MockListener(1));
+        gm1.readyToPlay("Name 1");
+		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", new MockListener(2));
+        gm2.readyToPlay("Name 2");
 		assertEquals(PlayerState.WAITING,gm1.getGameStateMachine().getMyState());
 		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
 		Thread.sleep(4*TIME_UNIT);
@@ -106,9 +107,12 @@ public class GameTest extends TestCase {
 
 	@Test
 	public void testSimpleGameWithThreePeopleOneWinning() throws Exception {
-		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", "Name 1", new MockListener(1));
-		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", "Name 2", new MockListener(2));
-		GameManager gm3 = new GameManager(new MockBroadCastManager(), "id3", "Name 3", new MockListener(3));
+		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", new MockListener(1));
+        gm1.readyToPlay("Name 1");
+		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", new MockListener(2));
+        gm2.readyToPlay("Name 2");
+		GameManager gm3 = new GameManager(new MockBroadCastManager(), "id3", new MockListener(3));
+        gm3.readyToPlay("Name 3");
 		assertEquals(PlayerState.WAITING,gm1.getGameStateMachine().getMyState());
 		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
 		assertEquals(PlayerState.WAITING,gm3.getGameStateMachine().getMyState());
@@ -140,10 +144,14 @@ public class GameTest extends TestCase {
 
 	@Test
 	public void testSimpleGameWithFourPeopleOneWinning() throws Exception {
-		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", "Name 1", new MockListener(1));
-		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", "Name 2", new MockListener(2));
-		GameManager gm3 = new GameManager(new MockBroadCastManager(), "id3", "Name 3", new MockListener(3));
-		GameManager gm4 = new GameManager(new MockBroadCastManager(), "id4", "Name 4", new MockListener(4));
+		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", new MockListener(1));
+        gm1.readyToPlay("Name 1");
+		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", new MockListener(2));
+        gm2.readyToPlay("Name 2");
+		GameManager gm3 = new GameManager(new MockBroadCastManager(), "id3", new MockListener(3));
+        gm3.readyToPlay("Name 3");
+		GameManager gm4 = new GameManager(new MockBroadCastManager(), "id4", new MockListener(4));
+        gm4.readyToPlay("Name 4");
 		assertEquals(PlayerState.WAITING,gm1.getGameStateMachine().getMyState());
 		assertEquals(PlayerState.WAITING,gm2.getGameStateMachine().getMyState());
 		assertEquals(PlayerState.WAITING,gm3.getGameStateMachine().getMyState());
@@ -181,10 +189,14 @@ public class GameTest extends TestCase {
 
 	@Test
 	public void testSimpleGameWithFourPeoplePartialAttacks() throws Exception {
-		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", "Name 1", new MockListener(1));
-		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", "Name 2", new MockListener(2));
-		GameManager gm3 = new GameManager(new MockBroadCastManager(), "id3", "Name 3", new MockListener(3));
-		GameManager gm4 = new GameManager(new MockBroadCastManager(), "id4", "Name 4", new MockListener(4));
+		GameManager gm1 = new GameManager(new MockBroadCastManager(), "id1", new MockListener(1));
+        gm1.readyToPlay("Name 1");
+		GameManager gm2 = new GameManager(new MockBroadCastManager(), "id2", new MockListener(2));
+        gm2.readyToPlay("Name 2");
+		GameManager gm3 = new GameManager(new MockBroadCastManager(), "id3", new MockListener(3));
+        gm3.readyToPlay("Name 3");
+		GameManager gm4 = new GameManager(new MockBroadCastManager(), "id4", new MockListener(4));
+        gm4.readyToPlay("Name 4");
 		double expectedPoints[] = {100.0,100.0,100.0,100.0};
 		Thread.sleep(4*TIME_UNIT);
 		assertEquals(PlayerState.WAITING,gm1.getGameStateMachine().getMyState());

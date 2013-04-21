@@ -13,7 +13,8 @@ public class GameStateMachine {
 	private GameStateChangeListener notificationStateListener;
 
 	public enum GameStateNotificationEnum {
-		SOMETHING_CHANGED, GAME_STARTED_OBSERVER, GAME_FINISHED_OBSERVER, GAME_STARTED_PLAYER, GAME_FINISHED_PLAYER_LOST, GAME_FINISHED_PLAYER_WON, HIT, LIFE_DECREASED
+		SOMETHING_CHANGED, GAME_STARTED_OBSERVER, GAME_FINISHED_OBSERVER,
+        GAME_STARTED_PLAYER, GAME_FINISHED_PLAYER_LOST, GAME_FINISHED_PLAYER_WON, HIT, LIFE_DECREASED
 	}
 
 	public static interface GameStateChangeListener {
@@ -26,7 +27,6 @@ public class GameStateMachine {
 	public GameStateMachine(String androidId, GameStateChangeListener listener) {
 		this.androidId = androidId;
 		this.notificationStateListener = listener;
-		resetStateMachine();
 	}
 
 	private void sendNotification(GameStateNotificationEnum notification) {

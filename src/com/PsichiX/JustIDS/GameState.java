@@ -1,5 +1,8 @@
 package com.PsichiX.JustIDS;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.PsichiX.JustIDS.game.GameManager;
@@ -14,22 +17,21 @@ public class GameState extends State implements CommandQueue.Delegate
 	/** od 0 do 100*/
 	public static double manaLevel;
 	public static double healthLevel;
-	
-	private Camera2D _cam;
+    private final Context context;
+
+    private Camera2D _cam;
 	private Scene _scn;
 	private CommandQueue _cmds = new CommandQueue();
 	private float _lastForce = 0.0f;
-	private float _currentForce = 0.0f;
+    private float _currentForce = 0.0f;
 	private float _maxForce = 0.0f;
 	private boolean _forceRecording = false;
 	private Sprite Mana;
 	private Sprite Health;
-	private GameManager gm;
-	
-	public GameState(GameManager gsm) {
-		this.gm = gsm;
-	}
-	
+
+    GameState(Context context) {
+        this.context = context;
+    }
 	@Override
 	public void onEnter()
 	{
@@ -51,7 +53,9 @@ public class GameState extends State implements CommandQueue.Delegate
 		Health.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		Health.setPosition( _cam.getViewWidth() * 0.5f, 0.0f);
 		_scn.attach(Health);
-		gm.resetGame();
+
+        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent("com.PsichiX.JustIDS.resetGame"));
+
 		manaLevel = 0;
 		
 		getApplication().getAssets().get(R.raw.badaboom_material, Material.class);
@@ -59,9 +63,8 @@ public class GameState extends State implements CommandQueue.Delegate
 		
 		getApplication().getPhoton().getRenderer().setClearBackground(true, 0.0f, 0.0f, 0.0f, 1.0f);
 		
-		// TODO: This should only be called after the list of players is displayed to the user
-		// And the user decides to start the game
-		gm.joinGame();
+		// TODO(Bartek): This should only be called after the list of players is displayed to the user and she chooses to join
+        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent("com.PsichiX.JustIDS.joinGame"));
 	}
 	
 	@Override
@@ -117,8 +120,10 @@ public class GameState extends State implements CommandQueue.Delegate
 		{
 			Log.d("ATTACK", "STOP");
 			double strength = calculateStrength();
-			gm.attackWithStrength(strength);
-			manaLevel = 0.0f;
+            Intent intent = new Intent("com.PsichiX.JustIDS.attackWithStrength");
+            intent.putExtra("STRENGTH", strength);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+            manaLevel = 0.0f;
 			_forceRecording = false;
 			_maxForce = 0.0f;
 		}

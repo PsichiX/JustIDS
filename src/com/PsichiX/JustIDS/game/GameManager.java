@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.PsichiX.JustIDS.comm.BroadcastManagerInterface;
 import com.PsichiX.JustIDS.game.GameStateMachine.GameStateChangeListener;
+import com.PsichiX.JustIDS.message.PlayerInformation;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo.BroadcastType;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerId;
@@ -43,17 +44,20 @@ public class GameManager {
 	private String androidId;
 	private String name;
 	boolean paused;
-	
-	public GameManager(BroadcastManagerInterface broadcastManager, String androidId, String name, 
-			GameStateChangeListener listener) {
+    private boolean broadCasting = false;
+
+    public GameManager(BroadcastManagerInterface broadcastManager, String androidId, GameStateChangeListener listener) {
 		this.bcm = broadcastManager;
-		this.name = name;
 		this.androidId = androidId;
 		this.gameStateMachine = new GameStateMachine(androidId, listener);
-		resetGame();
-		resume();
-	}	
-	
+	}
+
+    public void readyToPlay(String name) {
+        this.name = name;
+        resetGame();
+        resume();
+        broadCasting = true;
+    }
 
 	/**
 	 * Determines whether the broadcast message received is one that we are interested in.
@@ -255,6 +259,9 @@ public class GameManager {
 	 * @return
 	 */
 	public synchronized boolean joinGame() {
+        if (!broadCasting) {
+            throw new RuntimeException("BroadCasting has not started. Pleas run readyToPlay first. ");
+        }
 		boolean res = gameStateMachine.joinGame();
 		sendMyState();
 		gameStateMachine.startGameIfAllReady(players.values());
@@ -300,8 +307,9 @@ public class GameManager {
 		return name;
 	}
 
-	public synchronized Collection<PlayerId> getPlayers() {
-		return players.values();
+	public synchronized PlayerId[] getPlayers() {
+        Collection<PlayerId> values = players.values();
+        return values.toArray(new PlayerId[values.size()]);
 	}
 	
 	/**
