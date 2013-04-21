@@ -57,7 +57,7 @@ public class ScreamFightApplication extends Application {
         @Override
         public void notifyStateChange(GameStateMachine.GameStateNotificationEnum gameStateNotification) {
             Intent intent = new Intent("com.PsichiX.JustIDS.ScreamFightNotificationService");
-            intent.putExtra("NOTIFICATION_TYPE", gameStateNotification.ordinal()); //passing enum as integer. Fast.
+                intent.putExtra("NOTIFICATION_TYPE", gameStateNotification.ordinal()); //passing enum as integer. Fast.
             intent.putExtra("MY_PLAYER", gm.getMyPlayerId());
             intent.putExtra("ALL_PLAYERS", gm.getPlayers());
             LocalBroadcastManager.getInstance(ScreamFightApplication.this).sendBroadcast(intent);

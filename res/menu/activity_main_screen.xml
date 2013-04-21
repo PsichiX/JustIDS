@@ -2,4 +2,19 @@
     <item android:id="@+id/menu_settings"
         android:title="@string/menu_settings"
         android:orderInCategory="100" />
+    <item android:id="@+id/menu_start_simulation_fight_back_weaker"
+          android:title="@string/menu_start_simulation_fight_back_weaker"
+          android:orderInCategory="100" />
+    <item android:id="@+id/menu_start_simulation_fight_back_stronger"
+          android:title="@string/menu_start_simulation_fight_back_stronger"
+          android:orderInCategory="100" />
+    <item android:id="@+id/menu_start_simulation_fight_contrattack"
+          android:title="@string/menu_start_simulation_contrattack"
+          android:orderInCategory="100" />
+    <item android:id="@+id/menu_start_simulation_fight_passive"
+          android:title="@string/menu_start_simulation_passive"
+          android:orderInCategory="100" />
+    <item android:id="@+id/menu_start_simulation_fight_continuous"
+          android:title="@string/menu_start_simulation_continuous"
+          android:orderInCategory="100" />
 </menu>

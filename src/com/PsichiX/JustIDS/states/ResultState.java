@@ -1,6 +1,10 @@
 package com.PsichiX.JustIDS.states;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import com.PsichiX.JustIDS.R;
+import com.PsichiX.JustIDS.display.GameActivity;
 import com.PsichiX.XenonCoreDroid.XeApplication.State;
 import com.PsichiX.XenonCoreDroid.Framework.Graphics.Camera2D;
 import com.PsichiX.XenonCoreDroid.Framework.Graphics.Font;
@@ -9,17 +13,19 @@ import com.PsichiX.XenonCoreDroid.Framework.Graphics.Scene;
 import com.PsichiX.XenonCoreDroid.Framework.Graphics.Text;
 
 public class ResultState extends State {
-	private Camera2D _cam;
+    private final Context context;
+    private Camera2D _cam;
 	private Scene _scn;
 	private String _status;
 	private boolean _strobo = false;
 	private Text _text;
 	private int _stroboPhase = 0;
 	
-	public ResultState(String status, boolean strobo)
+	public ResultState(String status, boolean strobo, Context context)
 	{
 		_status = status;
 		_strobo = strobo;
+        this.context = context;
 	}
 	
 	@Override
@@ -62,5 +68,7 @@ public class ResultState extends State {
 	public void onExit()
 	{
 		_scn.releaseAll();
+        Intent intent = new Intent("com.PsichiX.JustIDS.resetGame");
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 }

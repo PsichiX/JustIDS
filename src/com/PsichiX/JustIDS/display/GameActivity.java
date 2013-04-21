@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Vibrator;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import com.PsichiX.JustIDS.states.GameState;
 import com.PsichiX.JustIDS.game.GameStateMachine.GameStateNotificationEnum;
 import com.PsichiX.JustIDS.message.PlayerInformation.Player;
@@ -23,72 +23,56 @@ public class GameActivity extends XeActivity {
 	private VibratorUtil vibratorUtil;
     private GameState gs;
 
-
-    private static class VibratorUtil {
-       Vibrator v;
-
-        public VibratorUtil(Context c) {
-            v = (Vibrator) c.getSystemService(VIBRATOR_SERVICE);
-        }
-
-        public void vibrate(int repeat)	{
-            v.vibrate(repeat);
-        }
-    }
+    private static final String TAG = GameActivity.class.getName();
 
     private class GameNotificationReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            int oridinal = intent.getIntExtra("NOTIFICATION_TYPE", -1);
-            GameStateNotificationEnum notification = GameStateNotificationEnum.values()[oridinal];
-            Player myPlayerId = (Player) intent.getSerializableExtra("MY_PLAYER");
+            GameStateNotificationEnum notification =
+                    GameStateNotificationEnum.values()[intent.getIntExtra("NOTIFICATION_TYPE", -1)];
+            Player myPlayer = (Player) intent.getSerializableExtra("MY_PLAYER");
             Player allPlayers[] = (Player[]) intent.getSerializableExtra("ALL_PLAYERS");
 
             switch (notification) {
                 case SOMETHING_CHANGED:
-                    GameState.healthLevel = myPlayerId.getLifePoints();
-                    // TODO: here you should display state of mine and others
+                    GameState.healthLevel = myPlayer.getLifePoints();
+                    // TODO: here you should display state of mine and possibly others
                     // Note - this also can happen before game is started or after finished.
-                    break;
-                case GAME_STARTED_OBSERVER:
-                    // TODO: Here we should automatically switch the view to observer when two other players joined the game.
-                    // I am now observer and till the end of the game I won't be able to play.
                     break;
                 case GAME_STARTED_PLAYER:
                     // TODO: This is an indication that I am a player and the other player also joined.
                     // Here the battle begins. We should enable the player to fight here.
-                    vibratorUtil.vibrate(200);
-                    break;
-                case GAME_FINISHED_OBSERVER:
-                    // TODO: This is an indication that game finished for the observer. There should be LOST/WON
-                    // in the player list. We should display the result and let the user reset game here
+                    // Possibly even do some 1..2..3 count before the game start
                     vibratorUtil.vibrate(200);
                     break;
                 case HIT:
                     // TODO: Here we are hit but not necessarily points are taken. We still have a chance to react
                     // which might decrease the damage for us. We should make some flashing that there is a hit.
-                    // Note: this is only notified to players, not to observers. Observers just see (SOMETHING CHANGED)
-                    vibratorUtil.vibrate(20);
+                    vibratorUtil.vibrate(30);
                     break;
                 case LIFE_DECREASED:
                     // TODO: This is an indication that after hit our life has actually been decreased.
-                    // You can read the current life points by runnning gm.getMyPlayerId().
                     // We should somehow indicate that life has been decreased.
-                    // Note: this is only notified to players, not to observers. Observers just see (SOMETHING CHANGED)
                     vibratorUtil.vibrate(500);
+                    GameState.healthLevel = myPlayer.getLifePoints();
                     break;
                 case GAME_FINISHED_PLAYER_LOST:
-                    // TODO: This is an indication that I lost the game
-                    // Note: this is only notified to players, not to observers. Observers just see (SOMETHING CHANGED)
+                    // TODO: do more (?) when I lost the game
                     vibratorUtil.vibrate(1000);
                     gs.youLost();
                     break;
                 case GAME_FINISHED_PLAYER_WON:
-                    // TODO: This is an indication that I won	 the game
-                    // Note: this is only notified to players, not to observers. Observers just see (SOMETHING CHANGED)
-                    vibratorUtil.vibrate(1000);
+                    // TODO: do more (?) when  I won the game
+                    vibratorUtil.vibrate(3000);
                     gs.youWon();
+                    break;
+                case GAME_FINISHED_OBSERVER:
+                case GAME_STARTED_OBSERVER:
+                default:
+                    // This should not have happened - just in case we finish the activity
+                    Log.w(TAG, "Unexpected " + notification);
+                    GameActivity.this.finish();
                     break;
             }
         }

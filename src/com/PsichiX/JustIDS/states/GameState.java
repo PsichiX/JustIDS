@@ -134,11 +134,11 @@ public class GameState extends State implements CommandQueue.Delegate
 	}
 	
 	public void youWon() {
-		getApplication().pushState(new ResultState("You won!", true));
+		getApplication().pushState(new ResultState("You won!", true, context));
 	}
 	
 	public void youLost() {
-		getApplication().pushState(new ResultState("You lost!", true));
+		getApplication().pushState(new ResultState("You lost!", true, context));
 	}
 
 }

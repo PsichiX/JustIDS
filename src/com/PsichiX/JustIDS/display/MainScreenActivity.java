@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.PsichiX.JustIDS.R;
+import com.PsichiX.JustIDS.game.GameStateMachine.GameStateNotificationEnum;
 import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.services.WifiService;
 import com.PsichiX.JustIDS.trash.AudioRecordTest;
@@ -25,7 +26,7 @@ public class MainScreenActivity extends Activity {
     public static String playerName;
 
     private Player[] allPlayers = new Player[0];
-    private Player myPlayerId;
+    private Player myPlayer;
 
     LayoutInflater inflater;
     WifiService wifi;
@@ -34,9 +35,20 @@ public class MainScreenActivity extends Activity {
     private class GameNotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            MainScreenActivity.this.myPlayerId = (Player) intent.getSerializableExtra("MY_PLAYER");
+            MainScreenActivity.this.myPlayer = (Player) intent.getSerializableExtra("MY_PLAYER");
             MainScreenActivity.this.allPlayers = (Player[]) intent.getSerializableExtra("ALL_PLAYERS");
-            setPlayersView();
+
+            GameStateNotificationEnum gameStateNotificationEnum =
+                    GameStateNotificationEnum.values()[intent.getIntExtra("NOTIFICATION_TYPE", -1)];
+            switch (gameStateNotificationEnum) {
+                case GAME_STARTED_OBSERVER:
+                    // now I automatically became observer because 2 players joined the game
+                    gotoSpectate();
+                    break;
+                default:
+                    refreshPlayersView();
+                    break;
+            }
         }
     }
 
@@ -70,22 +82,23 @@ public class MainScreenActivity extends Activity {
             }
         };
 
-        setPlayersView();
-        Intent intent = new Intent("com.PsichiX.JustIDS.readyToPlay");
-        intent.putExtra("NAME", playerName);
+        setUpScreen();
+        refreshPlayersView();
 
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+
+        // Register now to receive notifications from Game Manager
         localBroadcastManager.registerReceiver(new GameNotificationReceiver(),
                 new IntentFilter("com.PsichiX.JustIDS.ScreamFightNotificationService"));
+
+        // I am ready to play now. Start new game with setting the name
+        Intent intent = new Intent("com.PsichiX.JustIDS.readyToPlay");
+        intent.putExtra("NAME", playerName);
         localBroadcastManager.sendBroadcast(intent);
-        setUpScreen();
+
     }
 
-    /**
-     * Listenery na guzikach, adaptery itp
-     */
     private void setUpScreen() {
-        //Pozostala konfiguracja ekranu
         TextView playerNameView = (TextView) findViewById(R.id.txt_yourname);
         playerNameView.setText(playerName);
 
@@ -119,14 +132,10 @@ public class MainScreenActivity extends Activity {
         playersList.setAdapter(playersAdapter);
     }
 
-    /**
-     * Do wywo�ania przy od�wierzeniu listy graczy
-     */
-    public void setPlayersView() {
+    public void refreshPlayersView() {
         LinearLayout playersNoneLL = (LinearLayout) findViewById(R.id.players_none);
         LinearLayout playersAreLL = (LinearLayout) findViewById(R.id.players_avalible);
         if (allPlayers.length > 0) {
-            //JE�LI GRACZE SA W SIECI, TO SUPER:
             playersAdapter.clear();
             for (Player playerId: allPlayers) {
                 playersAdapter.add(playerId);
@@ -135,7 +144,6 @@ public class MainScreenActivity extends Activity {
             playersNoneLL.setVisibility(View.GONE);
             playersAreLL.setVisibility(View.VISIBLE);
         } else {
-            //JESLI GRACZY NIE MA:
             playersAdapter.clear();
             playersNoneLL.setVisibility(View.VISIBLE);
             playersAreLL.setVisibility(View.GONE);
@@ -154,14 +162,13 @@ public class MainScreenActivity extends Activity {
     }
 
     public void gotoHowto() {
-        //TODO: testowo tylko.
+        //TODO: temporary only - for tests. should be replaced by automatic training
         startActivity(new Intent(this, AudioRecordTest.class));
     }
 
     public void gotoSpectate() {
         startActivity(new Intent(this, SpectateActivity.class));
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

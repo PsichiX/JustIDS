@@ -5,6 +5,11 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_start_simulation_fight_back_weaker">Simulate weaker</string>
+    <string name="menu_start_simulation_fight_back_stronger">Simulate stronger</string>
+    <string name="menu_start_simulation_passive">Simulate passive</string>
+    <string name="menu_start_simulation_contrattack">Simulate contrattack</string>
+    <string name="menu_start_simulation_continuous">Simulate continuous attack</string>
     <string name="title_activity_microphone">MicrophoneActivity</string>
     <string name="title_activity_audio_record_test">AudioRecordTest</string>
     <string name="title_activity_udp">UDPActivity</string>
