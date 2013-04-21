@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import com.PsichiX.JustIDS.comm.BroadcastManagerInterface;
 import com.PsichiX.JustIDS.game.GameStateMachine.GameStateChangeListener;
-import com.PsichiX.JustIDS.message.PlayerInformation;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerBroadcastInfo.BroadcastType;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerId;
@@ -29,7 +28,6 @@ public class GameManager {
 	Logger logger = Logger.getLogger(GameManager.class.getName());
 
 	private static final double MIN_LIFE_POINTS = 0.01;
-	private boolean DEBUG_SELF_SENDING = false;
 	static int UNIT_OF_TIME_MILLIS = 100;
 
 	private HashMap<String, PlayerId> players = new HashMap<String, PlayerId>();
@@ -69,9 +67,6 @@ public class GameManager {
 		if (hasFinished()) {
 			logger.info(name + ":Skipping message (I finished already): " + pbi);
 			return false;
-		}
-		if (DEBUG_SELF_SENDING) {
-			return true;
 		}
 		boolean mine = pbi.getPlayerId().getId().equals(androidId);
 		if (mine) {

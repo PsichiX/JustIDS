@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import com.PsichiX.JustIDS.comm.BroadCastManager;
@@ -12,6 +13,9 @@ import com.PsichiX.JustIDS.game.GameManager;
 import com.PsichiX.JustIDS.game.GameStateMachine;
 
 public class ScreamFightApplication extends Application {
+
+    private Simulator simulator;
+    private boolean SIMULATION_ENABLED = true;
 
     private class ReadyToPlayReceiver extends BroadcastReceiver {
         @Override
@@ -62,8 +66,8 @@ public class ScreamFightApplication extends Application {
         super.onCreate();
         String android_id = Settings.Secure.getString(this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        this.gm = new GameManager(new BroadCastManager(this),
-                android_id, new NotificationListener());
+        BroadCastManager bm = new BroadCastManager(this);
+        this.gm = new GameManager(bm, android_id, new NotificationListener());
 
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.registerReceiver(new ReadyToPlayReceiver(),
@@ -74,7 +78,9 @@ public class ScreamFightApplication extends Application {
                 new IntentFilter("com.PsichiX.JustIDS.resetGame"));
         localBroadcastManager.registerReceiver(new AttackWithStrengthReceiver(),
                 new IntentFilter("com.PsichiX.JustIDS.attackWithStrength"));
+        if (SIMULATION_ENABLED) {
+            simulator = new Simulator(this, bm);
+        }
     }
-
 
 }

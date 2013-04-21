@@ -6,6 +6,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.LinkedList;
 
 import android.content.Context;
 import android.net.DhcpInfo;
@@ -20,9 +21,15 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 public class BroadCastManager implements BroadcastManagerInterface {
 
+    public static interface ChainedReceiver {
+        void forwardReceivedMessage(PlayerBroadcastInfo pbi);
+    }
+
 	private static int PORT = 14444;
 	DatagramSocket socket;
 	private Context context;
+
+    private LinkedList<ChainedReceiver> chainedReceiverList = new LinkedList<ChainedReceiver>();
 	
 	public BroadCastManager(Context context) {
 		this.context = context;
@@ -113,14 +120,19 @@ public class BroadCastManager implements BroadcastManagerInterface {
 			return null;
 		}
 		try {
-			PlayerBroadcastInfo pbi = PlayerBroadcastInfo
-					.parseFrom(message);
+			PlayerBroadcastInfo pbi = PlayerBroadcastInfo.parseFrom(message);
+            for (ChainedReceiver receiver : chainedReceiverList) {
+                receiver.forwardReceivedMessage(pbi);
+            }
 			return pbi;
 		} catch (InvalidProtocolBufferException e) {
 			Log.e("ERR", e.getMessage());
 			return null;
 		}
 	}
-	
+
+    public void addChainedReceiver(ChainedReceiver receiver) {
+        chainedReceiverList.add(receiver);
+    }
 	
 }
