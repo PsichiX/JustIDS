@@ -8,7 +8,6 @@ import com.PsichiX.JustIDS.PlayerInformation;
 import com.PsichiX.JustIDS.R;
 import com.PsichiX.JustIDS.R.layout;
 import com.PsichiX.JustIDS.R.menu;
-import com.PsichiX.JustIDS.SpectateActivity;
 import com.PsichiX.JustIDS.logic.Player;
 import com.PsichiX.JustIDS.services.WifiService;
 import com.PsichiX.JustIDS.trash.AudioRecordTest;

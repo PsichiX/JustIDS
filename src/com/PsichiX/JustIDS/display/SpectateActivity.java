@@ -1,4 +1,8 @@
-package com.PsichiX.JustIDS;
+package com.PsichiX.JustIDS.display;
+
+import com.PsichiX.JustIDS.R;
+import com.PsichiX.JustIDS.R.layout;
+import com.PsichiX.JustIDS.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
