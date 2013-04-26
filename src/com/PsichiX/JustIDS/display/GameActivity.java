@@ -69,6 +69,7 @@ public class GameActivity extends XeActivity {
                     break;
                 case GAME_FINISHED_OBSERVER:
                 case GAME_STARTED_OBSERVER:
+                case PLAYER_HIT_OBSERVER:
                 default:
                     // This should not have happened - just in case we finish the activity
                     Log.w(TAG, "Unexpected " + notification);
@@ -78,7 +79,8 @@ public class GameActivity extends XeActivity {
         }
     }
 
-	@Override
+
+    @Override
 	public void onCreate(android.os.Bundle savedInstanceState) {
 
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
