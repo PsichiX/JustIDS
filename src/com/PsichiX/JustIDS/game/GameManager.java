@@ -27,6 +27,7 @@ import com.PsichiX.JustIDS.message.PlayerInformation.PlayerState;
  */
 public class GameManager {
 
+    private final GameStateChangeListener listener;
     // Here we are using java logger not the android logger on purpose...
     // We want to test the game manager logic outside of android
 	Logger logger = Logger.getLogger(GameManager.class.getName());
@@ -53,6 +54,7 @@ public class GameManager {
 		this.androidId = androidId;
 		this.gameStateMachine = new GameStateMachine(androidId, listener);
         this.name = name;
+        this.listener = listener;
 	}
 
     public void startGameManager() {
@@ -107,12 +109,18 @@ public class GameManager {
         }
 		if (pbi.getType() == BroadcastType.STATE) {
 			gameStateMachine.startGameIfAllReady(players.values());
-		} else if (isAttackSuccessfull(pbi)) {
-			logger.info("Attack successful" + pbi + " to " + getMyPlayer());
-			decreaseLifePointsOfMine(pbi.getAttackStrength());
-			gameStateMachine.hit();
-			gameStateMachine.successfulAttack();
-		}
+		} else if (pbi.getType() == BroadcastType.ATTACK) {
+            if (isAttackSuccessfull(pbi)) {
+                logger.info("Attack successful " + pbi + " to " + getMyPlayer());
+                decreaseLifePointsOfMine(pbi.getAttackStrength());
+                gameStateMachine.hit();
+                gameStateMachine.successfulAttack();
+    		} else {
+                logger.info("Attack observed " + pbi + " from " + pbi.getMyPlayer());
+                Player attacking = pbi.getMyPlayer();
+                listener.notifyHitSeen(attacking);
+            }
+        }
         return somethingHasChanged;
 	}
 

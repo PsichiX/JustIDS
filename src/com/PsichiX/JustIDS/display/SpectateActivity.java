@@ -21,8 +21,18 @@ public class SpectateActivity extends Activity {
 
     private VibratorUtil vibratorUtil;
 
-    private class SpectateNotificationReceiver extends BroadcastReceiver {
+    private class SpectateHitSeenReceiver extends BroadcastReceiver {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            PlayerInformation.Player attacking = (PlayerInformation.Player) intent.getSerializableExtra("ATTACKING");
+            // TODO: do something when observing the attack
+            vibratorUtil.vibrate(200);
+        }
+    }
+
+
+    private class SpectateNotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             GameStateMachine.GameStateNotificationEnum notification =
@@ -47,6 +57,11 @@ public class SpectateActivity extends Activity {
                     // TODO: the game has finished. We should indicate it somehow in the views
                     vibratorUtil.vibrate(1000);
                     break;
+                case PLAYER_HIT_OBSERVER:
+                    // TODO: observer sees HIT
+                    // Game started
+                    vibratorUtil.vibrate(200);
+                    break;
                 case HIT:
                 case LIFE_DECREASED:
                 case GAME_STARTED_PLAYER:
@@ -68,8 +83,14 @@ public class SpectateActivity extends Activity {
         this.vibratorUtil = new VibratorUtil(this);
         setContentView(R.layout.activity_spectate);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(new SpectateNotificationReceiver(),
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.registerReceiver(new SpectateNotificationReceiver(),
                 new IntentFilter("com.PsichiX.JustIDS.ScreamFightNotificationService"));
+
+        localBroadcastManager.registerReceiver(
+                new SpectateHitSeenReceiver(),
+                new IntentFilter("com.PsichiX.JustIDS.ScreamFightAttackObservedService"));
+
     }
 
 }

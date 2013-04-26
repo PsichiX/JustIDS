@@ -8,6 +8,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 
+import com.PsichiX.JustIDS.message.PlayerInformation;
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -29,7 +30,9 @@ public class GameTest extends TestCase {
 	private class MockListener implements GameStateChangeListener {
 
 		private int number;
-		public MockListener(int number) {
+        private boolean hitSeen;
+
+        public MockListener(int number) {
 			this.number = number;
 		}
 		
@@ -40,10 +43,16 @@ public class GameTest extends TestCase {
 			notifications.add(gameStateNotification);
 			logger.fine("Listener:" + number + ":Received notification " + gameStateNotification);
 		}
-		
-		@Override
+
+        @Override
+        public void notifyHitSeen(Player attacking) {
+            this.hitSeen = true;
+            logger.info("Hit Seen. Attacking:" + attacking);
+        }
+
+        @Override
 		public String toString() {
-			return Arrays.toString(notifications.toArray());
+			return Arrays.toString(notifications.toArray()) + ", hit seen: " + this.hitSeen;
 		}
 	}
 

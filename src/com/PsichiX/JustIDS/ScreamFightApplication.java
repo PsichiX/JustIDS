@@ -12,6 +12,7 @@ import com.PsichiX.JustIDS.comm.UDPBroadCastManager;
 import com.PsichiX.JustIDS.display.PrintCurrentState;
 import com.PsichiX.JustIDS.game.GameManager;
 import com.PsichiX.JustIDS.game.GameStateMachine;
+import com.PsichiX.JustIDS.message.PlayerInformation;
 import com.PsichiX.JustIDS.simulator.SimulatedScenarioEnum;
 import com.PsichiX.JustIDS.simulator.Simulator;
 
@@ -92,6 +93,15 @@ public class ScreamFightApplication extends Application {
             intent.putExtra("MY_PLAYER", gm.getMyPlayer());
             intent.putExtra("ALL_PLAYERS", gm.getPlayers());
             Log.i(TAG, "Sending local broadcast notification (" + gm.getName() + "): " + gameStateNotification + ":" +
+                    PrintCurrentState.getCurrentStateAsString(gm.getMyPlayer(), gm.getPlayers()));
+            LocalBroadcastManager.getInstance(ScreamFightApplication.this).sendBroadcast(intent);
+        }
+
+        @Override
+        public void notifyHitSeen(PlayerInformation.Player attacking) {
+            Intent intent = new Intent("com.PsichiX.JustIDS.ScreamFightAttackObservedService");
+            intent.putExtra("ATTACKING", attacking);
+            Log.i(TAG, "Sending local broadcast notification (" + gm.getName() + "): AttackObserved :" +
                     PrintCurrentState.getCurrentStateAsString(gm.getMyPlayer(), gm.getPlayers()));
             LocalBroadcastManager.getInstance(ScreamFightApplication.this).sendBroadcast(intent);
         }

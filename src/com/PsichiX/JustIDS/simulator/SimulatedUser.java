@@ -143,6 +143,11 @@ public class SimulatedUser {
             }
         }
 
+        @Override
+        public void notifyHitSeen(PlayerInformation.Player attacking) {
+            Log.i(TAG, "Hit seen by observer. Attacking " + attacking);
+        }
+
         private void handleEndGame() {
             handler.removeCallbacks(repeatedAttack);
             handler.postDelayed(new ResetGame(), RESET_GAME_DELAY_AFTER_END);

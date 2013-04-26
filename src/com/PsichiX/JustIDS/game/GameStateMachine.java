@@ -1,12 +1,10 @@
 package com.PsichiX.JustIDS.game;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.logging.Logger;
-
-import com.PsichiX.JustIDS.display.PrintCurrentState;
 import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerState;
+
+import java.util.Collection;
+import java.util.logging.Logger;
 
 public class GameStateMachine {
 
@@ -16,12 +14,14 @@ public class GameStateMachine {
 
 	public enum GameStateNotificationEnum {
 		SOMETHING_CHANGED, GAME_STARTED_OBSERVER, GAME_FINISHED_OBSERVER,
-        GAME_STARTED_PLAYER, GAME_FINISHED_PLAYER_LOST, GAME_FINISHED_PLAYER_WON, HIT, LIFE_DECREASED
+        GAME_STARTED_PLAYER, GAME_FINISHED_PLAYER_LOST, GAME_FINISHED_PLAYER_WON, HIT, LIFE_DECREASED,
+        PLAYER_HIT_OBSERVER
 	}
 
 	public static interface GameStateChangeListener {
 		public void notifyStateChange(
 				GameStateNotificationEnum gameStateNotification);
+        public void notifyHitSeen(Player attacking);
 	}
 
 	private String androidId;
@@ -40,7 +40,7 @@ public class GameStateMachine {
 
 	private PlayerState myState = PlayerState.WAITING;
 
-	static boolean isInGame(PlayerState playerState) {
+	public static boolean isInGame(PlayerState playerState) {
 		return (playerState == PlayerState.IN_GAME
 				|| playerState == PlayerState.PLAYING
 				|| playerState == PlayerState.LOST || playerState == PlayerState.WON);
@@ -112,7 +112,7 @@ public class GameStateMachine {
 		sendNotification(GameStateNotificationEnum.HIT);
 	}
 
-	public void successfulAttack() {
+    public void successfulAttack() {
 		sendNotification(GameStateNotificationEnum.LIFE_DECREASED);
 	}
 
