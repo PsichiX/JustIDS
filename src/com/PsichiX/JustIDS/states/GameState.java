@@ -1,7 +1,11 @@
-package com.PsichiX.JustIDS;
+package com.PsichiX.JustIDS.states;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.PsichiX.JustIDS.R;
 import com.PsichiX.XenonCoreDroid.XeApplication.*;
 import com.PsichiX.XenonCoreDroid.Framework.Graphics.*;
 import com.PsichiX.XenonCoreDroid.XeUtils.*;
@@ -9,26 +13,27 @@ import com.PsichiX.XenonCoreDroid.XeSense;
 
 public class GameState extends State implements CommandQueue.Delegate
 {
+
+    private static final String TAG = GameState.class.getName();
 	
 	/** od 0 do 100*/
 	public static double manaLevel;
 	public static double healthLevel;
-	
-	private Camera2D _cam;
+    private final Context context;
+
+    private Camera2D _cam;
 	private Scene _scn;
 	private CommandQueue _cmds = new CommandQueue();
 	private float _lastForce = 0.0f;
-	private float _currentForce = 0.0f;
+    private float _currentForce = 0.0f;
 	private float _maxForce = 0.0f;
 	private boolean _forceRecording = false;
 	private Sprite Mana;
 	private Sprite Health;
-	private GameStateManager gsm;
-	
-	public GameState(GameStateManager gsm) {
-		this.gsm = gsm;
-	}
-	
+
+    public GameState(Context context) {
+        this.context = context;
+    }
 	@Override
 	public void onEnter()
 	{
@@ -50,17 +55,12 @@ public class GameState extends State implements CommandQueue.Delegate
 		Health.setSize(_cam.getViewWidth() * 0.5f, _cam.getViewHeight());
 		Health.setPosition( _cam.getViewWidth() * 0.5f, 0.0f);
 		_scn.attach(Health);
-		gsm.resetGame();
 		manaLevel = 0;
 		
 		getApplication().getAssets().get(R.raw.badaboom_material, Material.class);
 		getApplication().getAssets().get(R.raw.badaboom_font, Font.class);
 		
 		getApplication().getPhoton().getRenderer().setClearBackground(true, 0.0f, 0.0f, 0.0f, 1.0f);
-		
-		// TODO: This should only be called after the list of players is displayed to the user
-		// And the user decides to start the game
-		gsm.startGame();
 	}
 	
 	@Override
@@ -108,16 +108,18 @@ public class GameState extends State implements CommandQueue.Delegate
 	{
 		if(cmd.equals("StartAttack"))
 		{
-			Log.d("ATTACK", "START");
+			Log.v(TAG, "Start Attack");
 			_maxForce = 0.0f;
 			_forceRecording = true;
 		}
 		else if(cmd.equals("StopAttack"))
 		{
-			Log.d("ATTACK", "STOP");
+			Log.v(TAG, "Stop Attack");
 			double strength = calculateStrength();
-			gsm.attackWithStrength(strength);
-			manaLevel = 0.0f;
+            Intent intent = new Intent("com.PsichiX.JustIDS.attackWithStrength");
+            intent.putExtra("STRENGTH", strength);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+            manaLevel = 0.0f;
 			_forceRecording = false;
 			_maxForce = 0.0f;
 		}
@@ -129,11 +131,11 @@ public class GameState extends State implements CommandQueue.Delegate
 	}
 	
 	public void youWon() {
-		getApplication().pushState(new ResultState("You won!", true));
+		getApplication().pushState(new ResultState("You won!", true, context));
 	}
 	
 	public void youLost() {
-		getApplication().pushState(new ResultState("You lost!", true));
+		getApplication().pushState(new ResultState("You lost!", true, context));
 	}
 
 }

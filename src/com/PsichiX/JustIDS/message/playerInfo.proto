@@ -1,26 +1,33 @@
 package com.PsichiX.JustIDS;
 
-option java_package = "com.PsichiX.JustIDS";
+option java_package = "com.PsichiX.JustIDS.message";
 option java_outer_classname = "PlayerInformation";
 
-message PlayerId {
+enum PlayerState {
+	WAITING = 0;
+	IN_GAME = 1;
+	PLAYING = 2;
+	OBSERVER = 3;
+	WON = 4;
+	LOST = 5;
+	GAME_FINISHED = 6;
+}
+
+message Player {
 	required string id = 1;
 	required string name = 2;
 	required double life_points = 3;
-	required int32 seconds_in_game = 5;
-	optional string ip_address = 4;
+	optional string ip_address = 4;	
+	required PlayerState state = 6;
 }
 
 message PlayerBroadcastInfo {
     enum BroadcastType {
     	STATE = 0;
     	ATTACK = 1;
-    	IWON = 2;
-    	GAME_INFO = 3;
     }
     required BroadcastType type = 1;
-	required PlayerId player_id = 2;
+	required Player my_player = 2;
 	optional double attack_strength = 3; // Only if type = ATTACK 
-	repeated PlayerId all_players = 4; // Only if type = GAME_INFO
+	repeated Player all_players = 4; // Only if type = GAME_INFO
 }
-

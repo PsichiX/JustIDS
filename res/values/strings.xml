@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">JustIDS</string>
+    <string name="app_name">ScreamFighter</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_start_simulation_fight_back_weaker">Weaker response</string>
+    <string name="menu_start_simulation_fight_back_stronger">Stronger response</string>
+    <string name="menu_start_simulation_passive">Passive</string>
+    <string name="menu_start_simulation_counter_attack">Counter-attack</string>
+    <string name="menu_start_simulation_continuous">Continuous attack</string>
+    <string name="menu_start_simulation_observer_only">Observer only</string>
     <string name="title_activity_microphone">MicrophoneActivity</string>
     <string name="title_activity_audio_record_test">AudioRecordTest</string>
     <string name="title_activity_udp">UDPActivity</string>

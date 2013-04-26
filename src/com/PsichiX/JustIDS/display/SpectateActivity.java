@@ -18,7 +18,7 @@ public class SpectateActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_spectate, menu);
+        //getMenuInflater().inflate(R.menu.activity_spectate, menu);
         return true;
     }
 }

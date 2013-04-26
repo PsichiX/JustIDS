@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="custom">
-	<target name="-pre-build">
+	<target name="buildproto" description="rebuilds proto objects from definition">
 		<exec executable="protoc" failonerror="true	">
 			<arg value="-I=${basedir}/src"/>
 			<arg value="--java_out=${basedir}/src"/>
-			<arg value="${basedir}/src/com/PsichiX/JustIDS/playerInfo.proto"/>
+			<arg value="${basedir}/src/com/PsichiX/JustIDS/message/playerInfo.proto"/>
 		</exec>
 	</target>
 </project>

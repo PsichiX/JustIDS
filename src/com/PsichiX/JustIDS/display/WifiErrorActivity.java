@@ -16,9 +16,4 @@ public class WifiErrorActivity extends Activity {
         setContentView(R.layout.activity_wifi_error);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_wifi_error, menu);
-        return true;
-    }
 }

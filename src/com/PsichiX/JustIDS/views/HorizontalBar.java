@@ -32,7 +32,9 @@ public abstract class HorizontalBar extends View {
 		
 		paint = new Paint();
 		paint.setColor(Color.BLACK);
-		if(!isInEditMode()) paint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/balham.otf"));
+        // TODO:@Bartek -> Jarek commented out the below code because it was crashing spectate activity
+//		if(!isInEditMode()) paint.setTypeface(Typeface.createFromAsset(getContext().getAssets(),
+//                "fonts/balham.otf"));
 		paint.setAntiAlias(true);
 		paint.setTextAlign(Align.LEFT);
 	}
