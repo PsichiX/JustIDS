@@ -3,6 +3,7 @@ package com.PsichiX.JustIDS.display;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ public class MainScreenActivity extends Activity {
     WifiService wifi;
     private ArrayAdapter<Player> playersAdapter;
 
+	private LocalBroadcastManager localBroadcastManager;
+
     private class GameNotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -55,6 +58,7 @@ public class MainScreenActivity extends Activity {
         }
     }
 
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +76,7 @@ public class MainScreenActivity extends Activity {
             Log.d(TAG, "WIFI ENABLED, carry on");
         }
 
-        playerName = ProfileActivity.generateName();
+        //playerName = ProfileActivity.generateName();
 
         playersAdapter = new ArrayAdapter<Player>(this,R.layout.listitem_player) {
             @Override
@@ -87,25 +91,17 @@ public class MainScreenActivity extends Activity {
             }
         };
 
-        setUpScreen();
-        refreshPlayersView();
-
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-
-        // Register now to receive notifications from Game Manager
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+     // Register now to receive notifications from Game Manager
         localBroadcastManager.registerReceiver(new GameNotificationReceiver(),
                 new IntentFilter("com.PsichiX.JustIDS.ScreamFightNotificationService"));
-
-        // I am ready to play now. Start new game with setting the name
-        Intent intent = new Intent("com.PsichiX.JustIDS.readyToPlay");
-        intent.putExtra("NAME", playerName);
-        localBroadcastManager.sendBroadcast(intent);
-
+        
+        setUpScreen();
+        refreshPlayersView();
     }
 
     private void setUpScreen() {
-        TextView playerNameView = (TextView) findViewById(R.id.txt_yourname);
-        playerNameView.setText(playerName);
+        TextView playerNameView = updatePlayerName();
 
         playerNameView.setOnClickListener(new OnClickListener() {
             @Override
@@ -137,6 +133,18 @@ public class MainScreenActivity extends Activity {
         playersList.setAdapter(playersAdapter);
     }
 
+	private TextView updatePlayerName() {
+		TextView playerNameView = (TextView) findViewById(R.id.txt_yourname);
+        playerNameView.setText(playerName);
+        
+        // I am ready to play now. Start new game with setting the name
+        Intent intent = new Intent("com.PsichiX.JustIDS.readyToPlay");
+        intent.putExtra("NAME", playerName);
+        localBroadcastManager.sendBroadcast(intent);
+        
+		return playerNameView;
+	}
+
     public void refreshPlayersView() {
         LinearLayout playersNoneLL = (LinearLayout) findViewById(R.id.players_none);
         LinearLayout playersAreLL = (LinearLayout) findViewById(R.id.players_avalible);
@@ -157,7 +165,7 @@ public class MainScreenActivity extends Activity {
     }
 
     public void gotoProfile() {
-        startActivity(new Intent(this, ProfileActivity.class));
+        startActivityForResult(new Intent(this, ProfileActivity.class), 1);
     }
 
     public void gotoFight() {
@@ -171,6 +179,7 @@ public class MainScreenActivity extends Activity {
 
     public void gotoHowto() {
         //TODO: temporary only - for tests. should be replaced by automatic training
+    	//teraz to i tak jest nieuzywane.
         startActivity(new Intent(this, AudioRecordTest.class));
     }
 
@@ -238,5 +247,17 @@ public class MainScreenActivity extends Activity {
         } else {
             return false;
         }
+    }
+    
+    @Override
+    public void onBackPressed() {
+    	finish();
+    	//TODO: doda³em, bo sie pare rzeczy nie zawsze wylacza.
+    	android.os.Process.killProcess(android.os.Process.myPid());
+    	super.onBackPressed();
+    }
+    
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	updatePlayerName();
     }
 }

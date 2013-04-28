@@ -1,5 +1,13 @@
 package com.PsichiX.JustIDS.display;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import com.PsichiX.JustIDS.R;
 import com.PsichiX.JustIDS.R.layout;
 import com.PsichiX.JustIDS.R.menu;
@@ -7,16 +15,20 @@ import com.PsichiX.JustIDS.game.GameStateMachine;
 import com.PsichiX.JustIDS.message.PlayerInformation;
 import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerState;
+import com.PsichiX.JustIDS.services.CameraService;
 import com.PsichiX.JustIDS.views.CameraPreview;
 import com.PsichiX.JustIDS.views.HorizontalBarHealth;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.Camera;
+import android.hardware.Camera.PictureCallback;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +37,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -88,7 +101,7 @@ public class SpectateActivity extends Activity {
                     GameStateMachine.GameStateNotificationEnum.values()[intent.getIntExtra("NOTIFICATION_TYPE", -1)];
             //TODO: Jarek, po co mi myPlayer w spectator?
             PlayerInformation.Player myPlayer = (PlayerInformation.Player) intent.getSerializableExtra("MY_PLAYER");
-            //TODO: to jest napewno straszliwie niewydajne.
+            //TODO: to musi byc straszliwie niewydajne.
             PlayerInformation.Player allPlayers[] = (PlayerInformation.Player[]) intent.getSerializableExtra("ALL_PLAYERS");
             
             pLeft=null;
@@ -172,12 +185,24 @@ public class SpectateActivity extends Activity {
                 new IntentFilter("com.PsichiX.JustIDS.ScreamFightAttackObservedService"));
 
         // Create an instance of Camera
-        mCamera = getCameraInstance();
+        mCamera = CameraService.getCameraInstance();
 
         // Create our Preview view and set it as the content of our activity.
         mPreview = new CameraPreview(this, mCamera);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
+        
+        Button captureButton = (Button) findViewById(R.id.button_capture);
+        captureButton.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // get an image from the camera
+                    mCamera.takePicture(null, null, mPicture);
+                    //mCamera.startPreview();
+                }
+            }
+        );
         
     }
 
@@ -197,15 +222,29 @@ public class SpectateActivity extends Activity {
         return true;
     }
     
-    /** A safe way to get an instance of the Camera object. */
-    public static Camera getCameraInstance(){
-        Camera c = null;
-        try {
-            c = Camera.open(); // attempt to get a Camera instance
+    private PictureCallback mPicture = new PictureCallback() {
+
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+
+            File pictureFile; 
+            try {
+            	pictureFile = CameraService.getOutputMediaFile(CameraService.MEDIA_TYPE_IMAGE);
+            }
+            catch(Exception e) 	{
+                Log.e(TAG, "Error creating media file, check storage permissions: " + e.getMessage());
+                return;
+            }
+
+            try {
+                FileOutputStream fos = new FileOutputStream(pictureFile);
+                fos.write(data);
+                fos.close();
+            } catch (FileNotFoundException e) {
+                Log.d(TAG, "File not found: " + e.getMessage());
+            } catch (IOException e) {
+                Log.d(TAG, "Error accessing file: " + e.getMessage());
+            }
         }
-        catch (Exception e){
-            // Camera is not available (in use or does not exist)
-        }
-        return c; // returns null if camera is unavailable
-    }
+    };
 }

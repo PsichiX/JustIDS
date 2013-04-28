@@ -24,7 +24,7 @@ public class RecorderService {
 	
     public void startRecording() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/audiorecordtest.3gp";
+        mFileName += "/ScreamFight/audiorecord.3gp";
     	
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);

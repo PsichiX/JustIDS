@@ -9,6 +9,7 @@ import com.PsichiX.JustIDS.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -32,6 +33,7 @@ public class ProfileActivity extends Activity {
 		setContentView(R.layout.activity_profile);
 
 		nameView = (TextView) findViewById(R.id.txt_yourname);
+		nameView.setText(MainScreenActivity.playerName);
 		
 		Button btnGenerate = (Button) findViewById(R.id.button_profile_generate);
 		btnGenerate.setOnClickListener(new OnClickListener() {
@@ -55,8 +57,8 @@ public class ProfileActivity extends Activity {
 		nameInput.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				// TODO on enter
-				nameView.setText(v.getText());
+				nameView.setText(v.getText().toString());
+				MainScreenActivity.playerName = v.getText().toString();
 				btnEnter.setVisibility(View.VISIBLE);
 				nameInput.setVisibility(View.GONE);
 				return true;
@@ -77,4 +79,10 @@ public class ProfileActivity extends Activity {
 		return playerName;
 	}
 
+    @Override
+    public void finish() {
+      setResult(RESULT_OK, new Intent());
+      super.finish();
+    } 
+	
 }
