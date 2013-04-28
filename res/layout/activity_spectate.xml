@@ -1,10 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/specteteView"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/topBars"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal|top"
@@ -17,34 +19,10 @@
             android:gravity="left|top"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/txt_yourname"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="Son Goku"
-                android:textSize="40dp"
-                tools:context=".MainMenuActivity" />
-
             <com.PsichiX.JustIDS.views.HorizontalBarHealth
+                android:id="@+id/playerBarLeft"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp" />
-
-            <com.PsichiX.JustIDS.views.HorizontalBarMana
-                android:layout_width="fill_parent"
-                android:layout_height="50dp" />
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/linearLayout1"
-                android:layout_marginLeft="83dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/arrow_right" />
         </LinearLayout>
 
         <LinearLayout
@@ -54,25 +32,35 @@
             android:gravity="right|top"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/txt_yourname"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="Son Goku"
-                android:textSize="40dp"
-                tools:context=".MainMenuActivity" />
-
             <com.PsichiX.JustIDS.views.HorizontalBarHealth
-                android:layout_width="fill_parent"
-                android:layout_height="50dp" />
-
-            <com.PsichiX.JustIDS.views.HorizontalBarMana
+                android:id="@+id/playerBarRight"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp" />
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:id="@+id/attackLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical|left"
+            android:layout_marginLeft="150dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/arrow_right" />
+
+        <ImageView
+            android:id="@+id/attackRight"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="150dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/arrow_left" />
+    </FrameLayout>
+
+</LinearLayout>

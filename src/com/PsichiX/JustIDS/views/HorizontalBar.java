@@ -24,7 +24,7 @@ public abstract class HorizontalBar extends View {
 
 	protected Bitmap bcg, bar;
 	protected int barResourceID;
-	private Rect destRect;
+	protected Rect destRect;
 	Paint paint; 
 	
 	public HorizontalBar(Context context, AttributeSet attrs) {
@@ -32,9 +32,6 @@ public abstract class HorizontalBar extends View {
 		
 		paint = new Paint();
 		paint.setColor(Color.BLACK);
-        // TODO:@Bartek -> Jarek commented out the below code because it was crashing spectate activity
-//		if(!isInEditMode()) paint.setTypeface(Typeface.createFromAsset(getContext().getAssets(),
-//                "fonts/balham.otf"));
 		paint.setAntiAlias(true);
 		paint.setTextAlign(Align.LEFT);
 	}
@@ -60,15 +57,4 @@ public abstract class HorizontalBar extends View {
 	
 	abstract protected String getText();
 
-	@Override
-	public void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		destRect.right = (int)(getFillPercentage()*getWidth()-7);
-		canvas.drawBitmap(bcg, 0, 0, null);
-		canvas.drawBitmap(bar, null, destRect, null);
-		canvas.drawText(getText(), 14, (float)(getHeight()*7/10), paint);
-		
-		// $log.d("VIEW", "creature health onDraw pos = " +toPosition +
-		// " size = "+ size);
-	}
 }
