@@ -7,6 +7,7 @@ import com.PsichiX.JustIDS.game.GameStateMachine;
 import com.PsichiX.JustIDS.message.PlayerInformation;
 import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.message.PlayerInformation.PlayerState;
+import com.PsichiX.JustIDS.views.CameraPreview;
 import com.PsichiX.JustIDS.views.HorizontalBarHealth;
 
 import android.os.Bundle;
@@ -15,17 +16,29 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.Camera;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class SpectateActivity extends Activity {
 
 	private HorizontalBarHealth playerBarLeft, playerBarRight;
 	private ImageView attackLeft, attackRight;
-    private static final String TAG = SpectateActivity.class.getName();
+	Player pLeft=null, pRight=null;
+
+    private Camera mCamera;
+    private CameraPreview mPreview;
+	
+	private static final String TAG = SpectateActivity.class.getName();
 
     private VibratorUtil vibratorUtil;
 
@@ -34,11 +47,40 @@ public class SpectateActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             PlayerInformation.Player attacking = (PlayerInformation.Player) intent.getSerializableExtra("ATTACKING");
+            double strength=20.0;
+            if(attacking.getName().equals(pLeft.getName()))	{
+            	animateAttack(attackLeft, strength);
+            }
+            else	{
+            	animateAttack(attackRight, strength);
+            }
             // TODO: do something when observing the attack
             //vibratorUtil.vibrate(200);
         }
     }
 
+	private void animateAttack(final ImageView attack, double strength) {
+		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) attack.getLayoutParams();
+        params.height = (int) (strength*5);
+        attack.setLayoutParams(params);
+        Animation anim = //new ScaleAnimation(0.0f, 1.0f, 1.0f, 1.0f, Animation.RELATIVE_TO_SELF,1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+		 AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.attackanim);
+		anim.setAnimationListener(new Animation.AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+				attack.setVisibility(View.VISIBLE);
+			}
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				attack.setVisibility(View.INVISIBLE);
+			}
+		});
+		attack.startAnimation(anim);
+	}
+    
     private class SpectateNotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -46,9 +88,11 @@ public class SpectateActivity extends Activity {
                     GameStateMachine.GameStateNotificationEnum.values()[intent.getIntExtra("NOTIFICATION_TYPE", -1)];
             //TODO: Jarek, po co mi myPlayer w spectator?
             PlayerInformation.Player myPlayer = (PlayerInformation.Player) intent.getSerializableExtra("MY_PLAYER");
+            //TODO: to jest napewno straszliwie niewydajne.
             PlayerInformation.Player allPlayers[] = (PlayerInformation.Player[]) intent.getSerializableExtra("ALL_PLAYERS");
             
-            Player pLeft=null, pRight=null;
+            pLeft=null;
+            pRight=null;
             for(Player p : allPlayers)	{
             	if(p.getState()==PlayerState.PLAYING ) {
             		if(pLeft == null)	{
@@ -113,6 +157,8 @@ public class SpectateActivity extends Activity {
         
         attackLeft = (ImageView) findViewById(R.id.attackLeft);
         attackRight = (ImageView) findViewById(R.id.attackRight);
+        attackLeft.setVisibility(View.INVISIBLE);
+        attackRight.setVisibility(View.INVISIBLE);
         
         playerBarLeft = (HorizontalBarHealth) findViewById(R.id.playerBarLeft);
         playerBarRight = (HorizontalBarHealth) findViewById(R.id.playerBarRight);
@@ -125,11 +171,41 @@ public class SpectateActivity extends Activity {
                 new SpectateHitSeenReceiver(),
                 new IntentFilter("com.PsichiX.JustIDS.ScreamFightAttackObservedService"));
 
+        // Create an instance of Camera
+        mCamera = getCameraInstance();
+
+        // Create our Preview view and set it as the content of our activity.
+        mPreview = new CameraPreview(this, mCamera);
+        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+        preview.addView(mPreview);
+        
     }
 
+    public void quitSpectate()	{
+    	mCamera.release();
+   }
+    
+    @Override
+    public void onBackPressed() {
+    	quitSpectate();
+    	super.onBackPressed();
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //getMenuInflater().inflate(R.menu.activity_spectate, menu);
         return true;
+    }
+    
+    /** A safe way to get an instance of the Camera object. */
+    public static Camera getCameraInstance(){
+        Camera c = null;
+        try {
+            c = Camera.open(); // attempt to get a Camera instance
+        }
+        catch (Exception e){
+            // Camera is not available (in use or does not exist)
+        }
+        return c; // returns null if camera is unavailable
     }
 }

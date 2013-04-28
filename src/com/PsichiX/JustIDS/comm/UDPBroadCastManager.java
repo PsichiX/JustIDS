@@ -47,8 +47,10 @@ public class UDPBroadCastManager implements BroadcastManagerInterface {
 	
 	private InetAddress getBroadcastAddress(Context context) throws IOException {
 	    WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+	    //TODO: Jarek, to siê raz ponoc powinno dziac a nie przy ka¿dym broadcascie
 	    MulticastLock ml = wifi.createMulticastLock("some tag");
 	    ml.acquire();
+	    
 	    DhcpInfo dhcp = wifi.getDhcpInfo();
 	    // handle null somehow
 
