@@ -19,26 +19,26 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <uses-feature android:name="android.hardware.camera" />
-    
+
     <application
+        android:name="com.PsichiX.JustIDS.ScreamFightApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="JustIDS"
-        android:name="com.PsichiX.JustIDS.ScreamFightApplication">
+        android:label="JustIDS" >
         <activity
-            android:name=".display.GameActivity"
+            android:name="com.PsichiX.JustIDS.display.GameActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".trash.AudioRecordTest"
+            android:name="com.PsichiX.JustIDS.trash.AudioRecordTest"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".display.ProfileActivity"
+            android:name="com.PsichiX.JustIDS.display.ProfileActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".display.MainScreenActivity"
+            android:name="com.PsichiX.JustIDS.display.MainScreenActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
@@ -49,13 +49,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".display.WifiErrorActivity"
+            android:name="com.PsichiX.JustIDS.display.WifiErrorActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".display.SpectateActivity"
+            android:name="com.PsichiX.JustIDS.display.SpectateActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.PsichiX.JustIDS.display.HowToActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.PsichiX.JustIDS.display.FightActivity"
+            android:label="@string/title_activity_fight" 
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
     </application>

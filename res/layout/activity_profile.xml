@@ -74,10 +74,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="left"
-            android:text="Kamehamas:	27
-Fights Won:	14
-Strongest hit:	1400
-Longest Shout: 5s"
+            android:text="@string/profile_stats"
             android:textSize="25dp"
             tools:context=".MainMenuActivity" />
     </LinearLayout>

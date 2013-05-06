@@ -8,7 +8,7 @@
    <Samplers>
       <Sampler0
          name="uSamp"
-         image="drawable/mw_fight_bar_hp"
+         image="drawable/fight_bar_hp"
          filteringMin="LINEAR"
          filteringMag="LINEAR"
          wrappingVertical="REPEAT"

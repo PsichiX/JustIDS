@@ -3,6 +3,7 @@ package com.PsichiX.JustIDS.display;
 import java.util.Calendar;
 import java.util.Random;
 
+import com.PsichiX.JustIDS.GameLogicData;
 import com.PsichiX.JustIDS.R;
 import com.PsichiX.JustIDS.R.layout;
 import com.PsichiX.JustIDS.R.menu;
@@ -33,14 +34,14 @@ public class ProfileActivity extends Activity {
 		setContentView(R.layout.activity_profile);
 
 		nameView = (TextView) findViewById(R.id.txt_yourname);
-		nameView.setText(MainScreenActivity.playerName);
+		nameView.setText(GameLogicData.getPlayerName());
 		
 		Button btnGenerate = (Button) findViewById(R.id.button_profile_generate);
 		btnGenerate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				MainScreenActivity.playerName = generateName();
-				nameView.setText(MainScreenActivity.playerName);
+				GameLogicData.setPlayerName(generateName());
+				nameView.setText(GameLogicData.getPlayerName());
 			}
 		});
 		
@@ -51,6 +52,7 @@ public class ProfileActivity extends Activity {
 			public void onClick(View v) {
 				btnEnter.setVisibility(View.GONE);
 				nameInput.setVisibility(View.VISIBLE);
+				nameInput.requestFocus();
 			}
 		});
 		
@@ -58,7 +60,7 @@ public class ProfileActivity extends Activity {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				nameView.setText(v.getText().toString());
-				MainScreenActivity.playerName = v.getText().toString();
+				GameLogicData.setPlayerName(v.getText().toString());
 				btnEnter.setVisibility(View.VISIBLE);
 				nameInput.setVisibility(View.GONE);
 				return true;

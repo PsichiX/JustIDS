@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
+
+import com.PsichiX.JustIDS.GameLogicData;
 import com.PsichiX.JustIDS.R;
 import com.PsichiX.JustIDS.game.GameStateMachine.GameStateNotificationEnum;
 import com.PsichiX.JustIDS.message.PlayerInformation.Player;
@@ -24,8 +26,6 @@ public class MainScreenActivity extends Activity {
     private static boolean ENABLE_SIMULATION = true;
 
     private String TAG = MainScreenActivity.class.getName();
-
-    public static String playerName;
 
     private Player[] allPlayers = new Player[0];
     private Player myPlayer;
@@ -62,9 +62,11 @@ public class MainScreenActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        GameLogicData.loadOptions(this);
+        
         setContentView(R.layout.activity_main_screen);
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        playerName = ProfileActivity.generateName();
 
         wifi = new WifiService(this);
         if (!wifi.isWifiInWorkingState()) {
@@ -75,8 +77,10 @@ public class MainScreenActivity extends Activity {
         } else {
             Log.d(TAG, "WIFI ENABLED, carry on");
         }
-
-        //playerName = ProfileActivity.generateName();
+        
+        if(GameLogicData.firstTimeRun)	{
+        	gotoHowto();
+        }
 
         playersAdapter = new ArrayAdapter<Player>(this,R.layout.listitem_player) {
             @Override
@@ -135,11 +139,11 @@ public class MainScreenActivity extends Activity {
 
 	private TextView updatePlayerName() {
 		TextView playerNameView = (TextView) findViewById(R.id.txt_yourname);
-        playerNameView.setText(playerName);
+        playerNameView.setText(GameLogicData.getPlayerName());
         
         // I am ready to play now. Start new game with setting the name
         Intent intent = new Intent("com.PsichiX.JustIDS.readyToPlay");
-        intent.putExtra("NAME", playerName);
+        intent.putExtra("NAME", GameLogicData.getPlayerName());
         localBroadcastManager.sendBroadcast(intent);
         
 		return playerNameView;
@@ -148,16 +152,16 @@ public class MainScreenActivity extends Activity {
     public void refreshPlayersView() {
         LinearLayout playersNoneLL = (LinearLayout) findViewById(R.id.players_none);
         LinearLayout playersAreLL = (LinearLayout) findViewById(R.id.players_avalible);
-        if (allPlayers.length > 0) {
-            playersAdapter.clear();
-            for (Player playerId: allPlayers) {
-                playersAdapter.add(playerId);
-            }
+        playersAdapter.clear();
+        for (Player playerId: allPlayers) {
+        	if(!(playerId.getId().equals(myPlayer.getId()))) 
+        		playersAdapter.add(playerId);
+        }
+        if (playersAdapter.getCount()>0) { 
             playersAdapter.notifyDataSetChanged();
             playersNoneLL.setVisibility(View.GONE);
             playersAreLL.setVisibility(View.VISIBLE);
         } else {
-            playersAdapter.clear();
             playersNoneLL.setVisibility(View.VISIBLE);
             playersAreLL.setVisibility(View.GONE);
             playersAdapter.notifyDataSetChanged();
@@ -180,7 +184,8 @@ public class MainScreenActivity extends Activity {
     public void gotoHowto() {
         //TODO: temporary only - for tests. should be replaced by automatic training
     	//teraz to i tak jest nieuzywane.
-        startActivity(new Intent(this, AudioRecordTest.class));
+        //startActivity(new Intent(this, AudioRecordTest.class));
+    	startActivity(new Intent(this, HowToActivity.class));
     }
 
     public void gotoSpectate() {
@@ -260,4 +265,6 @@ public class MainScreenActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     	updatePlayerName();
     }
+
+
 }

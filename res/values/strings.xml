@@ -18,5 +18,11 @@
     <string name="title_activity_wifi_error">WifiErrorActivity</string>
     <string name="title_activity_spectate">SpectateActivity</string>
     <string name="title_activity_wifi_ap">WifiAP</string>
+    <string name="profile_stats">Kamehamas:	27
+Fights Won:	14
+Strongest hit:	1400
+Longest Shout: 5s</string>
+    <string name="title_activity_fight">FightActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

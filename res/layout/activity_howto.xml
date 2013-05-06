@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical|center_horizontal" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:background="#FFFFFFFF"
+        android:scaleType="fitXY"
+        android:src="@drawable/howto1" />
+    
+    <TextView
+        android:id="@+id/howtotext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:scrollHorizontally="false"
+        android:text="Connect to same WiFi hotspot with your opponent!"
+        android:textSize="30dp"
+        tools:context=".WifiErrorActivity" />
+    <TextView
+        android:id="@+id/howtotextsmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:scrollHorizontally="false"
+        android:text="You can start hotspot on your phone too! "
+        android:textSize="20dp"
+        tools:context=".WifiErrorActivity" />
+
+</LinearLayout>
