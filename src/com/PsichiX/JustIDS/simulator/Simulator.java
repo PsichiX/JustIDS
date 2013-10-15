@@ -44,18 +44,18 @@ public class Simulator {
         this.scenario = scenario;
         if (scenario != SimulatedScenarioEnum.OBSERVER_ONLY) {
             simulatedPlayers = new SimulatedUser[1];
-            simulatedPlayers[0] = new SimulatedUser(context, "Simulated Player",
+            simulatedPlayers[0] = new SimulatedUser(context, "SimPlayer",
                     false, dependentBroadCastManager, scenario);
         } else {
             simulatedPlayers = new SimulatedUser[2];
-            simulatedPlayers[0] = new SimulatedUser(context, "Simulated Player 0",
+            simulatedPlayers[0] = new SimulatedUser(context, "SimPlayer 1",
                     false, dependentBroadCastManager, scenario);
-            simulatedPlayers[1] = new SimulatedUser(context, "Simulated Player 1",
+            simulatedPlayers[1] = new SimulatedUser(context, "SimPlayer 2",
                     false, dependentBroadCastManager, scenario);
         }
         simulatedObservers = new SimulatedUser[numberOfObservers];
         for (int i = 0; i < numberOfObservers; i++) {
-            simulatedObservers[i] = new SimulatedUser(context, "Simulated Observer " + i,
+            simulatedObservers[i] = new SimulatedUser(context, "SimObserver " + i,
                     true, dependentBroadCastManager, scenario);
         }
     }

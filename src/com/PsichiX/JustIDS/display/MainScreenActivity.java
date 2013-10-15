@@ -19,7 +19,7 @@ import com.PsichiX.JustIDS.game.GameStateMachine.GameStateNotificationEnum;
 import com.PsichiX.JustIDS.message.PlayerInformation.Player;
 import com.PsichiX.JustIDS.services.WifiService;
 import com.PsichiX.JustIDS.simulator.SimulatedScenarioEnum;
-import com.PsichiX.JustIDS.trash.AudioRecordTest;
+import com.PsichiX.JustIDS.display.GameActivity;
 
 public class MainScreenActivity extends Activity {
 

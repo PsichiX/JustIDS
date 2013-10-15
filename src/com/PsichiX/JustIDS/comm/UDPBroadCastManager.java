@@ -32,6 +32,7 @@ public class UDPBroadCastManager implements BroadcastManagerInterface {
 	private Context context;
 
     private LinkedList<ChainedReceiver> chainedReceiverList = new LinkedList<ChainedReceiver>();
+	private InetAddress inetAddress;
 	
 	public UDPBroadCastManager(Context context) {
 		this.context = context;
@@ -45,7 +46,7 @@ public class UDPBroadCastManager implements BroadcastManagerInterface {
 		}
 	}
 	
-	private InetAddress getBroadcastAddress(Context context) throws IOException {
+	private InetAddress setBroadcastAddress(Context context) throws IOException {
 	    WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 	    //TODO: Jarek, to siê raz ponoc powinno dziac a nie przy ka¿dym broadcascie
 	    MulticastLock ml = wifi.createMulticastLock("some tag");
@@ -58,7 +59,15 @@ public class UDPBroadCastManager implements BroadcastManagerInterface {
 	    byte[] quads = new byte[4];
 	    for (int k = 0; k < 4; k++)
 	      quads[k] = (byte) ((broadcast >> k * 8) & 0xFF);
-	    return InetAddress.getByAddress(quads);
+	    inetAddress = InetAddress.getByAddress(quads);
+	    return inetAddress;
+	}
+	
+	private InetAddress getBroadcastAddress(Context context) throws IOException	{
+		if(inetAddress==null)	{
+			return setBroadcastAddress(context);
+		}
+		else return inetAddress;
 	}
 	
 	private void sendBroadcast(final Context context, final byte [] data) {
